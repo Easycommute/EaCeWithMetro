@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.RelativeLayout;
@@ -20,6 +21,8 @@ import android.widget.Toast;
 import easycommute.EaCeWithMetro.R;
 import easycommute.EaCeWithMetro.interfaces.ActionEventListener;
 import easycommute.EaCeWithMetro.interfaces.FragmentListener;
+import retrofit.RetrofitError;
+import rx.functions.Action1;
 
 /**
  * Created by Ram Prasad on 10/11/2015.
@@ -185,6 +188,32 @@ public class BaseActivity extends AppCompatActivity implements FragmentListener 
         if(activity.getCurrentFocus() != null)
             inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
     }
+    protected Action1<Throwable> errorHandler = new Action1<Throwable>() {
+
+        @Override
+        public void call(Throwable throwable) {
+            try {
+            }catch (Throwable t){
+                //ignore
+            }
+            try {
+                RetrofitError error = (RetrofitError) throwable;
+                hideProgressBar();
+                switch (error.getKind()) {
+                    case NETWORK:
+                        showNetworkDialog();
+                        break;
+
+                    default:
+                        showToast(error.getMessage());
+                }
+            } catch (NullPointerException ex) {
+                Log.d("ERROR", ex.toString());
+            } catch (Exception ex) {
+                Log.d("ERROR", ex.toString());
+            }
+        }
+    };
 
 
 }

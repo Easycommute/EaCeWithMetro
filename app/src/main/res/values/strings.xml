@@ -16,5 +16,38 @@
 
     <string name="netwrok_error">Network Error</string>
     <string name="error_internet_conn">Looks like you are not connected to network. Please check your internet connection.</string>
+    <string name="termsNconditions"><![CDATA[I have read & agree to the <a href="http://www.easycommute.co/terms-conditions"> terms & conditions</a>]]></string>
+    <string name="wait_sms">Waiting for SMS</string>
+    <string name="warning_email_empty">Please enter your Email ID</string>
+    <string name="warning_email_not_proper">Please enter a valid Email ID</string>
+    <string name="verify">Verify</string>
+
+    <string name="warning_name_empty">Please enter your name</string>
+    <string name="warning_company_empty">Please enter company name</string>
+    <string name="warning_name_spl_char">Please enter a valid name. Name which you entered seems to have a special character.</string>
+    <string name="warning_name_digit">Please enter a valid name.</string>
+
+    <string name="enter_otp">Please enter your OTP</string>
+
+    <string name="enter_referral">Please enter your referral code</string>
+
+    <string name="congos">Congratulations!</string>
+    <string name="success_reg">You have successfully registered</string>
+
+    <string name="lbl_name">Name</string>
+
+    <string name="lbl_email">Email</string>
+    <string name="lbl_mobile">Mobile</string>
+    <string name="lbl_next">NEXT</string>
+    <string name="code">+91</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="verification">Verification</string>
+    <string name="regenerating_otp">Regenerating OTP </string>
+
+    <string name="register">Register</string>
+
+    <string name="regenerate_otp">Regenerate Your OTP</string>
+
 
 </resources>

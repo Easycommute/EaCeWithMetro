@@ -21,11 +21,7 @@
             android:label="@string/title_activity_main2"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <activity
@@ -39,6 +35,18 @@
             android:name="com.razorpay.ApiKey"
             android:value="rzp_test_gPctIJOwWzSCzM"
             />           <!--android:value=rzp_test_gPctIJOwWzSCzM"   rzp_live_SwLM6nUtDjrIJl	"-->
+
+        <activity
+            android:name=".activities.QuickRegistrationActivity"
+            android:configChanges="orientation"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
 
     </application>
