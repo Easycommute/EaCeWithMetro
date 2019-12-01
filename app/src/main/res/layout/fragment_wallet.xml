@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context=".fragments.WalletFragment"
+    android:padding="15dp">
+
+    <TextView
+        android:id="@+id/title_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="8dp"
+        android:text="Available Balance"
+        android:textColor="@color/black" />
+
+    <TextView
+        android:id="@+id/credits"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_below="@id/title_label"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/bg_credits"
+        android:gravity="center"
+        android:text="INR 25"
+        android:textColor="@color/black"
+        android:textSize="35sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:weightSum="4"
+        android:id="@+id/priceLayout1"
+        android:orientation="horizontal"
+        android:layout_marginTop="50dp"
+        android:layout_below="@+id/credits"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btn1"
+            android:layout_width="98dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/rounded_button_unselected"
+            android:text="15"
+            android:textAllCaps="false"
+            android:textColor="@color/black" />
+        <Button
+            android:id="@+id/btn2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/rounded_button_unselected"
+            android:text="20"
+            android:textAllCaps="false"
+            android:textColor="@color/black" />
+        <Button
+            android:id="@+id/btn3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/rounded_button_unselected"
+            android:text="30"
+            android:textAllCaps="false"
+            android:textColor="@color/black" />
+
+        <Button
+            android:layout_weight="1"
+            android:id="@+id/btn4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_button_unselected"
+            android:text="50"
+            android:textAllCaps="false"
+            android:textColor="@color/black" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:weightSum="4"
+        android:id="@+id/priceLayout2"
+        android:orientation="horizontal"
+        android:layout_below="@+id/priceLayout1"
+        android:layout_marginTop="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:layout_weight="1"
+            android:id="@+id/btn5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_button_unselected"
+            android:text="60"
+            android:textAllCaps="false"
+            android:textColor="@color/black" />
+        <Button
+            android:id="@+id/btn6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/rounded_button_unselected"
+            android:text="75"
+            android:textAllCaps="false"
+            android:textColor="@color/black" />
+        <Button
+            android:id="@+id/btn7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/rounded_button_unselected"
+            android:text="100"
+            android:textAllCaps="false"
+            android:textColor="@color/black" />
+
+        <Button
+            android:layout_weight="1"
+            android:id="@+id/btn8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_button_unselected"
+            android:text="150"
+            android:textAllCaps="false"
+            android:textColor="@color/black" />
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/btnAddMoney"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:background="@color/colorPrimaryDark"
+        android:text="@string/add_money"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
+
+
+
+</RelativeLayout>
