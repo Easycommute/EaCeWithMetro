@@ -126,7 +126,7 @@
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="16dp"
                     android:text="Gender : "
-                    android:textColor="#000000"
+                    android:textColor="@color/black"
                     android:textSize="18sp" />
 
                 <RadioGroup
@@ -259,7 +259,7 @@
                     android:fontFamily="sans-serif-light"
                     android:hint="@string/lbl_mobile"
                     android:inputType="text"
-                    android:textColor="#000000"
+                    android:textColor="@color/black"
                     android:textSize="18sp" />
 
                 <ImageView
@@ -283,7 +283,7 @@
                     android:fontFamily="sans-serif-light"
                     android:hint="@string/wait_sms"
                     android:inputType="number"
-                    android:textColor="#000000"
+                    android:textColor="@color/black"
                     android:textSize="18sp" />
 
                 <ProgressBar
@@ -337,18 +337,13 @@
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="8dp"
                     android:layout_marginTop="10dp"
-                    android:background="#329659"
+                    android:background="@color/colorGreen"
                     android:text="@string/verify"
                     android:textAllCaps="true"
-                    android:textColor="#ffffff" />
+                    android:textColor="@color/white" />
             </RelativeLayout>
 
-            <RelativeLayout
-                android:id="@+id/bac_dim_layout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#C0000000"
-                android:visibility="gone"></RelativeLayout>
+
 
             <TextView
                 android:layout_width="wrap_content"
@@ -359,7 +354,7 @@
                 android:layout_marginTop="8dp"
                 android:fontFamily="Roboto"
                 android:text="@string/verification"
-                android:textColor="#ffffff"
+                android:textColor="@color/white"
                 android:textSize="24sp" />
 
         </RelativeLayout>

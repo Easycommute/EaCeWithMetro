@@ -63,7 +63,6 @@ public class QuickRegistrationActivity extends BaseActivity implements View.OnCl
     private TextView txtEditMobile;
     private RadioGroup radioGroup;
 
-    RelativeLayout back_dim_layout;
     Receiver receiver;
     private PopupWindow successDialog;
     private static final int REQUEST_CODE_EMAIL = 1;
@@ -113,7 +112,6 @@ public class QuickRegistrationActivity extends BaseActivity implements View.OnCl
     protected void initLayout() {
         super.initLayout();
 
-        back_dim_layout = (RelativeLayout) findViewById(R.id.bac_dim_layout);
         viewPager = (ViewPager) findViewById(R.id.viewPagerVertical);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
@@ -318,7 +316,8 @@ public class QuickRegistrationActivity extends BaseActivity implements View.OnCl
         commuter.deviceId = getDeviceID();
         this.tempCommuter = commuter;
      //   requestForSMS(commuter);
-        showReferralCodeDialog(commuter);
+        launchHomeActivity();
+
 
     }
 
@@ -472,7 +471,8 @@ public class QuickRegistrationActivity extends BaseActivity implements View.OnCl
         @Override
         public void onReceive(Context context, Intent intent) {
             if(intent.getAction().equals(AppConstants.CUSTOM_INTENT)) {
-                showSortPopup(QuickRegistrationActivity.this);
+              //
+                //  showSortPopup(QuickRegistrationActivity.this);
                 startHome();
 
 
@@ -483,6 +483,7 @@ public class QuickRegistrationActivity extends BaseActivity implements View.OnCl
     }
 
     //TODO: Need to refactor this piece of code
+/*
     private void showSortPopup(final Activity context) {
         View layout = LayoutInflater.from(this).inflate(R.layout.popup_otp, null);
         successDialog = new PopupWindow(context);
@@ -501,6 +502,7 @@ public class QuickRegistrationActivity extends BaseActivity implements View.OnCl
             }
         });
     }
+*/
 
     @Override
     protected void onDestroy() {
@@ -536,13 +538,16 @@ public class QuickRegistrationActivity extends BaseActivity implements View.OnCl
         finish();
     }
 
+/*
     private void showReferralCodeDialog(final Commuter commuter) {
         View layout = LayoutInflater.from(this).inflate(R.layout.referral_popup, null);
         final Dialog referralDialog = new Dialog(this, R.style.Theme_Dialog);
         referralDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         referralDialog.setContentView(layout);
-        /*referralDialog.setTitle("Have Referral Code? ");*/
+        */
+/*referralDialog.setTitle("Have Referral Code? ");*//*
+
         final EditText referral = (EditText) layout.findViewById(R.id.referral_code);
         referral.setText(referralCode);
         Button yes = (Button) layout.findViewById(R.id.yes);
@@ -570,6 +575,7 @@ public class QuickRegistrationActivity extends BaseActivity implements View.OnCl
         });
     referralDialog.show();
     }
+*/
 
 
 }
