@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.RideFragment">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/title_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="Token: 1456 For HYD-> ABC, Valid Till 24/11/19 11:00 AM"
+        android:textColor="@color/black" />
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_below="@+id/title_label"
+        android:id="@+id/view1"
+        android:background="@color/divider"
+        android:layout_height="2sp"/>
+
+        <RelativeLayout
+            android:id="@+id/rlSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/view1"
+            android:layout_marginTop="100dp"
+            android:gravity="center">
+
+            <Spinner
+                android:id="@+id/spinnerStarting"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="50dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginRight="50dp"
+                android:background="@drawable/spinner_background"
+                >
+
+            </Spinner>
+
+            <Spinner
+                android:id="@+id/spinnerEnd"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/spinnerStarting"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="50dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="50dp"
+                android:background="@drawable/spinner_background"
+                />
+            <TextView
+                android:id="@+id/txtTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="100dp"
+                android:text="Hyderbad based Easy Commute Metro Shuttle Services"
+                android:textColor="@color/primary_text"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:layout_centerInParent="true"
+                android:visibility="gone" />
+
+
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/btnValidate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rlSpinner"
+            android:background="@drawable/rounded_button_disable"
+            android:layout_centerHorizontal="true"
+            android:textAllCaps="false"
+            android:layout_marginTop="50dp"
+            android:textColor="@color/icons" />
+
+        <Button
+            android:id="@+id/btnAddMoney"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rlSpinner"
+            android:background="@drawable/rounded_button"
+            android:layout_centerHorizontal="true"
+            android:textAllCaps="false"
+            android:text="@string/add_money"
+            android:layout_marginTop="50dp"
+            android:visibility="gone"
+            android:textColor="@color/icons" />
+
+    </RelativeLayout>
+
+
+
+</FrameLayout>

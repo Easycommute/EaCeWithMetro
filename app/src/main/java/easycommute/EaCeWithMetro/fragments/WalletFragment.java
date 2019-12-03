@@ -13,12 +13,13 @@ import android.widget.Button;
 
 import easycommute.EaCeWithMetro.R;
 import easycommute.EaCeWithMetro.activities.PaymentsActivity;
+import easycommute.EaCeWithMetro.utils.BaseFragment;
 import easycommute.EaCeWithMetro.utils.PaymentConstants;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class WalletFragment extends Fragment {
+public class WalletFragment extends BaseFragment {
 
     Button btn1,btn2,btn3,btn4,btn5,btn6,btn7,btn8,btnAddMoney;
     int selectedPrice;
@@ -174,6 +175,11 @@ public class WalletFragment extends Fragment {
 
     }
 
+
+    @Override
+    protected int getTitle() {
+        return R.string.wallet;
+    }
 
 
     private void openPaymentScreen()

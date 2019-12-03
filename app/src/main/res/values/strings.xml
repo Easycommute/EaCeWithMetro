@@ -49,5 +49,20 @@
 
     <string name="regenerate_otp">Regenerate Your OTP</string>
 
+    <string-array name="source">
+        <item>"Select Source"</item>
+        <item>IIT Hyderabad</item>
+        <item>Galconda fort</item>
+    </string-array>
+
+    <string-array name="destination">
+        <item>"Select Destination"</item>
+        <item>DLF</item>
+        <item>RMZ</item>
+    </string-array>
+
+
+    <string name="get_easy_token">Get Easy Token</string>
+
 
 </resources>

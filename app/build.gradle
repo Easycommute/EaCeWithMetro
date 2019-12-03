@@ -34,5 +34,6 @@ dependencies {
     implementation 'io.reactivex:rxandroid:1.2.1'
     implementation 'io.reactivex:rxjava:1.1.6'
     implementation "androidx.viewpager:viewpager:1.0.0"
-
+    implementation 'com.google.firebase:firebase-analytics:17.2.0'
 }
+apply plugin: 'com.google.gms.google-services'
