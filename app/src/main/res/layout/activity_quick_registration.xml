@@ -156,7 +156,6 @@
                         android:button="@drawable/apptheme_btn_radio_holo_light"
                         android:text="@string/female" />
                 </RadioGroup>
-
                 <CheckBox
                     android:id="@+id/terms"
                     android:layout_width="wrap_content"
