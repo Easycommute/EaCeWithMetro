@@ -1,18 +1,18 @@
 <resources>
-    <string name="app_name">EaCeWithMetro</string>
+    <string name="app_name">Easy Commute Metro</string>
     <string name="add_money">Add Money</string>
     <string name="title_activity_main2">Main2Activity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_title">John Doe</string>
+    <string name="nav_header_subtitle">johndoe@noname.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
 
-    <string name="wallet">Wallet</string>
-    <string name="passbook">Pass Book</string>
-    <string name="ride">Ride</string>
+    <string name="wallet">My Wallet</string>
+    <string name="passbook">My Pass Book</string>
+    <string name="ride">My Ride</string>
 
     <string name="netwrok_error">Network Error</string>
     <string name="error_internet_conn">Looks like you are not connected to network. Please check your internet connection.</string>
