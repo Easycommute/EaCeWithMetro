@@ -51,8 +51,8 @@ public class PaymentsActivity extends Activity implements PaymentResultWithDataL
             options.put("currency", "INR");
            // options.put("order_id", orderID);
             options.put("amount", amount);
-            options.put("prefill.email", "naveenkukreja28@gmail.com");
-            options.put("prefill.contact", "9826242803");
+            options.put("prefill.email", "johndoe@noname.com");
+            options.put("prefill.contact", "9876543210");
             checkout.open(PaymentsActivity.this, options);
         } catch(Exception e) {
             Log.e(TAG, "Error in starting Razorpay Checkout", e);
