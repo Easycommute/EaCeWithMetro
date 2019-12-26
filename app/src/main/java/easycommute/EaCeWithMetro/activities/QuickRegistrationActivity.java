@@ -33,6 +33,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import java.util.regex.Pattern;
 
+
 import easycommute.EaCeWithMetro.R;
 import easycommute.EaCeWithMetro.api.EasyCommuteApi;
 import easycommute.EaCeWithMetro.api.data.response.ApiResponse;
@@ -45,8 +46,6 @@ import easycommute.EaCeWithMetro.utils.PreferenceManager;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
-
-
 
 public class QuickRegistrationActivity extends BaseActivity implements View.OnClickListener {
     private EditText inputEmail, inputMobile, inputName, inputOtp;
@@ -63,6 +62,7 @@ public class QuickRegistrationActivity extends BaseActivity implements View.OnCl
     private TextView txtEditMobile;
     private RadioGroup radioGroup;
 
+    RelativeLayout back_dim_layout;
     Receiver receiver;
     private PopupWindow successDialog;
     private static final int REQUEST_CODE_EMAIL = 1;
@@ -78,16 +78,6 @@ public class QuickRegistrationActivity extends BaseActivity implements View.OnCl
         initLayout();
 
     }
-
-/*    protected void setAccountsPicker() {
-        try {
-            Intent intent = AccountPicker.newChooseAccountIntent(null, null,
-                    new String[]{GoogleAuthUtil.GOOGLE_ACCOUNT_TYPE}, false, null, null, null, null);
-            startActivityForResult(intent, REQUEST_CODE_EMAIL);
-        } catch (ActivityNotFoundException e) {
-            // TODO
-        }
-    }*/
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -124,6 +114,7 @@ public class QuickRegistrationActivity extends BaseActivity implements View.OnCl
         txtEditMobile = (TextView) findViewById(R.id.txt_edit_mobile);
         btnRequestSms = (Button) findViewById(R.id.btn_request_sms);
         btnVerifyOtp  = (Button) findViewById(R.id.btn_verify_otp);
+        back_dim_layout = (RelativeLayout) findViewById(R.id.bac_dim_layout);
 
         layoutEditMobile = (RelativeLayout) findViewById(R.id.layout_edit_mobile);
         radioGroup = (RadioGroup) findViewById(R.id.myRadioGroup);
@@ -157,15 +148,10 @@ public class QuickRegistrationActivity extends BaseActivity implements View.OnCl
         findViewById(R.id.reg_img).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                //
-                launchHomeActivity();
-
-                //
                 showProgressBar();
                 inputOtp.setHint(R.string.regenerating_otp);
                 Commuter commuter = EasySingleton.getInstance().getCommuter();
-              /*  EasyCommuteApi.getService().regenerateOTP(commuter)
+                EasyCommuteApi.getService().regenerateOTP(commuter)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Action1<ApiResponse>() {
@@ -183,7 +169,7 @@ public class QuickRegistrationActivity extends BaseActivity implements View.OnCl
                             public void call(Throwable throwable) {
                                 showToast(throwable.getMessage());
                             }
-                        });*/
+                        });
             }
         });
 
@@ -316,8 +302,7 @@ public class QuickRegistrationActivity extends BaseActivity implements View.OnCl
         commuter.deviceId = getDeviceID();
         this.tempCommuter = commuter;
      //   requestForSMS(commuter);
-        launchHomeActivity();
-
+        showReferralCodeDialog(commuter);
 
     }
 
@@ -358,12 +343,8 @@ public class QuickRegistrationActivity extends BaseActivity implements View.OnCl
     {
         commuter.regId=prefManager.getRegistrationId();
         showProgressBar();
-        //
-        startActivity(new Intent(QuickRegistrationActivity.this,MainActivity.class));
-       //
-
         //Log.d("DEBUG", commuter.referralCode + "");
-        /*EasyCommuteApi.getService().registerCommuter(commuter)
+        EasyCommuteApi.getService().registerCommuter(commuter)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Action1<ApiResponse>() {
@@ -372,7 +353,7 @@ public class QuickRegistrationActivity extends BaseActivity implements View.OnCl
                         hideProgressBar();
                         validateResponse(response);
                     }
-                }, errorHandler);*/
+                }, errorHandler);
     }
 
     private void validateResponse(ApiResponse apiResponse) {
@@ -471,8 +452,7 @@ public class QuickRegistrationActivity extends BaseActivity implements View.OnCl
         @Override
         public void onReceive(Context context, Intent intent) {
             if(intent.getAction().equals(AppConstants.CUSTOM_INTENT)) {
-              //
-                //  showSortPopup(QuickRegistrationActivity.this);
+                //showSortPopup(QuickRegistrationActivity.this);
                 startHome();
 
 
@@ -532,22 +512,23 @@ public class QuickRegistrationActivity extends BaseActivity implements View.OnCl
     }
 
     private void launchHomeActivity() {
+//        Intent intent = new Intent(QuickRegistrationActivity.this, HomeActivity.class);
+//        intent.putExtra(AppConstants.FRAGMENT_NUM, 3);
+//        startActivity(intent);
+
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);
 
         finish();
     }
 
-/*
     private void showReferralCodeDialog(final Commuter commuter) {
         View layout = LayoutInflater.from(this).inflate(R.layout.referral_popup, null);
         final Dialog referralDialog = new Dialog(this, R.style.Theme_Dialog);
         referralDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         referralDialog.setContentView(layout);
-        */
-/*referralDialog.setTitle("Have Referral Code? ");*//*
-
+        /*referralDialog.setTitle("Have Referral Code? ");*/
         final EditText referral = (EditText) layout.findViewById(R.id.referral_code);
         referral.setText(referralCode);
         Button yes = (Button) layout.findViewById(R.id.yes);
@@ -575,7 +556,6 @@ public class QuickRegistrationActivity extends BaseActivity implements View.OnCl
         });
     referralDialog.show();
     }
-*/
 
 
 }

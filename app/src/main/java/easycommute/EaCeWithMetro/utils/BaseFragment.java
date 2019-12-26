@@ -102,9 +102,46 @@ public class BaseFragment extends Fragment implements ActionEventListener {
         super.onCreateOptionsMenu(menu, inflater);
         menu.clear();
     }
+    protected int getCommuterId() {
+        return EasySingleton.getInstance().getCommuter().commuterId;
+    }
+
+
+    protected void updateProfileInfo() {
+        if (mActivity != null) mActivity.setProfileInfo();
+    }
+
+    protected Action1<Throwable> errorHandler = new Action1<Throwable>() {
+
+        @Override
+        public void call(Throwable throwable) {
+            try {
+                if (throwable instanceof java.lang.NullPointerException) {
+                    throwable.printStackTrace();
+                    Log.d("ERROR_HANDLER", throwable.toString());
+                    showToast(R.string.generic_error+throwable.toString());
+                }else {
+                    RetrofitError error = (RetrofitError) throwable;
+                    hideProgressBar();
+
+                    switch (error.getKind()) {
+                        case NETWORK:
+                            if (mActivity != null) mActivity.showNetworkDialog();
+                            break;
+                        default:
+                            showToast(R.string.generic_error);
+                            error.printStackTrace();
+                    }
+                }
+            } catch(NullPointerException ex){
+                Log.d("ERROR", ex.toString());
+            } catch(Exception ex){
+                Log.d("ERROR", ex.toString());
+            }
+        }
+    };
 
     @Override
-
     public void onStop() {
         super.onStop();
         hideSoftKeyboard();

@@ -327,6 +327,10 @@
 
                 </LinearLayout>
 
+
+
+
+
                 <Button
                     android:id="@+id/btn_verify_otp"
                     android:layout_width="match_parent"
@@ -336,12 +340,20 @@
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="8dp"
                     android:layout_marginTop="10dp"
-                    android:background="@color/colorGrey"
+                    android:background="#329659"
                     android:text="@string/verify"
                     android:textAllCaps="true"
                     android:textColor="@color/white" />
+
+
             </RelativeLayout>
 
+            <RelativeLayout
+                android:id="@+id/bac_dim_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#C0000000"
+                android:visibility="gone"/>
 
 
             <TextView

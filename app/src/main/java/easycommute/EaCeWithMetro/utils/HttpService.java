@@ -37,7 +37,7 @@ public class HttpService extends IntentService {
     private void verifyOtp(final String otp) {
         Commuter commuter = EasySingleton.getInstance().getCommuter();
         commuter.otp = otp;
-       /* EasyCommuteApi.getService().verifyCommuter(commuter)
+        EasyCommuteApi.getService().verifyCommuter(commuter)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Action1<ApiResponse>() {
@@ -55,7 +55,7 @@ public class HttpService extends IntentService {
                         Toast.makeText(HttpService.this, "Oops! Verification failed. Try again.",
                                 Toast.LENGTH_SHORT).show();
                     }
-                });*/
+                });
     }
 
     private void parseJSONResponse(ApiResponse apiResponse) throws JSONException {

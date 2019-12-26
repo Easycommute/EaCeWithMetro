@@ -5,17 +5,12 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".EasyCommuteApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/rsz_32logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".activities.HomeActivity"
-            android:screenOrientation="portrait">
-
-
-        </activity>
+        android:theme="@style/AppTheme.NoActionBar">
         <activity
             android:name=".activities.MainActivity"
             android:label="@string/title_activity_main2"
@@ -32,6 +27,12 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".activities.QuickRegistrationActivity"
+            android:configChanges="orientation"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+
 
         <meta-data
             android:name="com.razorpay.ApiKey"
@@ -39,7 +40,7 @@
             />           <!--android:value=rzp_test_gPctIJOwWzSCzM"   rzp_live_SwLM6nUtDjrIJl	"-->
 
         <activity
-            android:name=".activities.QuickRegistrationActivity"
+            android:name=".activities.SplashActivity"
             android:configChanges="orientation"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
@@ -49,6 +50,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service
+            android:name=".utils.HttpService"
+            android:exported="false" />
+
+        <!-- SMS Receiver -->
 
 
     </application>

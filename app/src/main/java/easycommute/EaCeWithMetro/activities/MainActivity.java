@@ -17,6 +17,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import easycommute.EaCeWithMetro.R;
 import easycommute.EaCeWithMetro.fragments.PassBookFragment;
+import easycommute.EaCeWithMetro.fragments.ProfileFragment;
 import easycommute.EaCeWithMetro.fragments.RideFragment;
 import easycommute.EaCeWithMetro.fragments.WalletFragment;
 import easycommute.EaCeWithMetro.utils.BaseActivity;
@@ -74,6 +75,10 @@ public class MainActivity extends BaseActivity
     {
 
         switch (item.getItemId()) {
+            case R.id.nav_profile:
+                fragment= new ProfileFragment();
+                break;
+
             case R.id.nav_wallet:
                 fragment = new WalletFragment();
                 break;

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <pl.droidsonroids.gif.GifImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:src="@drawable/splash_bg"/>
+
+    <ProgressBar
+        android:id="@+id/otp_progressBar"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="16dp"
+        android:indeterminateTint="@color/accent"
+        android:indeterminateTintMode="src_atop"/>
+
+    <easycommute.EaCeWithMetro.ui.AnimateTextView
+        android:id="@+id/animate_text_view"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_above="@id/otp_progressBar"
+        android:textAppearance="?android:textAppearanceLarge"
+        android:textColor="@color/primary"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="32dp"/>
+
+</RelativeLayout>

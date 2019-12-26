@@ -64,5 +64,8 @@
 
     <string name="get_easy_token">Get Easy Token</string>
 
+    <string name="generic_error">Oops! Something went wrong. Please try after sometime.</string>
+    <string name="title_profile">My Profile</string>
+    <string name="lbl_edit_profile">Update Profile</string>
 
 </resources>

@@ -27,7 +27,7 @@ public final class EasyCommuteApi {
     //http://prod.easycommute.co
   //    private static final String PRODUCTION_URL = "https://apiv2.easycommute.co/sts";
     private static final String PRODUCTION_URL = "https://prod.easycommute.co";
-    private static final String STAGING_URL = "https://staging.easycommute.co";
+    private static final String STAGING_URL = "https://metro.easycommute.co/";
     private static String SERVER_URL = PRODUCTION_URL;
     private static final String PLACES_URL = "https://maps.googleapis.com/maps/api";
 
@@ -57,13 +57,6 @@ public final class EasyCommuteApi {
             SERVER_URL = TEST_URL;
         if (AppConstants.isStaging)
             SERVER_URL = STAGING_URL;
-        //SERVER_URL = "https://server.easycommute.co/sts";
-        //setAuthenticate();
-//        SERVER_URL=REQUEST_BIN_URL;
-//        RestAdapter.Builder builder = new RestAdapter.Builder()
-//                .setRequestInterceptor(requestInterceptor)
-//                .setEndpoint(SERVER_URL);
-
 
         RestAdapter.Builder builder = new RestAdapter.Builder()
                 .setRequestInterceptor(requestInterceptor)
@@ -77,12 +70,7 @@ public final class EasyCommuteApi {
         mService = builder.build().create(EasyCommuteService.class);
     }
 
-    public static EasyCommuteService getGoogleApiService() {
-        RestAdapter.Builder builder = new RestAdapter.Builder()
-                .setEndpoint(PLACES_URL);
 
-        return builder.build().create(EasyCommuteService.class);
-    }
 
     /**
      * A request interceptor used to modify all requests sent through this   service. Currently,
@@ -104,20 +92,6 @@ public final class EasyCommuteApi {
     };
 
 
-    /*Buy A Pass*/
-
-    /**
-     * Singleton "constructor"
-     *
-     * @return Returns the singleton sInstance
-     */
-    public static EasyCommuteService getService(String BASEURL) {
-        if (sInstance == null) {
-            sInstance = new EasyCommuteApi(BASEURL);
-        }
-
-        return sInstance.mService;
-    }
 
     /**
      * Private constructor
@@ -164,14 +138,7 @@ public final class EasyCommuteApi {
         }
     }
 
-    private static boolean hasOkHttpOnClasspath() {
-        try {
-            Class.forName("com.squareup.okhttp.OkHttpClient");
-            return true;
-        } catch (ClassNotFoundException ignored) {
-        }
-        return false;
-    }
+
 
     private Client getClient(){
         final Client client;

@@ -1,12 +1,14 @@
 package easycommute.EaCeWithMetro.api;
 
-import android.database.Observable;
 
 import easycommute.EaCeWithMetro.api.data.response.ApiResponse;
+import easycommute.EaCeWithMetro.models.City;
 import easycommute.EaCeWithMetro.models.Commuter;
 import retrofit.http.Body;
+import retrofit.http.GET;
 import retrofit.http.POST;
 import retrofit.http.Path;
+import rx.Observable;
 
 /**
  * Created by Ram Prasad on 10/8/2015.
@@ -17,6 +19,9 @@ public interface EasyCommuteService {
 
     @POST("/commuter/registerCommuter")
     Observable<ApiResponse> registerCommuter(@Body Commuter commuter);
+
+    @POST("/commuter/user/profile/update")
+    Observable<ApiResponse> updateProfile(@Body Commuter commuter);
 
     @POST("/commuter/verifyCommuter")
     Observable<ApiResponse> verifyCommuter(@Body Commuter commuter);
@@ -33,6 +38,9 @@ public interface EasyCommuteService {
 
     @POST("/commuter/regenrateOTP")
     Observable<ApiResponse> regenerateOTP(@Body Commuter commuter);
+
+    @GET("/city/list")
+    Observable<City> getCityList();
 
     //--------- Booking --------
 
