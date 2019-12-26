@@ -26,7 +26,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:textSize">18sp</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/primary_text</item>
         <item name="android:layout_marginBottom">15dp</item>
         <item name="android:singleLine">true</item>
     </style>
@@ -37,7 +37,7 @@
         <item name="android:gravity">center</item>
         <item name="android:background">@color/colorPrimaryDark</item>
         <item name="android:layout_gravity">center_horizontal</item>
-        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColor">@color/icons</item>
         <item name="android:textSize">14sp</item>
         <item name="android:padding">10dp</item>
     </style>
