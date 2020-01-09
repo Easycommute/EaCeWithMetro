@@ -150,20 +150,12 @@ public class ProfileFragment extends BaseFragment {
     private void updateProfile() {
         Commuter commuter = EasySingleton.getInstance()
                 .getCommuter();
-
         emailEdt.setText(commuter.email);
         phoneEdt.setText(commuter.phone);
-
         nameEdt.setText(commuter.name);
-
-//        if(commuter.cityId!=0){
-//            spinnerCityList.set(city[commuter.cityId]);
-//        }
-
         ((RadioButton) getView().findViewById(commuter.gender.equals("M") ? R.id.male
                 : R.id.female)).setChecked(true);
         cityId=commuter.cityId;
-
     }
 
     private void updateCommuter(final Commuter commuter) {
@@ -177,7 +169,6 @@ public class ProfileFragment extends BaseFragment {
                     @Override
                     public void call(ApiResponse apiResponse) {
                         new PreferenceManager(getContext()).updateCommuter(commuter);
-                        Log.d("PRFRGMT_val",""+commuter.cityId);
                         updateProfileInfo();
 
                         showToast(apiResponse.message);
@@ -199,7 +190,6 @@ public class ProfileFragment extends BaseFragment {
                         String cityNameList[]=new String[cityList.cityDataList.size()+1];
                         cityNameList[0]="Select City";
                         cityIdList.add(0);
-
                         String dummy="";
 
                         for(int i=0;i<cityList.cityDataList.size();i++){

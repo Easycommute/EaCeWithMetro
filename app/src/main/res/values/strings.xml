@@ -11,8 +11,13 @@
 
 
     <string name="wallet">My Wallet</string>
-    <string name="passbook">My Pass Book</string>
+    <string name="history">My History</string>
     <string name="ride">My Ride</string>
+
+    <string name="about_us">About Us</string>
+    <string name="rate_us">Rate Us</string>
+    <string name="share">Share</string>
+    <string name="logout">Logout</string>
 
     <string name="netwrok_error">Network Error</string>
     <string name="error_internet_conn">Looks like you are not connected to network. Please check your internet connection.</string>

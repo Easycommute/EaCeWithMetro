@@ -44,10 +44,9 @@ public class PreferenceManager {
     }
 
 
-    public void   updateCommuter(Commuter commuter) {
+    public void updateCommuter(Commuter commuter) {
         editor.putString(KEY_PHONE, commuter.phone);
         editor.putString(KEY_EMAIL, commuter.email);
-
         editor.putInt(KEY_ID, commuter.commuterId);
         editor.putString(KEY_NAME, commuter.name);
         editor.putString(KEY_GENDER, commuter.gender);
@@ -96,7 +95,8 @@ public class PreferenceManager {
         commuter.email = pref.getString(KEY_EMAIL, "");
         commuter.gender = pref.getString(KEY_GENDER, "");
         commuter.companyName = pref.getString(KEY_COMPANY, "");
-        commuter.cityId=pref.getInt(KEY_CITY_ID,0);
+      //  commuter.cityId=pref.getInt(KEY_CITY_ID,0);
+        commuter.cityId=1;
         return commuter;
     }
 

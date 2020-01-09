@@ -2,6 +2,8 @@ package easycommute.EaCeWithMetro.api;
 
 
 import easycommute.EaCeWithMetro.api.data.response.ApiResponse;
+import easycommute.EaCeWithMetro.api.data.response.PreBookingApiResponse;
+import easycommute.EaCeWithMetro.models.BookingReq;
 import easycommute.EaCeWithMetro.models.City;
 import easycommute.EaCeWithMetro.models.Commuter;
 import retrofit.http.Body;
@@ -20,6 +22,9 @@ public interface EasyCommuteService {
     @POST("/commuter/registerCommuter")
     Observable<ApiResponse> registerCommuter(@Body Commuter commuter);
 
+    @POST("/booking/pre_booking_details")
+    Observable<PreBookingApiResponse> getPreBookingDetails(@Body BookingReq bookingReq);
+
     @POST("/commuter/user/profile/update")
     Observable<ApiResponse> updateProfile(@Body Commuter commuter);
 
@@ -31,10 +36,6 @@ public interface EasyCommuteService {
 
     @POST("/commuter/unregisterCommuter/{mobile}")
     void unregisterCommuter(@Path("commuter_id") int commuterId);
-
-    @POST("/commuter/updateGCMRegistrationId")
-    Observable<ApiResponse> updateGCMRegistrationId(@Body Commuter commuter);
-    // void updateGCMRegistrationId(@Body Commuter commuter);
 
     @POST("/commuter/regenrateOTP")
     Observable<ApiResponse> regenerateOTP(@Body Commuter commuter);

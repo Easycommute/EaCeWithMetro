@@ -45,7 +45,7 @@ public class AppConstants {
     public static final String APP_VERSION = "2.2";
 
     public static final boolean isTesting = false;
-    public static final boolean isStaging = false;
+    public static final boolean isStaging = true;
 
     public static final String FRAGMENT_NUM = "fragment";
     public static final String SEND_LOCATION = "send.location.commuter.details" ;
