@@ -99,7 +99,8 @@ public class QuickRegistrationActivity extends BaseActivity implements View.OnCl
     }
 
     @Override
-    protected void initLayout() {
+    protected void initLayout()   // widget initialization
+    {
         super.initLayout();
 
         viewPager = (ViewPager) findViewById(R.id.viewPagerVertical);
@@ -227,22 +228,6 @@ public class QuickRegistrationActivity extends BaseActivity implements View.OnCl
 
     }
 
-    private void validateRegenerateOTPResponse(ApiResponse apiResponse) {
-        ApiResponse.ResponseStatus status = apiResponse.responseStatus;
-
-        switch (status) {
-            case USER_VERIFIED:
-                EasySingleton.getInstance().setCommuter(apiResponse.commuter);
-                new PreferenceManager(this).setLoggedIn(true);
-
-                launchHomeActivity();
-                break;
-            case USER_EXIST_OTP_GENERATED:
-                break;
-            default:
-                Toast.makeText(this, status.toString(), Toast.LENGTH_SHORT).show();
-        }
-    }
 
     @Override
     protected void onStop() {
@@ -252,7 +237,8 @@ public class QuickRegistrationActivity extends BaseActivity implements View.OnCl
     }
 
     @Override
-    public void onClick(View view) {
+    public void onClick(View view)
+    {
         switch (view.getId()) {
             case R.id.btn_request_sms:
                 try {
@@ -277,7 +263,8 @@ public class QuickRegistrationActivity extends BaseActivity implements View.OnCl
     /**
      * Validating user details form
      */
-    private void validateForm() {
+    private void validateForm()   // validate form fields
+    {
         String mobile = inputMobile.getText().toString().trim();
         String email  = inputEmail.getText().toString().trim();
         String name   = inputName.getText().toString().trim();
@@ -306,17 +293,20 @@ public class QuickRegistrationActivity extends BaseActivity implements View.OnCl
 
     }
 
-    public String getDeviceID() {
+    public String getDeviceID() // get unique deviceID
+    {
         String deviceId =  Settings.Secure.getString(getContentResolver(),
                 Settings.Secure.ANDROID_ID);
         return deviceId;
     }
 
-    private String getGender() {
+    private String getGender()
+    {
         return radioGroup.getCheckedRadioButtonId() == R.id.male ? "M" : "F";
     }
 
-    private void verifyEmail(String email) {
+    private void verifyEmail(String email)   // email validation
+    {
         if (email.isEmpty()) {
             throw new RuntimeException(getString(R.string.warning_email_empty));
         } else if (!Pattern.compile(AppConstants.EMAIL_PATTERN).matcher(email).matches()) {
@@ -339,7 +329,7 @@ public class QuickRegistrationActivity extends BaseActivity implements View.OnCl
      *
      * @param commuter details of commuter
      */
-    private void requestForSMS(Commuter commuter)
+    private void requestForSMS(Commuter commuter)   // API calling for OTP
     {
         commuter.regId=prefManager.getRegistrationId();
         showProgressBar();
@@ -356,7 +346,8 @@ public class QuickRegistrationActivity extends BaseActivity implements View.OnCl
                 }, errorHandler);
     }
 
-    private void validateResponse(ApiResponse apiResponse) {
+    private void validateResponse(ApiResponse apiResponse)   // handle OTP response
+    {
         ApiResponse.ResponseStatus status = apiResponse.responseStatus;
 
         switch (status) {
@@ -386,7 +377,8 @@ public class QuickRegistrationActivity extends BaseActivity implements View.OnCl
     /**
      * sending the OTP to server and activating the user
      */
-    private void verifyOtp() {
+    private void verifyOtp() //OTP validation
+    {
         String otp = inputOtp.getText().toString().trim();
 
         if (!otp.isEmpty()) {
@@ -511,18 +503,15 @@ public class QuickRegistrationActivity extends BaseActivity implements View.OnCl
         thread.start();
     }
 
-    private void launchHomeActivity() {
-//        Intent intent = new Intent(QuickRegistrationActivity.this, HomeActivity.class);
-//        intent.putExtra(AppConstants.FRAGMENT_NUM, 3);
-//        startActivity(intent);
-
+    private void launchHomeActivity()
+    {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);
-
         finish();
     }
 
-    private void showReferralCodeDialog(final Commuter commuter) {
+    private void showReferralCodeDialog(final Commuter commuter)  // display dialog box with referral field
+    {
         View layout = LayoutInflater.from(this).inflate(R.layout.referral_popup, null);
         final Dialog referralDialog = new Dialog(this, R.style.Theme_Dialog);
         referralDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
