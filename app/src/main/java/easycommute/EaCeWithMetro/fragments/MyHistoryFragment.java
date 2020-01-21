@@ -78,9 +78,9 @@ public class MyHistoryFragment extends BaseFragment {
         fetchBookingDetails();
     }
 
-    private void fetchBookingDetails() {
+    private void fetchBookingDetails() // fetch the list
+    {
         showProgressBar();
-       // Toast.makeText(getActivity(), bookedBookingId+"--"+action,Toast.LENGTH_SHORT).show();
         EasyCommuteApi.getService().getPreBookingDetails(booking.getBookingReq(promoCode, bookedBookingId, action))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -112,6 +112,7 @@ public class MyHistoryFragment extends BaseFragment {
 
     @Override
     protected int getTitle() {
+        // POTENTIAL_MULTILINGUAL_STRINGS
         return R.string.history;
     }
 

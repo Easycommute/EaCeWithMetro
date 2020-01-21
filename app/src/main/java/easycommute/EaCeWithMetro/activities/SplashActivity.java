@@ -33,7 +33,7 @@ public class SplashActivity extends BaseActivity {
         animateTextView.setCharacterDelay(50);
         animateTextView.animateText("Sit. . . Relax. . . Commute. . .");
 
-        FirebaseInstanceId.getInstance().getInstanceId()
+        FirebaseInstanceId.getInstance().getInstanceId()   // get firebase token
                 .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>()
                 {
                     @Override
@@ -91,7 +91,8 @@ public class SplashActivity extends BaseActivity {
         }
     }
 
-    private void registerWithServer() {
+    private void registerWithServer()
+    {
         PackageManager packageManager = this.getPackageManager();
         try {
             packageManager.getPackageInfo("com.google.android.gsf", 0);

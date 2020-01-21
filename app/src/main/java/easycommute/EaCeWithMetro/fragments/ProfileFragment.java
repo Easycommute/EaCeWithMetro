@@ -1,7 +1,6 @@
 package easycommute.EaCeWithMetro.fragments;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,7 +54,7 @@ public class ProfileFragment extends BaseFragment {
     // Shall we be putting all the hardcoded values for this class in a seperate file? if yes,
     // decide what that file would be & do the rest of implementation.
 
-    int cityId = 0;
+    int cityId = 0;  // 0 is for hyderabad metro
 
     List<Integer> cityIdList = new ArrayList<>();
     PreferenceManager preferenceManager;
@@ -84,29 +83,7 @@ public class ProfileFragment extends BaseFragment {
 
         preferenceManager = new PreferenceManager(getActivity());
 
-        /*rlLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (preferenceManager.getBookingId()==null)
-                {
-                    Fragment fragment = new StopSelectionFragment();
-                    launchFragment(fragment, fragment.getTag());
-                }
-                else
-                {
-                    Fragment fragment = new MainTabListFragment();
-                    Bundle bundle = new Bundle();
-                    bundle.putInt(AppConstants.BOOKING_ID, Integer.parseInt(preferenceManager.getBookingId()));
-                    bundle.putInt(AppConstants.FRAGMENT_NUM, AppConstants.BOARDING_DETAILS);
-                    fragment.setArguments(bundle);
-                    launchFragment(fragment, fragment.getTag());
-                }
-            }
-        });
 
-        txtBookingId.setBackgroundColor(getResources().getColor(R.color.ticket_top));
-        txtBookingId.setText(preferenceManager.getBookingMessage());
-*/
         getView().findViewById(R.id.btn_edit_profile).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -132,7 +109,7 @@ public class ProfileFragment extends BaseFragment {
                     }
                     else {
                         // POTENTIAL_MULTILINGUAL_STRINGS
-                        showToast("Please select city");
+                        showToast(getResources().getString(R.string.please_select_city));
                     }
                 } catch (Exception e) {
                     showToast(e.getMessage());
@@ -153,7 +130,6 @@ public class ProfileFragment extends BaseFragment {
                 else {
                     spinnerText=adapterView.getItemAtPosition(i).toString();
                     cityId=cityIdList.get(i);
-                    Log.d("PRFRGMT_cityId_I",""+cityId);
                 }
             }
 
@@ -163,14 +139,15 @@ public class ProfileFragment extends BaseFragment {
             }
         });
 
-        updateProfile();
+        fetchProfileDetails();
     }
 
     //TODO_NAVEEN: Please add comment here to explain what this private
-    // function does. And does it have some prerequsites? Like this updateProfile
+    // function does. And does it have some prerequsites? Like this fetchProfileDetails
     // function assumes that the RadioButton of this view is initialized.
 
-    private void updateProfile() {
+    private void fetchProfileDetails()  // load the profile form details
+    {
         Commuter commuter = EasySingleton.getInstance()
                 .getCommuter();
         emailEdt.setText(commuter.email);
@@ -178,8 +155,7 @@ public class ProfileFragment extends BaseFragment {
         nameEdt.setText(commuter.name);
 
         //TODO_NAVEEN: There is a better way to write this, figure it out & discuss.
-        ((RadioButton) getView().findViewById(commuter.gender.equals("M") ? R.id.male
-                : R.id.female)).setChecked(true);
+        ((RadioButton) getView().findViewById(commuter.gender.equals("M") ? R.id.male : R.id.female)).setChecked(true);
 
         // So, here we are setting the cityId variable as per the information from
         // oommuters -- Then is this not fetchProfile? Why is it called update?
@@ -191,7 +167,8 @@ public class ProfileFragment extends BaseFragment {
     //TODO_NAVEEN: Please add comment here to explain what this private
     // function does. And does it have some prerequsites?
 
-    private void updateCommuter(final Commuter commuter) {
+    private void updateCommuter(final Commuter commuter)// update the profile form details
+    {
         commuter.commuterId = getCommuterId();
         showProgressBar();
 
@@ -213,7 +190,8 @@ public class ProfileFragment extends BaseFragment {
     //TODO_NAVEEN: Please add comment here to explain what the output of this function would be?
     // Give sample output for clarity purpose in the comment.
 
-    private void getCityList(){
+    private void getCityList()  // fetch the city list e.g, Delhi, hyderabad, Bangalore etc
+    {
         showProgressBar();
 
         EasyCommuteApi.getService().getCityList()
@@ -227,30 +205,31 @@ public class ProfileFragment extends BaseFragment {
                         String cityNameList[]=new String[cityList.cityDataList.size()+1];
 
                         //Hardcoded values in code! - Move to the constant files please.
-                        cityNameList[0]="Select City";
+                        cityNameList[0] = getResources().getString(R.string.select_city);
                         cityIdList.add(0);
-                        String dummy=""; // dont call a variable dummy please :)
+                        String selectedCity=""; // dont call a variable dummy please :)
 
                         //NOTICE: How aditi has added spaces to code to look cleaner and readable.
                         //TODO_NAVEEN: Follow my example to fix readability of code in all our products.
-                        for(int i = 0; i < cityList.cityDataList.size(); i++)   {
-
+                        for(int i = 0; i < cityList.cityDataList.size(); i++)
+                        {
                             cityNameList[i+1]=cityList.cityDataList.get(i).name;
                             cityIdList.add(cityList.cityDataList.get(i).id);
-                            if(cityList.cityDataList.get(i).id==cityId){
-                                dummy=cityList.cityDataList.get(i).name;
+                            if(cityList.cityDataList.get(i).id==cityId)
+                            {
+                                selectedCity=cityList.cityDataList.get(i).name;
                             }
                         }
-
-                        for(int i=1;i<cityNameList.length;i++){
-                            if(dummy.endsWith(cityNameList[i])){
+                        for(int i=1;i<cityNameList.length;i++)
+                        {
+                            if(selectedCity.endsWith(cityNameList[i]))
+                            {
                                 cityId=i;
                                 break;
                             }
                         }
 
                         spinnerCityList.setAdapter(new UtilsCityList().setAdapter(getActivity(),cityNameList));
-
                         spinnerCityList.setSelection(cityId);
                         hideProgressBar();
                     }
@@ -281,11 +260,6 @@ public class ProfileFragment extends BaseFragment {
     }
 
 
-    private void verifyCompany(String input) {
-        if (input.isEmpty()) {
-            throw new RuntimeException(getString(R.string.warning_company_empty));
-        }
-    }
 
     @Override
     protected int getTitle() {

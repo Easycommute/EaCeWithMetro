@@ -46,6 +46,7 @@ public class RideFragment extends BaseFragment {
 
     @Override
     protected int getTitle() {
+        // POTENTIAL_MULTILINGUAL_STRINGS
         return R.string.ride;
     }
 
@@ -57,7 +58,7 @@ public class RideFragment extends BaseFragment {
         loadSpinner();
     }
 
-    private void loadSpinner()
+    private void loadSpinner()   // bind data to spinner
     {
         startingList = Arrays.asList(getResources().getStringArray(R.array.source));
         endList = Arrays.asList(getResources().getStringArray(R.array.destination));
@@ -107,7 +108,7 @@ public class RideFragment extends BaseFragment {
         });
     }
 
-    private void init()
+    private void init()    // widget initialization
     {
         spinnerStarting=(Spinner)getView().findViewById(R.id.spinnerStarting);
         spinnerEnd=(Spinner)getView().findViewById(R.id.spinnerEnd);

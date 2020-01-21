@@ -37,7 +37,7 @@ public class PaymentsActivity extends Activity implements PaymentResultWithDataL
     }
 
 
-    private void openPaymentScreen()
+    private void openPaymentScreen()    // open razorpay screen
     {
         amount = getIntent().getStringExtra(PaymentConstants.AMOUNT);
         rechargeId = getIntent().getStringExtra(PaymentConstants.RECHARGE_ID);
@@ -63,13 +63,14 @@ public class PaymentsActivity extends Activity implements PaymentResultWithDataL
 
 
     @Override
-    public void onBackPressed() {
+    public void onBackPressed() {   // handle back press
         setResult(RESULT_CANCELED);
         finish();
     }
 
     @Override
-    public void onPaymentSuccess(String s, PaymentData paymentData) {
+    public void onPaymentSuccess(String s, PaymentData paymentData)  // handle payment success
+    {
 
         Intent intent = new Intent();
         intent.putExtra("orderID",  paymentData.getOrderId());
@@ -80,7 +81,8 @@ public class PaymentsActivity extends Activity implements PaymentResultWithDataL
     }
 
     @Override
-    public void onPaymentError(int i, String s, PaymentData paymentData) {
+    public void onPaymentError(int i, String s, PaymentData paymentData) // handle payment failure
+    {
          Toast.makeText(PaymentsActivity.this, s, Toast.LENGTH_SHORT).show();
         Intent intent = new Intent();
          setResult(RESULT_OK, intent);

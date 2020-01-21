@@ -51,12 +51,12 @@ public class MainActivity extends BaseActivity
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
 
-        fragment = new WalletFragment();
-        navigateToFragment(fragment, fragment.getTag(), false, true);
+        fragment = new WalletFragment();   // initializing fragment with wallettFragment
+        navigateToFragment(fragment, fragment.getTag(), false, true);   // call fragment
 
         try {
             PackageInfo pInfo = this.getPackageManager().getPackageInfo(getPackageName(), 0);
-            String version = pInfo.versionName;
+            String version = pInfo.versionName;// get package info
             txtVersion.setText("v"+version);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
@@ -74,7 +74,8 @@ public class MainActivity extends BaseActivity
     }
 
     @Override
-    public void onBackPressed() {
+    public void onBackPressed()   // handle back press
+    {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
@@ -87,7 +88,7 @@ public class MainActivity extends BaseActivity
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item)
+    public boolean onNavigationItemSelected(MenuItem item)// call fragment on click of Side menu items
     {
 
         switch (item.getItemId()) {

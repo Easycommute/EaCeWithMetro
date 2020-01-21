@@ -72,5 +72,7 @@
     <string name="generic_error">Oops! Something went wrong. Please try after sometime.</string>
     <string name="title_profile">My Profile</string>
     <string name="lbl_edit_profile">Update Profile</string>
+    <string name="please_select_city">Please select city</string>
+    <string name="select_city">Select City</string>
 
 </resources>
