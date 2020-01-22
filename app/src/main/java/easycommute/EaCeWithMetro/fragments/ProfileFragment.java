@@ -34,11 +34,11 @@ import rx.schedulers.Schedulers;
 // the android users, be it in exceptions or screen title or anything else,
 // They need to be standardized and kept in one file. This would prepare
 // our app to be multilingual.
-// Aditi will mark those as POTENTIAL_MULTILINGUAL_STRINGS in her comments
-
 // At some places we are prepared for us being multilingual in this fragment
 // Example: verifyCompany function
 // throw new RuntimeException(getString(R.string.warning_company_empty));
+
+// Aditi will mark those as POTENTIAL_MULTILINGUAL_STRINGS in her comments
 
 public class ProfileFragment extends BaseFragment {
     private RadioGroup radioGroup;
@@ -51,12 +51,16 @@ public class ProfileFragment extends BaseFragment {
     String spinnerText;
 
     // TODO_NAVEEN :- Add the comment to mention why 0 is being used and not some other value
-    // Shall we be putting all the hardcoded values for this class in a seperate file? if yes,
-    // decide what that file would be & do the rest of implementation.
+    // Shall we be putting all the hardcoded values for this class in a seperate file?
+    // if yes, decide what that file would be & do the rest of implementation.
 
-    int cityId = 0;  // 0 is for hyderabad metro
+    // Please note that the comments should be placed on the top of line.
+    // TODO_NAVEEN - Add comment here describing what does value of 0 signify.
+    int cityId = 0;
 
     List<Integer> cityIdList = new ArrayList<>();
+
+    //TODO_NAVEEN :- I think this should this be initialzed to null.
     PreferenceManager preferenceManager;
 
     public ProfileFragment() {
@@ -83,7 +87,6 @@ public class ProfileFragment extends BaseFragment {
 
         preferenceManager = new PreferenceManager(getActivity());
 
-
         getView().findViewById(R.id.btn_edit_profile).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,7 +99,10 @@ public class ProfileFragment extends BaseFragment {
                 Commuter commuter = EasySingleton.getInstance()
                         .getCommuter();
                 try {
+
+
                     verifyEmail(email);
+                    //TODO_NAVEEN: change name of verifyInput Function
                     verifyInput(name);
 
                     commuter.gender = gender;
@@ -117,9 +123,11 @@ public class ProfileFragment extends BaseFragment {
             }
         });
 
+        //Initialize spinnerCityList
         getCityList();
 
-
+        //This setOnItemSelectedListener should be made part of getCityList Function above.
+        // getCityList function should be renamed to setupSpinnerCityList();
         spinnerCityList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -167,7 +175,12 @@ public class ProfileFragment extends BaseFragment {
     //TODO_NAVEEN: Please add comment here to explain what this private
     // function does. And does it have some prerequsites?
 
-    private void updateCommuter(final Commuter commuter)// update the profile form details
+
+    //TODO_NAVEEN :- Does this work if we say change the name? or a field other than
+    //city?
+    // update the profile form details - Rework the comment on what does the below function do.
+
+    private void updateCommuter(final Commuter commuter)
     {
         commuter.commuterId = getCommuterId();
         showProgressBar();
@@ -190,7 +203,8 @@ public class ProfileFragment extends BaseFragment {
     //TODO_NAVEEN: Please add comment here to explain what the output of this function would be?
     // Give sample output for clarity purpose in the comment.
 
-    private void getCityList()  // fetch the city list e.g, Delhi, hyderabad, Bangalore etc
+    // Fetch the city list where easycommute is deployed
+    private void getCityList()
     {
         showProgressBar();
 
@@ -202,12 +216,16 @@ public class ProfileFragment extends BaseFragment {
                     public void call(City cityList) {
                         Commuter commuter=preferenceManager.getCommuter();
                         cityId=commuter.cityId;
-                        String cityNameList[]=new String[cityList.cityDataList.size()+1];
+
+                        //TODO_NAVEEN:- instead of using a raw string [], use ArrayList<String>
+                        // from java.util package
+                        String cityNameList[] = new String[cityList.cityDataList.size()+1];
 
                         //Hardcoded values in code! - Move to the constant files please.
                         cityNameList[0] = getResources().getString(R.string.select_city);
                         cityIdList.add(0);
-                        String selectedCity=""; // dont call a variable dummy please :)
+
+                        String selectedCity="";
 
                         //NOTICE: How aditi has added spaces to code to look cleaner and readable.
                         //TODO_NAVEEN: Follow my example to fix readability of code in all our products.
@@ -229,6 +247,9 @@ public class ProfileFragment extends BaseFragment {
                             }
                         }
 
+                        //TODO_NAVEEN: It looks like we need to pass an adapter to spinnerobject ...
+                        // cityNameList is being passed as of now. But we are maintaining cityListIds
+                        // as well as cityNameList. Why?
                         spinnerCityList.setAdapter(new UtilsCityList().setAdapter(getActivity(),cityNameList));
                         spinnerCityList.setSelection(cityId);
                         hideProgressBar();
@@ -247,10 +268,28 @@ public class ProfileFragment extends BaseFragment {
     }
 
     private void verifyInput(String input) {
+
+        //TODO_NAVEEN: Do we really need an if ... else if ... else if block here?
+        // If we say throw then the execution will stop and function will return.
+        // So, why not do something like this?
+        //    if (input.isEmpty()) {
+        // throw new RuntimeException(getString(R.string.warning_name_empty));
+        // }
+        //
+        // if (Pattern.compile("[^A-Za-z0-9 ]").matcher(input).find()) {
+        // throw new RuntimeException(getString(R.string.warning_name_spl_char));
+        // }
+        // ...
+
         if (input.isEmpty()) {
             //POTENTIAL_MULTILINGUAL_STRINGS
             throw new RuntimeException(getString(R.string.warning_name_empty));
-        } else if (Pattern.compile("[^A-Za-z0-9 ]").matcher(input).find()) {
+        }
+
+        // TODO_NAVEEN :- Changing the pattern used here cam help us not have the third
+        // else condition - Lets discuss how to get the correct regular expression
+        // We need to add it as AppConstants.EMAIL_PATTERN used above.
+        else if (Pattern.compile("[^A-Za-z0-9 ]").matcher(input).find()) {
             //POTENTIAL_MULTILINGUAL_STRINGS
             throw new RuntimeException(getString(R.string.warning_name_spl_char));
         } else if (Character.isDigit(input.charAt(0))) {
@@ -258,8 +297,6 @@ public class ProfileFragment extends BaseFragment {
             throw new RuntimeException(getString(R.string.warning_name_digit));
         }
     }
-
-
 
     @Override
     protected int getTitle() {
