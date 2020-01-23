@@ -31,9 +31,10 @@ public class SplashActivity extends BaseActivity {
         prefManger = new PreferenceManager(SplashActivity.this);
         AnimateTextView animateTextView = (AnimateTextView) findViewById(R.id.animate_text_view);
         animateTextView.setCharacterDelay(50);
-        animateTextView.animateText("Sit. . . Relax. . . Commute. . .");
+        animateTextView.animateText(getResources().getString(R.string.sit_relax_commute));
 
-        FirebaseInstanceId.getInstance().getInstanceId()   // get firebase token
+        // get firebase token
+        FirebaseInstanceId.getInstance().getInstanceId()
                 .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>()
                 {
                     @Override
@@ -44,7 +45,6 @@ public class SplashActivity extends BaseActivity {
                         }
                         regId = task.getResult().getToken();
                         prefManger.setRegistrationId(regId);
-                        Log.v("FCM_Token:",regId);
                     }
                 });
     }
@@ -114,11 +114,14 @@ public class SplashActivity extends BaseActivity {
     }
 
 
-    private void resolveNextActivity() {
+    private void resolveNextActivity()
+    {
 
         if (prefManger.isLoggedIn()) {
+            finish();
             startActivity(new Intent(this, MainActivity.class));
         } else {
+            finish();
             startActivity(new Intent(this, QuickRegistrationActivity.class));
         }
     }

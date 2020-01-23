@@ -21,14 +21,12 @@ import java.util.List;
 import easycommute.EaCeWithMetro.R;
 import easycommute.EaCeWithMetro.utils.BaseFragment;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class RideFragment extends BaseFragment {
 
     Spinner spinnerStarting,spinnerEnd;
     List<String> startingList, endList;
-    TextView txtTitle;
+    TextView txtChangeSelection,txtTitle,title_label,title_label1,title_label2;
+    View view1,view2,view3;
     Button btnValidate,btnAddMoney;
 
     public RideFragment() {
@@ -58,7 +56,8 @@ public class RideFragment extends BaseFragment {
         loadSpinner();
     }
 
-    private void loadSpinner()   // bind data to spinner
+    // bind data to spinner
+    private void loadSpinner()
     {
         startingList = Arrays.asList(getResources().getStringArray(R.array.source));
         endList = Arrays.asList(getResources().getStringArray(R.array.destination));
@@ -71,13 +70,17 @@ public class RideFragment extends BaseFragment {
         endAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerEnd.setAdapter(endAdapter);
 
+        spinnerEnd.setEnabled(false);
+        spinnerEnd.setClickable(false);
+
 
         spinnerStarting.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position > 0)
                 {
-
+                    spinnerEnd.setEnabled(true);
+                    spinnerEnd.setClickable(true);
                 }
             }
 
@@ -95,9 +98,10 @@ public class RideFragment extends BaseFragment {
                     spinnerEnd.setVisibility(View.GONE);
                     spinnerStarting.setVisibility(View.GONE);
                     txtTitle.setVisibility(View.VISIBLE);
-                    btnValidate.setText(getResources().getString(R.string.get_easy_token));
+                    txtChangeSelection.setVisibility(View.VISIBLE);
                     btnValidate.setBackgroundResource(R.drawable.rounded_button);
                     btnValidate.setVisibility(View.VISIBLE);
+                    btnValidate.setEnabled(true);
                 }
             }
 
@@ -108,19 +112,46 @@ public class RideFragment extends BaseFragment {
         });
     }
 
-    private void init()    // widget initialization
+    // handle back press
+    @Override
+    public boolean onBackPressed() {
+        return super.onBackPressed();
+    }
+
+    // widget initialization
+    private void init()
     {
         spinnerStarting=(Spinner)getView().findViewById(R.id.spinnerStarting);
         spinnerEnd=(Spinner)getView().findViewById(R.id.spinnerEnd);
         txtTitle=(TextView) getView().findViewById(R.id.txtTitle);
+        txtChangeSelection=(TextView) getView().findViewById(R.id.txtChangeSelection);
+
+        title_label=(TextView) getView().findViewById(R.id.title_label);
+        title_label1=(TextView) getView().findViewById(R.id.title_label1);
+        title_label2=(TextView) getView().findViewById(R.id.title_label2);
+
+        view1=(View) getView().findViewById(R.id.view1);
+        view2=(View) getView().findViewById(R.id.view2);
+        view3=(View) getView().findViewById(R.id.view3);
+
+        title_label.setVisibility(View.GONE);
+        title_label1.setVisibility(View.GONE);
+        title_label2.setVisibility(View.GONE);
+        view1.setVisibility(View.GONE);
+        view2.setVisibility(View.GONE);
+        view3.setVisibility(View.GONE);
+
         btnValidate=(Button) getView().findViewById(R.id.btnValidate);
         btnAddMoney=(Button) getView().findViewById(R.id.btnAddMoney);
-        btnValidate.setVisibility(View.GONE);
 
+        btnValidate.setEnabled(false);
         btnValidate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                btnAddMoney.setVisibility(View.VISIBLE);
+               // btnAddMoney.setVisibility(View.VISIBLE);
+                view1.setVisibility(View.VISIBLE);
+                title_label.setVisibility(View.VISIBLE);
+                btnValidate.setText(getResources().getString(R.string.get_another_token));
             }
         });
 
@@ -129,6 +160,22 @@ public class RideFragment extends BaseFragment {
             public void onClick(View v) {
                 mActivity.navigateToFragment(new WalletFragment(), new WalletFragment().getTag(), false, true);
 
+            }
+        });
+
+        txtChangeSelection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                spinnerStarting.setVisibility(View.VISIBLE);
+                spinnerEnd.setVisibility(View.VISIBLE);
+                spinnerEnd.setSelection(0);
+                spinnerStarting.setSelection(0);
+                btnValidate.setVisibility(View.VISIBLE);
+                txtTitle.setVisibility(View.GONE);
+                txtChangeSelection.setVisibility(View.GONE);
+                spinnerEnd.setEnabled(false);
+                spinnerEnd.setClickable(false);
             }
         });
 

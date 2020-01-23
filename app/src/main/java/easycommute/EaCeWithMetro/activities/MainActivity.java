@@ -24,8 +24,10 @@ import easycommute.EaCeWithMetro.fragments.ProfileFragment;
 import easycommute.EaCeWithMetro.fragments.RideFragment;
 import easycommute.EaCeWithMetro.fragments.WalletFragment;
 import easycommute.EaCeWithMetro.models.BookingInfo;
+import easycommute.EaCeWithMetro.models.Commuter;
 import easycommute.EaCeWithMetro.utils.AppConstants;
 import easycommute.EaCeWithMetro.utils.BaseActivity;
+import easycommute.EaCeWithMetro.utils.EasySingleton;
 
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -34,29 +36,26 @@ public class MainActivity extends BaseActivity
     private BookingInfo booking;
     Fragment fragment=null;
     ImageView imgCall;
-    TextView txtVersion;
+    Toolbar toolbar;
+    NavigationView navigationView;
+    TextView txtVersion,nav_header_name,nav_header_email;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        drawer = findViewById(R.id.drawer_layout);
-        imgCall = findViewById(R.id.imgCall);
-        txtVersion = findViewById(R.id.txtVersion);
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-        navigationView.setNavigationItemSelectedListener(this);
 
-        fragment = new WalletFragment();   // initializing fragment with wallettFragment
-        navigateToFragment(fragment, fragment.getTag(), false, true);   // call fragment
+        init();
+        showNavHeaderData();
+        // initializing fragment with walletFragment
+        fragment = new WalletFragment();
+        // call fragment
+        navigateToFragment(fragment, fragment.getTag(), false, true);
 
         try {
             PackageInfo pInfo = this.getPackageManager().getPackageInfo(getPackageName(), 0);
-            String version = pInfo.versionName;// get package info
+            // get package info
+            String version = pInfo.versionName;
             txtVersion.setText("v"+version);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
@@ -73,8 +72,39 @@ public class MainActivity extends BaseActivity
 
     }
 
+    private void showNavHeaderData()
+    {
+        Commuter commuter = EasySingleton.getInstance().getCommuter();
+        nav_header_email.setText(commuter.email);
+        nav_header_name.setText(commuter.name);
+    }
+
+    // widget initialization
+    private void init()
+    {
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        drawer = findViewById(R.id.drawer_layout);
+        imgCall = findViewById(R.id.imgCall);
+        txtVersion = findViewById(R.id.txtVersion);
+        navigationView = findViewById(R.id.nav_view);
+        View headerView = navigationView.getHeaderView(0);
+        nav_header_email = (TextView) headerView.findViewById(R.id.nav_header_email);
+        nav_header_name = (TextView) headerView.findViewById(R.id.nav_header_name);
+
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+        navigationView.setNavigationItemSelectedListener(this);
+    }
+
+
+
+    // handle back press
     @Override
-    public void onBackPressed()   // handle back press
+    public void onBackPressed()
     {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -85,10 +115,10 @@ public class MainActivity extends BaseActivity
     }
 
 
-
+    // call fragment on click of Side menu items
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item)// call fragment on click of Side menu items
+    public boolean onNavigationItemSelected(MenuItem item)
     {
 
         switch (item.getItemId()) {

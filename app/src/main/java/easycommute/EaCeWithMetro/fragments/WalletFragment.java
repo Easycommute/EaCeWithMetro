@@ -36,7 +36,9 @@ public class WalletFragment extends BaseFragment {
         super.onActivityCreated(savedInstanceState);
         init();
     }
-    private void init()  // widget initialization
+
+    // widget initialization
+    private void init()
     {
         btn1=(Button)getView().findViewById(R.id.btn1);
         btn2=(Button)getView().findViewById(R.id.btn2);
@@ -182,8 +184,8 @@ public class WalletFragment extends BaseFragment {
         return R.string.wallet;
     }
 
-
-    private void openPaymentScreen()  // open razorpay screen
+    // open razorpay screen
+    private void openPaymentScreen()
     {
         Intent intent = new Intent(getActivity(), PaymentsActivity.class);
         intent.putExtra(PaymentConstants.AMOUNT, String.valueOf(selectedPrice));

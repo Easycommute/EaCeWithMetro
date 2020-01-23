@@ -15,6 +15,8 @@ import com.razorpay.PaymentResultWithDataListener;
 
 import org.json.JSONObject;
 
+import easycommute.EaCeWithMetro.models.Commuter;
+import easycommute.EaCeWithMetro.utils.EasySingleton;
 import easycommute.EaCeWithMetro.utils.PaymentConstants;
 
 
@@ -36,9 +38,11 @@ public class PaymentsActivity extends Activity implements PaymentResultWithDataL
         openPaymentScreen();
     }
 
-
-    private void openPaymentScreen()    // open razorpay screen
+    // open razorpay screen
+    private void openPaymentScreen()
     {
+        Commuter commuter = EasySingleton.getInstance().getCommuter();
+
         amount = getIntent().getStringExtra(PaymentConstants.AMOUNT);
         rechargeId = getIntent().getStringExtra(PaymentConstants.RECHARGE_ID);
         //orderID = getIntent().getStringExtra(PaymentConstants.ORDER_ID);
@@ -51,8 +55,8 @@ public class PaymentsActivity extends Activity implements PaymentResultWithDataL
             options.put("currency", "INR");
            // options.put("order_id", orderID);
             options.put("amount", amount);
-            options.put("prefill.email", "johndoe@noname.com");
-            options.put("prefill.contact", "9876543210");
+            options.put("prefill.email", commuter.email);
+            options.put("prefill.contact", commuter.phone);
             checkout.open(PaymentsActivity.this, options);
         } catch(Exception e) {
             Log.e(TAG, "Error in starting Razorpay Checkout", e);
@@ -61,15 +65,16 @@ public class PaymentsActivity extends Activity implements PaymentResultWithDataL
 
 
 
-
+    // handle back press
     @Override
-    public void onBackPressed() {   // handle back press
+    public void onBackPressed() {
         setResult(RESULT_CANCELED);
         finish();
     }
 
+    // handle payment success
     @Override
-    public void onPaymentSuccess(String s, PaymentData paymentData)  // handle payment success
+    public void onPaymentSuccess(String s, PaymentData paymentData)
     {
 
         Intent intent = new Intent();
@@ -80,8 +85,9 @@ public class PaymentsActivity extends Activity implements PaymentResultWithDataL
         finish();
     }
 
+    // handle payment failure
     @Override
-    public void onPaymentError(int i, String s, PaymentData paymentData) // handle payment failure
+    public void onPaymentError(int i, String s, PaymentData paymentData)
     {
          Toast.makeText(PaymentsActivity.this, s, Toast.LENGTH_SHORT).show();
         Intent intent = new Intent();

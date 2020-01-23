@@ -98,8 +98,9 @@ public class QuickRegistrationActivity extends BaseActivity implements View.OnCl
         registerReceiver(receiver, filter);
     }
 
+    // widget initialization
     @Override
-    protected void initLayout()   // widget initialization
+    protected void initLayout()
     {
         super.initLayout();
 
@@ -293,7 +294,8 @@ public class QuickRegistrationActivity extends BaseActivity implements View.OnCl
 
     }
 
-    public String getDeviceID() // get unique deviceID
+    // get unique deviceID
+    public String getDeviceID()
     {
         String deviceId =  Settings.Secure.getString(getContentResolver(),
                 Settings.Secure.ANDROID_ID);
@@ -305,7 +307,8 @@ public class QuickRegistrationActivity extends BaseActivity implements View.OnCl
         return radioGroup.getCheckedRadioButtonId() == R.id.male ? "M" : "F";
     }
 
-    private void verifyEmail(String email)   // email validation
+    // email validation
+    private void verifyEmail(String email)
     {
         if (email.isEmpty()) {
             throw new RuntimeException(getString(R.string.warning_email_empty));
@@ -329,7 +332,7 @@ public class QuickRegistrationActivity extends BaseActivity implements View.OnCl
      *
      * @param commuter details of commuter
      */
-    private void requestForSMS(Commuter commuter)   // API calling for OTP
+    private void requestForSMS(Commuter commuter)
     {
         commuter.regId=prefManager.getRegistrationId();
         showProgressBar();
@@ -346,7 +349,8 @@ public class QuickRegistrationActivity extends BaseActivity implements View.OnCl
                 }, errorHandler);
     }
 
-    private void validateResponse(ApiResponse apiResponse)   // handle OTP response
+    // handle OTP response
+    private void validateResponse(ApiResponse apiResponse)
     {
         ApiResponse.ResponseStatus status = apiResponse.responseStatus;
 
@@ -377,7 +381,7 @@ public class QuickRegistrationActivity extends BaseActivity implements View.OnCl
     /**
      * sending the OTP to server and activating the user
      */
-    private void verifyOtp() //OTP validation
+    private void verifyOtp()
     {
         String otp = inputOtp.getText().toString().trim();
 
@@ -510,7 +514,8 @@ public class QuickRegistrationActivity extends BaseActivity implements View.OnCl
         finish();
     }
 
-    private void showReferralCodeDialog(final Commuter commuter)  // display dialog box with referral field
+    // display dialog box with referral field
+    private void showReferralCodeDialog(final Commuter commuter)
     {
         View layout = LayoutInflater.from(this).inflate(R.layout.referral_popup, null);
         final Dialog referralDialog = new Dialog(this, R.style.Theme_Dialog);

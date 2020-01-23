@@ -78,7 +78,8 @@ public class MyHistoryFragment extends BaseFragment {
         fetchBookingDetails();
     }
 
-    private void fetchBookingDetails() // fetch the list
+    // fetch the list
+    private void fetchBookingDetails()
     {
         showProgressBar();
         EasyCommuteApi.getService().getPreBookingDetails(booking.getBookingReq(promoCode, bookedBookingId, action))
@@ -98,10 +99,6 @@ public class MyHistoryFragment extends BaseFragment {
     private void updateContent(PreBookingApiResponse apiResponse) {
         recyclerView.setAdapter(new StopListAdapter(apiResponse.bookingDtls.stops));
     }
-
-
-
-
 
     @Override
     public boolean onBackPressed() {
