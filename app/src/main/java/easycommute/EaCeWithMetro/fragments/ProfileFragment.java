@@ -102,8 +102,8 @@ public class ProfileFragment extends BaseFragment {
 
 
                     verifyEmail(email);
-                    //TODO_NAVEEN: change name of verifyInput Function
-                    verifyInput(name);
+                    //TODO_NAVEEN: change name of verifyName Function
+                    verifyName(name);
 
                     commuter.gender = gender;
                     commuter.email = email;
@@ -154,7 +154,8 @@ public class ProfileFragment extends BaseFragment {
     // function does. And does it have some prerequsites? Like this fetchProfileDetails
     // function assumes that the RadioButton of this view is initialized.
 
-    private void fetchProfileDetails()  // load the profile form details
+    // load the profile form details
+    private void fetchProfileDetails()
     {
         Commuter commuter = EasySingleton.getInstance()
                 .getCommuter();
@@ -179,7 +180,6 @@ public class ProfileFragment extends BaseFragment {
     //TODO_NAVEEN :- Does this work if we say change the name? or a field other than
     //city?
     // update the profile form details - Rework the comment on what does the below function do.
-
     private void updateCommuter(final Commuter commuter)
     {
         commuter.commuterId = getCommuterId();
@@ -267,7 +267,7 @@ public class ProfileFragment extends BaseFragment {
         }
     }
 
-    private void verifyInput(String input) {
+    private void verifyName(String input) {
 
         //TODO_NAVEEN: Do we really need an if ... else if ... else if block here?
         // If we say throw then the execution will stop and function will return.

@@ -47,6 +47,22 @@ public class WalletFragment extends BaseFragment {
         super.onActivityCreated(savedInstanceState);
         init();
     }
+<<<<<<< HEAD
+=======
+
+    // widget initialization
+    private void init()
+    {
+        btn1=(Button)getView().findViewById(R.id.btn1);
+        btn2=(Button)getView().findViewById(R.id.btn2);
+        btn3=(Button)getView().findViewById(R.id.btn3);
+        btn4=(Button)getView().findViewById(R.id.btn4);
+        btn5=(Button)getView().findViewById(R.id.btn5);
+        btn6=(Button)getView().findViewById(R.id.btn6);
+        btn7=(Button)getView().findViewById(R.id.btn7);
+        btn8=(Button)getView().findViewById(R.id.btn8);
+        btnAddMoney=(Button)getView().findViewById(R.id.btnAddMoney);
+>>>>>>> e196542d5faef8e077ca05994161729fade3e35d
 
     private void unselectButtonAtIndex(int buttonIndex) {
         btnGroup.get(buttonIndex).setBackground(getResources().getDrawable(R.drawable.rounded_button_unselected));
@@ -95,8 +111,8 @@ public class WalletFragment extends BaseFragment {
         return R.string.wallet;
     }
 
-
-    private void openPaymentScreen()  // open razorpay screen
+    // open razorpay screen
+    private void openPaymentScreen()
     {
         Intent intent = new Intent(getActivity(), PaymentsActivity.class);
         intent.putExtra(PaymentConstants.AMOUNT, String.valueOf(selectedPrice));
