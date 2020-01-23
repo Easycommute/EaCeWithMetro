@@ -11,6 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import easycommute.EaCeWithMetro.R;
 import easycommute.EaCeWithMetro.activities.PaymentsActivity;
 import easycommute.EaCeWithMetro.utils.BaseFragment;
@@ -21,8 +24,16 @@ import easycommute.EaCeWithMetro.utils.PaymentConstants;
  */
 public class WalletFragment extends BaseFragment {
 
-    Button btn1,btn2,btn3,btn4,btn5,btn6,btn7,btn8,btnAddMoney;
-    int selectedPrice;
+    Button btnAddMoney;
+    List<Button> btnGroup = new ArrayList<Button>();
+
+    //Price has to be multiplied  by 100 for razorpay to work
+    //TODO:- Hardcoded values needs to be brought in via API call
+    long priceList[] = { 15*100, 20*100, 30*100, 50*100, 60*100, 75*100,  100*100, 150*100 };
+
+    long selectedPrice;
+    int selectedBtnIndex = -1;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -36,135 +47,38 @@ public class WalletFragment extends BaseFragment {
         super.onActivityCreated(savedInstanceState);
         init();
     }
-    private void init()  // widget initialization
+
+    private void unselectButtonAtIndex(int buttonIndex) {
+        btnGroup.get(buttonIndex).setBackground(getResources().getDrawable(R.drawable.rounded_button_unselected));
+    }
+
+    // widget initialization
+    private void init()
     {
-        btn1=(Button)getView().findViewById(R.id.btn1);
-        btn2=(Button)getView().findViewById(R.id.btn2);
-        btn3=(Button)getView().findViewById(R.id.btn3);
-        btn4=(Button)getView().findViewById(R.id.btn4);
-        btn5=(Button)getView().findViewById(R.id.btn5);
-        btn6=(Button)getView().findViewById(R.id.btn6);
-        btn7=(Button)getView().findViewById(R.id.btn7);
-        btn8=(Button)getView().findViewById(R.id.btn8);
+        for (int i = 1; i <= 8; i++) {
+            final int j = i - 1;
+            String buttonId = "btn" + i;
+            int resID = getResources().getIdentifier(buttonId, "id", getContext().getPackageName());
+
+            final Button localButton = (Button)getView().findViewById(resID);
+            localButton.setBackground(getResources().getDrawable(R.drawable.rounded_button_unselected));
+            btnGroup.add(localButton);
+
+            final long price =  priceList[i-1];
+            localButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(selectedBtnIndex != -1) {
+                        unselectButtonAtIndex(selectedBtnIndex);
+                    }
+
+                    selectedPrice = price;
+                    localButton.setBackground(getResources().getDrawable(R.drawable.rounded_button_selected));
+                    selectedBtnIndex = j;
+                }});
+        }
+
         btnAddMoney=(Button)getView().findViewById(R.id.btnAddMoney);
-
-        btn1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                  selectedPrice =15*100;
-                btn1.setBackground(getResources().getDrawable(R.drawable.rounded_button_selected));
-                btn2.setBackground(getResources().getDrawable(R.drawable.rounded_button_unselected));
-                btn3.setBackground(getResources().getDrawable(R.drawable.rounded_button_unselected));
-                btn4.setBackground(getResources().getDrawable(R.drawable.rounded_button_unselected));
-                btn5.setBackground(getResources().getDrawable(R.drawable.rounded_button_unselected));
-                btn6.setBackground(getResources().getDrawable(R.drawable.rounded_button_unselected));
-                btn7.setBackground(getResources().getDrawable(R.drawable.rounded_button_unselected));
-                btn8.setBackground(getResources().getDrawable(R.drawable.rounded_button_unselected));
-
-            }
-        });
-        btn2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selectedPrice =20*100;
-                btn1.setBackground(getResources().getDrawable(R.drawable.rounded_button_unselected));
-                btn2.setBackground(getResources().getDrawable(R.drawable.rounded_button_selected));
-                btn3.setBackground(getResources().getDrawable(R.drawable.rounded_button_unselected));
-                btn4.setBackground(getResources().getDrawable(R.drawable.rounded_button_unselected));
-                btn5.setBackground(getResources().getDrawable(R.drawable.rounded_button_unselected));
-                btn6.setBackground(getResources().getDrawable(R.drawable.rounded_button_unselected));
-                btn7.setBackground(getResources().getDrawable(R.drawable.rounded_button_unselected));
-                btn8.setBackground(getResources().getDrawable(R.drawable.rounded_button_unselected));
-
-            }
-        });
-        btn3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selectedPrice =30*100;
-                btn1.setBackground(getResources().getDrawable(R.drawable.rounded_button_unselected));
-                btn2.setBackground(getResources().getDrawable(R.drawable.rounded_button_unselected));
-                btn3.setBackground(getResources().getDrawable(R.drawable.rounded_button_selected));
-                btn4.setBackground(getResources().getDrawable(R.drawable.rounded_button_unselected));
-                btn5.setBackground(getResources().getDrawable(R.drawable.rounded_button_unselected));
-                btn6.setBackground(getResources().getDrawable(R.drawable.rounded_button_unselected));
-                btn7.setBackground(getResources().getDrawable(R.drawable.rounded_button_unselected));
-                btn8.setBackground(getResources().getDrawable(R.drawable.rounded_button_unselected));
-            }
-        });
-         btn4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selectedPrice =50*100;
-                btn1.setBackground(getResources().getDrawable(R.drawable.rounded_button_unselected));
-                btn2.setBackground(getResources().getDrawable(R.drawable.rounded_button_unselected));
-                btn3.setBackground(getResources().getDrawable(R.drawable.rounded_button_unselected));
-                btn4.setBackground(getResources().getDrawable(R.drawable.rounded_button_selected));
-                btn5.setBackground(getResources().getDrawable(R.drawable.rounded_button_unselected));
-                btn6.setBackground(getResources().getDrawable(R.drawable.rounded_button_unselected));
-                btn7.setBackground(getResources().getDrawable(R.drawable.rounded_button_unselected));
-                btn8.setBackground(getResources().getDrawable(R.drawable.rounded_button_unselected));
-            }
-        });
-        btn5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selectedPrice =60*100;
-                btn1.setBackground(getResources().getDrawable(R.drawable.rounded_button_unselected));
-                btn2.setBackground(getResources().getDrawable(R.drawable.rounded_button_unselected));
-                btn3.setBackground(getResources().getDrawable(R.drawable.rounded_button_unselected));
-                btn4.setBackground(getResources().getDrawable(R.drawable.rounded_button_unselected));
-                btn5.setBackground(getResources().getDrawable(R.drawable.rounded_button_selected));
-                btn6.setBackground(getResources().getDrawable(R.drawable.rounded_button_unselected));
-                btn7.setBackground(getResources().getDrawable(R.drawable.rounded_button_unselected));
-                btn8.setBackground(getResources().getDrawable(R.drawable.rounded_button_unselected));
-            }
-        });
-
-        btn6.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selectedPrice =75*100;
-                btn1.setBackground(getResources().getDrawable(R.drawable.rounded_button_unselected));
-                btn2.setBackground(getResources().getDrawable(R.drawable.rounded_button_unselected));
-                btn3.setBackground(getResources().getDrawable(R.drawable.rounded_button_unselected));
-                btn4.setBackground(getResources().getDrawable(R.drawable.rounded_button_unselected));
-                btn5.setBackground(getResources().getDrawable(R.drawable.rounded_button_unselected));
-                btn6.setBackground(getResources().getDrawable(R.drawable.rounded_button_selected));
-                btn7.setBackground(getResources().getDrawable(R.drawable.rounded_button_unselected));
-                btn8.setBackground(getResources().getDrawable(R.drawable.rounded_button_unselected));
-            }
-        });
-
-        btn7.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selectedPrice =100*100;
-                btn1.setBackground(getResources().getDrawable(R.drawable.rounded_button_unselected));
-                btn2.setBackground(getResources().getDrawable(R.drawable.rounded_button_unselected));
-                btn3.setBackground(getResources().getDrawable(R.drawable.rounded_button_unselected));
-                btn4.setBackground(getResources().getDrawable(R.drawable.rounded_button_unselected));
-                btn5.setBackground(getResources().getDrawable(R.drawable.rounded_button_unselected));
-                btn6.setBackground(getResources().getDrawable(R.drawable.rounded_button_unselected));
-                btn7.setBackground(getResources().getDrawable(R.drawable.rounded_button_selected));
-                btn8.setBackground(getResources().getDrawable(R.drawable.rounded_button_unselected));
-            }
-        });
-        btn8.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selectedPrice =150*100;
-                btn1.setBackground(getResources().getDrawable(R.drawable.rounded_button_unselected));
-                btn2.setBackground(getResources().getDrawable(R.drawable.rounded_button_unselected));
-                btn3.setBackground(getResources().getDrawable(R.drawable.rounded_button_unselected));
-                btn4.setBackground(getResources().getDrawable(R.drawable.rounded_button_unselected));
-                btn5.setBackground(getResources().getDrawable(R.drawable.rounded_button_unselected));
-                btn6.setBackground(getResources().getDrawable(R.drawable.rounded_button_unselected));
-                btn7.setBackground(getResources().getDrawable(R.drawable.rounded_button_unselected));
-                btn8.setBackground(getResources().getDrawable(R.drawable.rounded_button_selected));
-            }
-        });
-
         btnAddMoney.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -172,7 +86,6 @@ public class WalletFragment extends BaseFragment {
 
             }
         });
-
     }
 
 
