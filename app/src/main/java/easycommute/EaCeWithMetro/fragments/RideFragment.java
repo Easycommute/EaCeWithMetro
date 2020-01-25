@@ -73,7 +73,6 @@ public class RideFragment extends BaseFragment {
         spinnerEnd.setEnabled(false);
         spinnerEnd.setClickable(false);
 
-
         spinnerStarting.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -115,6 +114,8 @@ public class RideFragment extends BaseFragment {
     // handle back press
     @Override
     public boolean onBackPressed() {
+       // WalletFragment stopSelectionFragment = new WalletFragment();
+       // launchFragment(stopSelectionFragment, stopSelectionFragment.getTag());
         return super.onBackPressed();
     }
 
@@ -176,6 +177,8 @@ public class RideFragment extends BaseFragment {
                 txtChangeSelection.setVisibility(View.GONE);
                 spinnerEnd.setEnabled(false);
                 spinnerEnd.setClickable(false);
+                btnValidate.setBackgroundResource(R.drawable.rounded_button_disable);
+                btnValidate.setText(getResources().getString(R.string.get_easy_token));
             }
         });
 

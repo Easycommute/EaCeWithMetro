@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import easycommute.EaCeWithMetro.R;
@@ -49,19 +50,14 @@ public class ProfileFragment extends BaseFragment {
     TextView txtBookingId;
     RelativeLayout rlLayout;
     String spinnerText;
-
-    // TODO_NAVEEN :- Add the comment to mention why 0 is being used and not some other value
-    // Shall we be putting all the hardcoded values for this class in a seperate file?
-    // if yes, decide what that file would be & do the rest of implementation.
-
-    // Please note that the comments should be placed on the top of line.
-    // TODO_NAVEEN - Add comment here describing what does value of 0 signify.
-    int cityId = 0;
+    RadioButton male, female;
+    int cityId = 0;    // 0 is for default value
 
     List<Integer> cityIdList = new ArrayList<>();
+    List<String> cityIdListDescription = new ArrayList<>();
 
-    //TODO_NAVEEN :- I think this should this be initialzed to null.
-    PreferenceManager preferenceManager;
+    PreferenceManager preferenceManager = null;
+
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -74,7 +70,8 @@ public class ProfileFragment extends BaseFragment {
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
+    public void onActivityCreated(Bundle savedInstanceState)
+    {
         super.onActivityCreated(savedInstanceState);
 
         phoneEdt = (EditText) getView().findViewById(R.id.inputMobile);
@@ -85,7 +82,10 @@ public class ProfileFragment extends BaseFragment {
         txtBookingId = (TextView)getView().findViewById(R.id.txtBookingId);
         rlLayout = (RelativeLayout)getView().findViewById(R.id.rlLayout);
 
+        male=(RadioButton)getView().findViewById(R.id.male);
+        female=(RadioButton)getView().findViewById(R.id.female);
         preferenceManager = new PreferenceManager(getActivity());
+        showProgressBar();
 
         getView().findViewById(R.id.btn_edit_profile).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,7 +102,6 @@ public class ProfileFragment extends BaseFragment {
 
 
                     verifyEmail(email);
-                    //TODO_NAVEEN: change name of verifyName Function
                     verifyName(name);
 
                     commuter.gender = gender;
@@ -123,11 +122,8 @@ public class ProfileFragment extends BaseFragment {
             }
         });
 
-        //Initialize spinnerCityList
-        getCityList();
+        loadCitySpinner();
 
-        //This setOnItemSelectedListener should be made part of getCityList Function above.
-        // getCityList function should be renamed to setupSpinnerCityList();
         spinnerCityList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -150,10 +146,6 @@ public class ProfileFragment extends BaseFragment {
         fetchProfileDetails();
     }
 
-    //TODO_NAVEEN: Please add comment here to explain what this private
-    // function does. And does it have some prerequsites? Like this fetchProfileDetails
-    // function assumes that the RadioButton of this view is initialized.
-
     // load the profile form details
     private void fetchProfileDetails()
     {
@@ -163,23 +155,18 @@ public class ProfileFragment extends BaseFragment {
         phoneEdt.setText(commuter.phone);
         nameEdt.setText(commuter.name);
 
-        //TODO_NAVEEN: There is a better way to write this, figure it out & discuss.
-        ((RadioButton) getView().findViewById(commuter.gender.equals("M") ? R.id.male : R.id.female)).setChecked(true);
-
-        // So, here we are setting the cityId variable as per the information from
-        // oommuters -- Then is this not fetchProfile? Why is it called update?
-        // As I see it, we are setting local variable of our class by looking up the
-        // backend. Naveen: What do you think?
+        if (commuter.gender.equals("M"))
+        {
+            male.setChecked(true);
+        }
+        else
+        {
+            female.setChecked(true);
+        }
         cityId = commuter.cityId;
     }
 
-    //TODO_NAVEEN: Please add comment here to explain what this private
-    // function does. And does it have some prerequsites?
-
-
-    //TODO_NAVEEN :- Does this work if we say change the name? or a field other than
-    //city?
-    // update the profile form details - Rework the comment on what does the below function do.
+    // update the profile form details
     private void updateCommuter(final Commuter commuter)
     {
         commuter.commuterId = getCommuterId();
@@ -200,14 +187,10 @@ public class ProfileFragment extends BaseFragment {
                 }, errorHandler);
     }
 
-    //TODO_NAVEEN: Please add comment here to explain what the output of this function would be?
-    // Give sample output for clarity purpose in the comment.
 
     // Fetch the city list where easycommute is deployed
-    private void getCityList()
+    private void loadCitySpinner()
     {
-        showProgressBar();
-
         EasyCommuteApi.getService().getCityList()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -216,42 +199,33 @@ public class ProfileFragment extends BaseFragment {
                     public void call(City cityList) {
                         Commuter commuter=preferenceManager.getCommuter();
                         cityId=commuter.cityId;
-
-                        //TODO_NAVEEN:- instead of using a raw string [], use ArrayList<String>
-                        // from java.util package
-                        String cityNameList[] = new String[cityList.cityDataList.size()+1];
-
-                        //Hardcoded values in code! - Move to the constant files please.
-                        cityNameList[0] = getResources().getString(R.string.select_city);
+                        //  String cityNameList[] = new String[cityList.cityDataList.size()+1];
+                        // cityNameList[0] = getResources().getString(R.string.select_city);
                         cityIdList.add(0);
+                        cityIdListDescription.add(getResources().getString(R.string.select_city));
 
-                        String selectedCity="";
-
-                        //NOTICE: How aditi has added spaces to code to look cleaner and readable.
-                        //TODO_NAVEEN: Follow my example to fix readability of code in all our products.
+                        //  String selectedCity="";
                         for(int i = 0; i < cityList.cityDataList.size(); i++)
                         {
-                            cityNameList[i+1]=cityList.cityDataList.get(i).name;
+                           // cityNameList[i+1]=cityList.cityDataList.get(i).name;
                             cityIdList.add(cityList.cityDataList.get(i).id);
-                            if(cityList.cityDataList.get(i).id==cityId)
+                            cityIdListDescription.add(cityList.cityDataList.get(i).name);
+                           /* if(cityList.cityDataList.get(i).id==cityId)
                             {
                                 selectedCity=cityList.cityDataList.get(i).name;
-                            }
+                            }*/
                         }
-                        for(int i=1;i<cityNameList.length;i++)
+                       /* for(int i=1;i<cityNameList.length;i++)
                         {
                             if(selectedCity.endsWith(cityNameList[i]))
                             {
                                 cityId=i;
                                 break;
                             }
-                        }
+                        }*/
 
-                        //TODO_NAVEEN: It looks like we need to pass an adapter to spinnerobject ...
-                        // cityNameList is being passed as of now. But we are maintaining cityListIds
-                        // as well as cityNameList. Why?
-                        spinnerCityList.setAdapter(new UtilsCityList().setAdapter(getActivity(),cityNameList));
-                        spinnerCityList.setSelection(cityId);
+                        spinnerCityList.setAdapter(new UtilsCityList().setAdapter(getActivity(),cityIdListDescription));
+                       // spinnerCityList.setSelection(cityId);
                         hideProgressBar();
                     }
                 }, errorHandler);
@@ -289,13 +263,15 @@ public class ProfileFragment extends BaseFragment {
         // TODO_NAVEEN :- Changing the pattern used here cam help us not have the third
         // else condition - Lets discuss how to get the correct regular expression
         // We need to add it as AppConstants.EMAIL_PATTERN used above.
-        else if (Pattern.compile("[^A-Za-z0-9 ]").matcher(input).find()) {
+        CharSequence inputStr = input;
+        Pattern pattern = Pattern.compile(new String (AppConstants.NAME_PATTERN));
+        Matcher matcher = pattern.matcher(inputStr);
+        if(!matcher.matches())
+        {
             //POTENTIAL_MULTILINGUAL_STRINGS
             throw new RuntimeException(getString(R.string.warning_name_spl_char));
-        } else if (Character.isDigit(input.charAt(0))) {
-            //POTENTIAL_MULTILINGUAL_STRINGS
-            throw new RuntimeException(getString(R.string.warning_name_digit));
         }
+
     }
 
     @Override
