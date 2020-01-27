@@ -31,16 +31,6 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
-// All the external communication string (which would be visible to
-// the android users, be it in exceptions or screen title or anything else,
-// They need to be standardized and kept in one file. This would prepare
-// our app to be multilingual.
-// At some places we are prepared for us being multilingual in this fragment
-// Example: verifyCompany function
-// throw new RuntimeException(getString(R.string.warning_company_empty));
-
-// Aditi will mark those as POTENTIAL_MULTILINGUAL_STRINGS in her comments
-
 public class ProfileFragment extends BaseFragment {
     private RadioGroup radioGroup;
     private EditText phoneEdt;
@@ -99,11 +89,8 @@ public class ProfileFragment extends BaseFragment {
                 Commuter commuter = EasySingleton.getInstance()
                         .getCommuter();
                 try {
-
-
                     verifyEmail(email);
                     verifyName(name);
-
                     commuter.gender = gender;
                     commuter.email = email;
                     commuter.name = name;
@@ -199,33 +186,14 @@ public class ProfileFragment extends BaseFragment {
                     public void call(City cityList) {
                         Commuter commuter=preferenceManager.getCommuter();
                         cityId=commuter.cityId;
-                        //  String cityNameList[] = new String[cityList.cityDataList.size()+1];
-                        // cityNameList[0] = getResources().getString(R.string.select_city);
                         cityIdList.add(0);
                         cityIdListDescription.add(getResources().getString(R.string.select_city));
-
-                        //  String selectedCity="";
                         for(int i = 0; i < cityList.cityDataList.size(); i++)
                         {
-                           // cityNameList[i+1]=cityList.cityDataList.get(i).name;
                             cityIdList.add(cityList.cityDataList.get(i).id);
                             cityIdListDescription.add(cityList.cityDataList.get(i).name);
-                           /* if(cityList.cityDataList.get(i).id==cityId)
-                            {
-                                selectedCity=cityList.cityDataList.get(i).name;
-                            }*/
                         }
-                       /* for(int i=1;i<cityNameList.length;i++)
-                        {
-                            if(selectedCity.endsWith(cityNameList[i]))
-                            {
-                                cityId=i;
-                                break;
-                            }
-                        }*/
-
                         spinnerCityList.setAdapter(new UtilsCityList().setAdapter(getActivity(),cityIdListDescription));
-                       // spinnerCityList.setSelection(cityId);
                         hideProgressBar();
                     }
                 }, errorHandler);
@@ -242,27 +210,10 @@ public class ProfileFragment extends BaseFragment {
     }
 
     private void verifyName(String input) {
-
-        //TODO_NAVEEN: Do we really need an if ... else if ... else if block here?
-        // If we say throw then the execution will stop and function will return.
-        // So, why not do something like this?
-        //    if (input.isEmpty()) {
-        // throw new RuntimeException(getString(R.string.warning_name_empty));
-        // }
-        //
-        // if (Pattern.compile("[^A-Za-z0-9 ]").matcher(input).find()) {
-        // throw new RuntimeException(getString(R.string.warning_name_spl_char));
-        // }
-        // ...
-
         if (input.isEmpty()) {
             //POTENTIAL_MULTILINGUAL_STRINGS
             throw new RuntimeException(getString(R.string.warning_name_empty));
         }
-
-        // TODO_NAVEEN :- Changing the pattern used here cam help us not have the third
-        // else condition - Lets discuss how to get the correct regular expression
-        // We need to add it as AppConstants.EMAIL_PATTERN used above.
         CharSequence inputStr = input;
         Pattern pattern = Pattern.compile(new String (AppConstants.NAME_PATTERN));
         Matcher matcher = pattern.matcher(inputStr);

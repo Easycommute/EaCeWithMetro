@@ -162,8 +162,6 @@ public class QuickRegistrationActivity extends BaseActivity implements View.OnCl
                             public void call(ApiResponse apiResponse) {
                                 hideProgressBar();
                                 inputOtp.setHint(R.string.wait_sms);
-                                // @Ram no need to call below method, if we call it is goint to homeactivity before verifying user
-                                //validateRegenerateOTPResponse(apiResponse);
                             }
                         }, new Action1<Throwable>() {
 
@@ -179,7 +177,6 @@ public class QuickRegistrationActivity extends BaseActivity implements View.OnCl
         layoutEditMobile.setVisibility(View.GONE);
         prefManager = new PreferenceManager(this);
 
-        //TODO: This should be cleaned off once Splash Activity is introduced
         // Checking for user session
         // if user is already logged in, take him to main activity
         if (prefManager.isLoggedIn()) {
@@ -336,7 +333,6 @@ public class QuickRegistrationActivity extends BaseActivity implements View.OnCl
     {
         commuter.regId=prefManager.getRegistrationId();
         showProgressBar();
-        //Log.d("DEBUG", commuter.referralCode + "");
         EasyCommuteApi.getService().registerCommuter(commuter)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
@@ -353,7 +349,6 @@ public class QuickRegistrationActivity extends BaseActivity implements View.OnCl
     private void validateResponse(ApiResponse apiResponse)
     {
         ApiResponse.ResponseStatus status = apiResponse.responseStatus;
-
         switch (status) {
             case USER_CREATED_OTP_GENERATED:
             case USER_EXIST_OTP_GENERATED:
@@ -369,10 +364,6 @@ public class QuickRegistrationActivity extends BaseActivity implements View.OnCl
             case USER_VERIFICATION_FAILED:
                 showToast(status.toString());
 
-/*
-            case USER_ALREADY_EXIST:
-                launchHomeActivity();
-                break;*/
             default:
               //  showToast(status.toString());
         }
