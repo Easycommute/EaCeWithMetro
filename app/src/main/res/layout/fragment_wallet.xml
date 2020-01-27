@@ -31,100 +31,31 @@
         android:textStyle="bold" />
 
     <LinearLayout
-        android:weightSum="4"
         android:id="@+id/priceLayout1"
         android:orientation="horizontal"
         android:layout_marginTop="50dp"
         android:layout_below="@+id/credits"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
-        <Button
-            android:id="@+id/btn1"
-            android:layout_width="98dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/rounded_button_unselected"
-            android:text="15"
-            android:textAllCaps="false"
-            android:textColor="@color/primary_text" />
-        <Button
-            android:id="@+id/btn2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/rounded_button_unselected"
-            android:text="20"
-            android:textAllCaps="false"
-            android:textColor="@color/primary_text" />
-        <Button
-            android:id="@+id/btn3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/rounded_button_unselected"
-            android:text="30"
-            android:textAllCaps="false"
-            android:textColor="@color/primary_text" />
-
-        <Button
-            android:layout_weight="1"
-            android:id="@+id/btn4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/rounded_button_unselected"
-            android:text="50"
-            android:textAllCaps="false"
-            android:textColor="@color/primary_text" />
     </LinearLayout>
 
     <LinearLayout
-        android:weightSum="4"
         android:id="@+id/priceLayout2"
         android:orientation="horizontal"
-        android:layout_below="@+id/priceLayout1"
         android:layout_marginTop="50dp"
+        android:layout_below="@+id/priceLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <Button
-            android:layout_weight="1"
-            android:id="@+id/btn5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/rounded_button_unselected"
-            android:text="60"
-            android:textAllCaps="false"
-            android:textColor="@color/primary_text" />
-        <Button
-            android:id="@+id/btn6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/rounded_button_unselected"
-            android:text="75"
-            android:textAllCaps="false"
-            android:textColor="@color/primary_text" />
-        <Button
-            android:id="@+id/btn7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/rounded_button_unselected"
-            android:text="100"
-            android:textAllCaps="false"
-            android:textColor="@color/primary_text" />
-
-        <Button
-            android:layout_weight="1"
-            android:id="@+id/btn8"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/rounded_button_unselected"
-            android:text="150"
-            android:textAllCaps="false"
-            android:textColor="@color/primary_text" />
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/priceLayout3"
+        android:orientation="horizontal"
+        android:layout_marginTop="50dp"
+        android:layout_below="@+id/priceLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </LinearLayout>
 
     <Button
         android:id="@+id/btnAddMoney"
