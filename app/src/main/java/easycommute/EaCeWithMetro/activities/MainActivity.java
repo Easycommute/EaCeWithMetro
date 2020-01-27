@@ -38,7 +38,7 @@ public class MainActivity extends BaseActivity
     ImageView imgCall;
     Toolbar toolbar;
     NavigationView navigationView;
-    TextView txtVersion,nav_header_name,nav_header_email;
+    TextView txtVersion,nav_header_name,nav_mob_no,nav_header_email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +77,7 @@ public class MainActivity extends BaseActivity
         Commuter commuter = EasySingleton.getInstance().getCommuter();
         nav_header_email.setText(commuter.email);
         nav_header_name.setText(commuter.name);
+        nav_mob_no.setText(commuter.phone);
     }
 
     // widget initialization
@@ -91,6 +92,7 @@ public class MainActivity extends BaseActivity
         View headerView = navigationView.getHeaderView(0);
         nav_header_email = (TextView) headerView.findViewById(R.id.nav_header_email);
         nav_header_name = (TextView) headerView.findViewById(R.id.nav_header_name);
+        nav_mob_no = (TextView) headerView.findViewById(R.id.nav_mob_no);
 
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

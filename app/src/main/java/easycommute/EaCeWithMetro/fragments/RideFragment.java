@@ -179,12 +179,8 @@ public class RideFragment extends BaseFragment {
                 spinnerEnd.setClickable(false);
                 btnValidate.setBackgroundResource(R.drawable.rounded_button_disable);
                 btnValidate.setText(getResources().getString(R.string.get_easy_token));
+                btnValidate.setEnabled(false);
             }
         });
-
-
-
     }
-
-
 }
