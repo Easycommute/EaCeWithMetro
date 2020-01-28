@@ -69,7 +69,7 @@ public class QuickRegistrationActivity extends BaseActivity implements View.OnCl
     private String referralCode = "";
 
     CheckBox checkBox;
-    private static Commuter tempCommuter;
+    public static Commuter tempCommuter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -179,11 +179,10 @@ public class QuickRegistrationActivity extends BaseActivity implements View.OnCl
 
         // Checking for user session
         // if user is already logged in, take him to main activity
-        if (prefManager.isLoggedIn()) {
-
+        if (prefManager.isLoggedIn())
+        {
             Intent intent = new Intent(this, HomeActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
             startActivity(intent);
             finish();
         }
@@ -212,7 +211,8 @@ public class QuickRegistrationActivity extends BaseActivity implements View.OnCl
         }
 
         /*checking whether if user entered the data previously, if data is there pre filling the form*/
-        if(tempCommuter != null) {
+        if(tempCommuter != null)
+        {
             inputEmail.setText(tempCommuter.email);
             inputName.setText(tempCommuter.name);
             inputMobile.setText(tempCommuter.phone);
@@ -281,8 +281,7 @@ public class QuickRegistrationActivity extends BaseActivity implements View.OnCl
         }
 
         prefManager.setMobileNumber(mobile);
-        Commuter commuter = new Commuter(name, email, mobile, getGender(),
-                prefManager.getRegistrationId());
+        Commuter commuter = new Commuter(name, email, mobile, getGender(), prefManager.getRegistrationId());
         //TODO  If referral code not works out we con remove comment for requestForSms(commuter) and comment openReferralDialog()
         commuter.deviceId = getDeviceID();
         this.tempCommuter = commuter;

@@ -1,5 +1,8 @@
 package easycommute.EaCeWithMetro.activities;
 
+import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -18,6 +21,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import androidx.appcompat.widget.Toolbar;
 
+import easycommute.EaCeWithMetro.BuildConfig;
 import easycommute.EaCeWithMetro.R;
 import easycommute.EaCeWithMetro.fragments.MyHistoryFragment;
 import easycommute.EaCeWithMetro.fragments.ProfileFragment;
@@ -28,6 +32,8 @@ import easycommute.EaCeWithMetro.models.Commuter;
 import easycommute.EaCeWithMetro.utils.AppConstants;
 import easycommute.EaCeWithMetro.utils.BaseActivity;
 import easycommute.EaCeWithMetro.utils.EasySingleton;
+import easycommute.EaCeWithMetro.utils.PreferenceManager;
+import easycommute.EaCeWithMetro.utils.Utils;
 
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -39,7 +45,7 @@ public class MainActivity extends BaseActivity
     Toolbar toolbar;
     NavigationView navigationView;
     TextView txtVersion,nav_header_name,nav_mob_no,nav_header_email;
-
+    private PreferenceManager prefManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,6 +89,7 @@ public class MainActivity extends BaseActivity
     // widget initialization
     private void init()
     {
+        prefManager = new PreferenceManager(this);
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         drawer = findViewById(R.id.drawer_layout);
@@ -136,6 +143,30 @@ public class MainActivity extends BaseActivity
                 fragment=new RideFragment();
                 break;
 
+            case R.id.nav_rate_us:
+                rateApp();
+                break;
+
+                case R.id.nav_share:
+                shareApp();
+                break;
+
+            case R.id.nav_logout:
+                new AlertDialog.Builder(this)
+                        .setMessage(getResources().getString(R.string.want_to_logout))
+                        .setPositiveButton(getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id)
+                            {
+                                finish();
+                                prefManager.clearSession();
+                                QuickRegistrationActivity.tempCommuter=null;
+                                startActivity(new Intent(MainActivity.this,QuickRegistrationActivity.class));
+                            }
+                        })
+                        .setNegativeButton(getResources().getString(R.string.no), null)
+                        .show();
+                break;
+
                 case R.id.nav_history:
                     booking=new BookingInfo();
                     booking.commuterId = 173306;
@@ -163,5 +194,38 @@ public class MainActivity extends BaseActivity
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void rateApp()
+    {
+        Uri uri = Uri.parse("market://details?id=" + this.getPackageName());
+        Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
+        // To count with Play market backstack, After pressing back button,
+        // to taken back to our application, we need to add following flags to intent.
+        goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY |
+                Intent.FLAG_ACTIVITY_NEW_DOCUMENT |
+                Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+        try {
+            startActivity(goToMarket);
+        } catch (ActivityNotFoundException e) {
+            startActivity(new Intent(Intent.ACTION_VIEW,
+                    Uri.parse(getResources().getString(R.string.app_store_url) + this.getPackageName())));
+        }
+    }
+
+    private void shareApp()
+    {
+        try {
+            Intent shareIntent = new Intent(Intent.ACTION_SEND);
+            shareIntent.setType("text/plain");
+            shareIntent.putExtra(Intent.EXTRA_SUBJECT, getResources().getString(R.string.EasyCommuteMetro));
+            String shareMessage= "\nLet me recommend you this application\n\n";
+            shareMessage = shareMessage + getResources().getString(R.string.app_store_url) + BuildConfig.APPLICATION_ID +"\n\n";
+            shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
+            startActivity(Intent.createChooser(shareIntent, getResources().getString(R.string.choose_one)));
+        } catch(Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 }

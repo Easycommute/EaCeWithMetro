@@ -32,6 +32,7 @@
     </LinearLayout>
 
 
+
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"
@@ -43,7 +44,7 @@
         app:menu="@menu/activity_main_drawer" >
 
         <RelativeLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:background="@color/white">
@@ -56,9 +57,10 @@
                 android:gravity="center_horizontal"
                 android:textColor="#808080"
                 android:textSize="16sp" />
-
-
         </RelativeLayout>
 
+
     </com.google.android.material.navigation.NavigationView>
+
+
 </androidx.drawerlayout.widget.DrawerLayout>
