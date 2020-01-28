@@ -39,8 +39,7 @@ public class AppConstants {
     public static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
             + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
-    public static final String NAME_PATTERN ="^[a-zA-Z,'-]+$";
-  //  public static final String NAME_PATTERN = "^[a-zA-Z\\s]*$";
+    public static final String NAME_PATTERN ="^[A-Za-z][A-Za-z- \\,\\']*$";
     public static final String EMAIL_ID = "care@easycommute.co";
     public static final String WHATSAPP = "91990859937";
     public static final String PHONE_NO = "+918099927902";
