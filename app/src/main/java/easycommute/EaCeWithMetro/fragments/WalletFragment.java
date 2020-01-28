@@ -10,9 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-
-import java.util.ArrayList;
-import java.util.List;
+import android.widget.LinearLayout;
 
 import easycommute.EaCeWithMetro.R;
 import easycommute.EaCeWithMetro.activities.PaymentsActivity;
@@ -25,14 +23,11 @@ import easycommute.EaCeWithMetro.utils.PaymentConstants;
 public class WalletFragment extends BaseFragment {
 
     Button btnAddMoney;
-    List<Button> btnGroup = new ArrayList<Button>();
 
-    //Price has to be multiplied  by 100 for razorpay to work
     //TODO:- Hardcoded values needs to be brought in via API call
-    long priceList[] = { 15*100, 20*100, 30*100, 50*100, 60*100, 75*100,  100*100, 150*100 };
-
+    long priceList[] = { 15, 20, 30, 50, 60, 75, 100, 150};
     long selectedPrice;
-    int selectedBtnIndex = -1;
+    int numButtonsPerRow = 4;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,36 +43,24 @@ public class WalletFragment extends BaseFragment {
         init();
     }
 
-    private void unselectButtonAtIndex(int buttonIndex) {
-        btnGroup.get(buttonIndex).setBackground(getResources().getDrawable(R.drawable.rounded_button_unselected));
+    private void unselectAllPriceButtons() {
+
+        int numrows = (priceList.length / numButtonsPerRow ) + 1;
+        for (int i = 0; i < numrows; i++) {
+            String lLayout = "priceLayout" + (i + 1);
+            int resID = getResources().getIdentifier(lLayout, "id", getContext().getPackageName());
+            LinearLayout row = (LinearLayout) getView().findViewById(resID);
+            final int childCount = row.getChildCount();
+            for (int j = 0; j < childCount; j++) {
+                Button b1 = row.getChildAt(j).findViewById(R.id.price_btn);
+                b1.setBackground(getResources().getDrawable(R.drawable.rounded_button_unselected));
+            }
+        }
     }
 
     // widget initialization
     private void init()
     {
-        for (int i = 1; i <= 8; i++) {
-            final int j = i - 1;
-            String buttonId = "btn" + i;
-            int resID = getResources().getIdentifier(buttonId, "id", getContext().getPackageName());
-
-            final Button localButton = (Button)getView().findViewById(resID);
-            localButton.setBackground(getResources().getDrawable(R.drawable.rounded_button_unselected));
-            btnGroup.add(localButton);
-
-            final long price =  priceList[i-1];
-            localButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(selectedBtnIndex != -1) {
-                        unselectButtonAtIndex(selectedBtnIndex);
-                    }
-
-                    selectedPrice = price;
-                    localButton.setBackground(getResources().getDrawable(R.drawable.rounded_button_selected));
-                    selectedBtnIndex = j;
-                }});
-        }
-
         btnAddMoney=(Button)getView().findViewById(R.id.btnAddMoney);
         btnAddMoney.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,6 +69,45 @@ public class WalletFragment extends BaseFragment {
 
             }
         });
+
+        int counter = 0, rowCouter = 0;
+        String layoutId;
+        while(counter < priceList.length ) {
+            if((counter % numButtonsPerRow) == 0 ){
+                rowCouter++;
+            }
+
+            layoutId = "priceLayout" + rowCouter;
+            int resID = getResources().getIdentifier(layoutId, "id", getContext().getPackageName());
+            LinearLayout item = (LinearLayout)getView().findViewById(resID);
+
+            View child = getLayoutInflater().inflate(R.layout.layout_recharge_options,null);
+            item.addView(child);
+
+            final Button b = (Button)  child.findViewById(R.id.price_btn);
+            b.setText( String.valueOf(priceList[counter]) );
+
+            final long price = priceList[counter];
+            b.setOnClickListener(
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            //Clear existing selected buttons
+                            unselectAllPriceButtons();
+                            selectedPrice = price * 100;
+                            b.setBackground(getResources().getDrawable(R.drawable.rounded_button_selected));
+                        }
+                    }
+            );
+            counter++;
+        }
+
+        for(int i = 0; i < rowCouter; i++) {
+            layoutId = "priceLayout" + (i + 1);
+            int resID = getResources().getIdentifier(layoutId, "id", getContext().getPackageName());
+            LinearLayout item = (LinearLayout)getView().findViewById(resID);
+            item.setWeightSum(item.getChildCount());
+        }
     }
 
 
@@ -104,5 +126,4 @@ public class WalletFragment extends BaseFragment {
         intent.putExtra(PaymentConstants.ORDER_ID, "an0ha92h2bah18282");
         startActivityForResult(intent, 1234);
     }
-
 }
