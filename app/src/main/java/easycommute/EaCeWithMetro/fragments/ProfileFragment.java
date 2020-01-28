@@ -27,6 +27,7 @@ import easycommute.EaCeWithMetro.utils.BaseFragment;
 import easycommute.EaCeWithMetro.utils.EasySingleton;
 import easycommute.EaCeWithMetro.utils.PreferenceManager;
 import easycommute.EaCeWithMetro.utils.UtilsCityList;
+import easycommute.EaCeWithMetro.models.CityReq;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -96,7 +97,7 @@ public class ProfileFragment extends BaseFragment {
                     commuter.name = name;
                     commuter.cityId = cityId;
 
-                    if(cityId!=0) {
+                    if(cityId != 0) {
                         updateCommuter(commuter);
                     }
                     else {
@@ -114,8 +115,8 @@ public class ProfileFragment extends BaseFragment {
         spinnerCityList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if(i==0){
-                    cityId=0;
+                if(i == 0){
+                    cityId = 0;
                     return;
                 }
                 else {
@@ -178,14 +179,16 @@ public class ProfileFragment extends BaseFragment {
     // Fetch the city list where easycommute is deployed
     private void loadCitySpinner()
     {
-        EasyCommuteApi.getService().getCityList()
+        CityReq cObj= new CityReq(1);
+
+        EasyCommuteApi.getService().getCityActiveList(cObj)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<City>() {
                     @Override
                     public void call(City cityList) {
                         Commuter commuter=preferenceManager.getCommuter();
-                        cityId=commuter.cityId;
+                        cityId = commuter.cityId;
                         cityIdList.add(0);
                         cityIdListDescription.add(getResources().getString(R.string.select_city));
                         for(int i = 0; i < cityList.cityDataList.size(); i++)
@@ -194,6 +197,8 @@ public class ProfileFragment extends BaseFragment {
                             cityIdListDescription.add(cityList.cityDataList.get(i).name);
                         }
                         spinnerCityList.setAdapter(new UtilsCityList().setAdapter(getActivity(),cityIdListDescription));
+
+                        spinnerCityList.setSelection(cityId);
                         hideProgressBar();
                     }
                 }, errorHandler);

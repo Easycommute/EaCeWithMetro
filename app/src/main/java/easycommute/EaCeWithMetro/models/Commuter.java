@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by Ram Prasad on 10/13/2015.
  */
 public class Commuter {
-    @SerializedName("commuter_id")
+    @SerializedName("id")
     public int commuterId;
 
     @SerializedName("name")
@@ -37,12 +37,8 @@ public class Commuter {
     @SerializedName("referral_code")
     public String referralCode;
 
-    @SerializedName("company_name")
-    public String companyName;
-
     @SerializedName("city_id")
     public int cityId;
-
 
     public Commuter() {
     }
@@ -61,6 +57,4 @@ public class Commuter {
         this.regId=regId;
         this.cityId=cityId;
     }
-
-
 }
