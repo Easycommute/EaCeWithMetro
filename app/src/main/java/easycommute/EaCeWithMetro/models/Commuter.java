@@ -12,7 +12,7 @@ public class Commuter {
     @SerializedName("name")
     public String name;
 
-    @SerializedName("device_id")
+    @SerializedName("device_id")s
     public String deviceId;
 
     @SerializedName("gender")

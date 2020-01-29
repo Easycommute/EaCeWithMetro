@@ -57,7 +57,6 @@ public class MainActivity extends BaseActivity
         fragment = new WalletFragment();
         // call fragment
         navigateToFragment(fragment, fragment.getTag(), false, true);
-
         try {
             PackageInfo pInfo = this.getPackageManager().getPackageInfo(getPackageName(), 0);
             // get package info
