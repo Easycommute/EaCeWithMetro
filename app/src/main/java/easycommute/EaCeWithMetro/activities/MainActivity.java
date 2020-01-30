@@ -59,7 +59,7 @@ public class MainActivity extends BaseActivity
         navigateToFragment(fragment, fragment.getTag(), false, true);
         try {
             PackageInfo pInfo = this.getPackageManager().getPackageInfo(getPackageName(), 0);
-            // get package info
+            // get package infoe
             String version = pInfo.versionName;
             txtVersion.setText("v"+version);
         } catch (PackageManager.NameNotFoundException e) {

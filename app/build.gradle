@@ -54,7 +54,5 @@ dependencies {
     implementation 'com.android.installreferrer:installreferrer:1.0'
     implementation 'me.dm7.barcodescanner:zbar:1.8.4'
     implementation 'com.razorpay:checkout:1.5.4'
-
-
 }
 apply plugin: 'com.google.gms.google-services'

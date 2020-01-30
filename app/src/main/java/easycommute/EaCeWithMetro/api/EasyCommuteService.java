@@ -7,8 +7,9 @@ import easycommute.EaCeWithMetro.models.BookingReq;
 import easycommute.EaCeWithMetro.models.City;
 import easycommute.EaCeWithMetro.models.CityReq;
 import easycommute.EaCeWithMetro.models.Commuter;
+import easycommute.EaCeWithMetro.models.RideReq;
+import easycommute.EaCeWithMetro.models.ride_screen.RideModel;
 import retrofit.http.Body;
-import retrofit.http.GET;
 import retrofit.http.POST;
 import retrofit.http.Path;
 import rx.Observable;
@@ -42,6 +43,10 @@ public interface EasyCommuteService {
 
     @POST("/city/active_list")
     Observable<City> getCityActiveList(@Body CityReq cityRequest);
+
+
+    @POST("/getRideScreenDetails")
+    Observable<RideModel> getCityActiveList(@Body RideReq rideReq);
 
     //--------- Booking --------
 

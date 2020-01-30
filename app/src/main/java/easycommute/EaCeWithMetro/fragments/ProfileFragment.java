@@ -137,8 +137,7 @@ public class ProfileFragment extends BaseFragment {
     // load the profile form details
     private void fetchProfileDetails()
     {
-        Commuter commuter = EasySingleton.getInstance()
-                .getCommuter();
+        Commuter commuter = EasySingleton.getInstance().getCommuter();
         emailEdt.setText(commuter.email);
         phoneEdt.setText(commuter.phone);
         nameEdt.setText(commuter.name);
@@ -180,7 +179,6 @@ public class ProfileFragment extends BaseFragment {
     private void loadCitySpinner()
     {
         CityReq cObj= new CityReq(1);
-
         EasyCommuteApi.getService().getCityActiveList(cObj)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

@@ -72,6 +72,8 @@
     </string-array>
 
 
+    <string name="select_starting_point">Select Starting Point</string>
+    <string name="select_end_point">Select End Point</string>
     <string name="get_easy_token">Get Easy Token</string>
     <string name="sit_relax_commute">Sit. . . Relax. . . Commute. . .</string>
     <string name="get_another_token">Get Another Token</string>

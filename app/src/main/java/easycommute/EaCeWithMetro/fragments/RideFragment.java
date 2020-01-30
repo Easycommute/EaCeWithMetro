@@ -4,7 +4,6 @@ package easycommute.EaCeWithMetro.fragments;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,20 +13,36 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import easycommute.EaCeWithMetro.R;
+import easycommute.EaCeWithMetro.api.EasyCommuteApi;
+import easycommute.EaCeWithMetro.models.Commuter;
+import easycommute.EaCeWithMetro.models.RideReq;
+import easycommute.EaCeWithMetro.models.ride_screen.PlansMap;
+import easycommute.EaCeWithMetro.models.ride_screen.RideModel;
+import easycommute.EaCeWithMetro.models.ride_screen.SourceStopModel;
 import easycommute.EaCeWithMetro.utils.BaseFragment;
+import easycommute.EaCeWithMetro.utils.PreferenceManager;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 public class RideFragment extends BaseFragment {
 
     Spinner spinnerStarting,spinnerEnd;
-    List<String> startingList, endList;
+    List<String> startingListDesc, endList;
+    List<Integer> startingListKey;
     TextView txtChangeSelection,txtTitle,title_label,title_label1,title_label2;
     View view1,view2,view3;
     Button btnValidate,btnAddMoney;
+    PreferenceManager preferenceManager = null;
+    String travelPlanDisplay;
 
     public RideFragment() {
         // Required empty public constructor
@@ -54,26 +69,113 @@ public class RideFragment extends BaseFragment {
         super.onActivityCreated(savedInstanceState);
         init();
         loadSpinner();
+        showProgressBar();
+        loadData();
+    }
+
+    private void loadData()
+    {
+        Commuter commuter=preferenceManager.getCommuter();
+
+        RideReq rideReq= new RideReq("1",String.valueOf(commuter.commuterId),"1");
+        EasyCommuteApi.getService().getCityActiveList(rideReq)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<RideModel>() {
+                    @Override
+                    public void call(final RideModel rideModel)
+                    {
+                        hideProgressBar();
+                        startingListKey=new ArrayList<>();
+                        startingListDesc=new ArrayList<>();
+                        endList = new ArrayList<>();
+
+                        startingListDesc.add(getResources().getString(R.string.select_starting_point));
+                        startingListKey.add(0);
+                        final List<SourceStopModel> list = new ArrayList<SourceStopModel>(rideModel.getSource_stops());
+                        for (int i=0; i<list.size();i++)
+                        {
+                            startingListKey.add(list.get(i).getStopId());
+                            startingListDesc.add(list.get(i).getDisplayName());
+                        }
+                        ArrayAdapter<String> startingAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, startingListDesc);
+                        startingAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        spinnerStarting.setAdapter(startingAdapter);
+
+
+                        spinnerStarting.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                            @Override
+                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+                            {
+                                if (position > 0)
+                                {
+                                    endList.clear();
+                                    spinnerEnd.setEnabled(true);
+                                    spinnerEnd.setClickable(true);
+                                    int startingPoint = startingListKey.get(startingListDesc.indexOf(spinnerStarting.getSelectedItem()));
+                                    List<PlansMap> list = rideModel.getPlans_map().get(startingPoint);
+                                    endList.add(getResources().getString(R.string.select_end_point));
+                                    endList.add(list.get(0).getDestination_stop_display());
+                                    travelPlanDisplay = list.get(0).getTravel_plan_display();
+
+                                    ArrayAdapter<String> endAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, endList);
+                                    endAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                    spinnerEnd.setAdapter(endAdapter);
+                                }
+                            }
+
+                            @Override
+                            public void onNothingSelected(AdapterView<?> parent) {
+
+                            }
+                        });
+
+
+                        spinnerEnd.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                            @Override
+                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                  if (position>0) {
+                                      spinnerEnd.setVisibility(View.GONE);
+                                      spinnerStarting.setVisibility(View.GONE);
+                                      txtTitle.setVisibility(View.VISIBLE);
+                                      txtTitle.setText(travelPlanDisplay);
+                                      txtChangeSelection.setVisibility(View.VISIBLE);
+                                      btnValidate.setBackgroundResource(R.drawable.rounded_button);
+                                      btnValidate.setVisibility(View.VISIBLE);
+                                      btnValidate.setEnabled(true);
+                                  }
+
+                            }
+
+                            @Override
+                            public void onNothingSelected(AdapterView<?> parent) {
+
+                            }
+                        });
+
+
+                    }
+                }, errorHandler);
     }
 
     // bind data to spinner
     private void loadSpinner()
     {
-        startingList = Arrays.asList(getResources().getStringArray(R.array.source));
-        endList = Arrays.asList(getResources().getStringArray(R.array.destination));
+        //startingList = Arrays.asList(getResources().getStringArray(R.array.source));
+        //endList = Arrays.asList(getResources().getStringArray(R.array.destination));
 
-        ArrayAdapter<String> startingAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, startingList);
-        startingAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerStarting.setAdapter(startingAdapter);
+       // ArrayAdapter<String> startingAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, startingList);
+       // startingAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+       // spinnerStarting.setAdapter(startingAdapter);
 
-        ArrayAdapter<String> endAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, endList);
-        endAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerEnd.setAdapter(endAdapter);
+       // ArrayAdapter<String> endAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, endList);
+       // endAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+       // spinnerEnd.setAdapter(endAdapter);
 
         spinnerEnd.setEnabled(false);
         spinnerEnd.setClickable(false);
 
-        spinnerStarting.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+       /* spinnerStarting.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position > 0)
@@ -87,7 +189,7 @@ public class RideFragment extends BaseFragment {
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
-        });
+        });*/
 
         spinnerEnd.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -126,6 +228,7 @@ public class RideFragment extends BaseFragment {
         spinnerEnd=(Spinner)getView().findViewById(R.id.spinnerEnd);
         txtTitle=(TextView) getView().findViewById(R.id.txtTitle);
         txtChangeSelection=(TextView) getView().findViewById(R.id.txtChangeSelection);
+        preferenceManager = new PreferenceManager(getActivity());
 
         title_label=(TextView) getView().findViewById(R.id.title_label);
         title_label1=(TextView) getView().findViewById(R.id.title_label1);
