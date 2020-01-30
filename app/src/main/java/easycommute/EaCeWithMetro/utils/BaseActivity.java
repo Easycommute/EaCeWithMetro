@@ -90,7 +90,8 @@ public class BaseActivity extends AppCompatActivity implements FragmentListener 
 
     @Override
     public void showProgressBar() {
-        if (progressLayout != null) {
+        if (progressLayout != null)
+        {
             progressLayout.setVisibility(View.VISIBLE);
             progressLayout.setBackgroundColor(getResources().getColor(android.R.color.white));
         }
@@ -173,7 +174,7 @@ public class BaseActivity extends AppCompatActivity implements FragmentListener 
     @Override
     public void setActionTitle(String title) {
         if (mToolbar != null) {
-            ((TextView) mToolbar.findViewById(R.id.title)).setText(title);
+            //((TextView) mToolbar.findViewById(R.id.title)).setText(title);
         }
     }
 

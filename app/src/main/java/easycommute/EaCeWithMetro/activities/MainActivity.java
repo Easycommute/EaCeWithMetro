@@ -51,6 +51,7 @@ public class MainActivity extends BaseActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        initLayout();
         init();
         showNavHeaderData();
         // initializing fragment with walletFragment
@@ -75,6 +76,11 @@ public class MainActivity extends BaseActivity
             }
         });
 
+    }
+
+    @Override
+    protected void initLayout() {
+        super.initLayout();
     }
 
     private void showNavHeaderData()

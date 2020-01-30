@@ -4,6 +4,7 @@ package easycommute.EaCeWithMetro.fragments;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,7 +43,8 @@ public class RideFragment extends BaseFragment {
     View view1,view2,view3;
     Button btnValidate,btnAddMoney;
     PreferenceManager preferenceManager = null;
-    String travelPlanDisplay;
+    int account_balance,travel_plan_fare;
+    List<PlansMap> plansMapList;
 
     public RideFragment() {
         // Required empty public constructor
@@ -86,10 +88,7 @@ public class RideFragment extends BaseFragment {
                     public void call(final RideModel rideModel)
                     {
                         hideProgressBar();
-                        startingListKey=new ArrayList<>();
-                        startingListDesc=new ArrayList<>();
-                        endList = new ArrayList<>();
-
+                        account_balance = rideModel.getAccount_balance();
                         startingListDesc.add(getResources().getString(R.string.select_starting_point));
                         startingListKey.add(0);
                         final List<SourceStopModel> list = new ArrayList<SourceStopModel>(rideModel.getSource_stops());
@@ -113,10 +112,13 @@ public class RideFragment extends BaseFragment {
                                     spinnerEnd.setEnabled(true);
                                     spinnerEnd.setClickable(true);
                                     int startingPoint = startingListKey.get(startingListDesc.indexOf(spinnerStarting.getSelectedItem()));
-                                    List<PlansMap> list = rideModel.getPlans_map().get(startingPoint);
+                                     plansMapList = rideModel.getPlans_map().get(startingPoint);
+
                                     endList.add(getResources().getString(R.string.select_end_point));
-                                    endList.add(list.get(0).getDestination_stop_display());
-                                    travelPlanDisplay = list.get(0).getTravel_plan_display();
+                                    for(int i=0;i<plansMapList.size();i++)
+                                    {
+                                        endList.add(plansMapList.get(i).getDestination_stop_display());
+                                    }
 
                                     ArrayAdapter<String> endAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, endList);
                                     endAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -138,7 +140,13 @@ public class RideFragment extends BaseFragment {
                                       spinnerEnd.setVisibility(View.GONE);
                                       spinnerStarting.setVisibility(View.GONE);
                                       txtTitle.setVisibility(View.VISIBLE);
-                                      txtTitle.setText(travelPlanDisplay);
+                                      txtTitle.setText(plansMapList.get(position-1).getTravel_plan_display());
+                                      travel_plan_fare = plansMapList.get(position-1).getTravel_plan_fare();
+
+                                      if (account_balance<travel_plan_fare)
+                                      {
+                                          btnValidate.setText(getResources().getString(R.string.add_money));
+                                      }
                                       txtChangeSelection.setVisibility(View.VISIBLE);
                                       btnValidate.setBackgroundResource(R.drawable.rounded_button);
                                       btnValidate.setVisibility(View.VISIBLE);
@@ -161,35 +169,13 @@ public class RideFragment extends BaseFragment {
     // bind data to spinner
     private void loadSpinner()
     {
-        //startingList = Arrays.asList(getResources().getStringArray(R.array.source));
-        //endList = Arrays.asList(getResources().getStringArray(R.array.destination));
-
-       // ArrayAdapter<String> startingAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, startingList);
-       // startingAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-       // spinnerStarting.setAdapter(startingAdapter);
-
-       // ArrayAdapter<String> endAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, endList);
-       // endAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-       // spinnerEnd.setAdapter(endAdapter);
+        endList.add(getResources().getString(R.string.select_end_point));
+        ArrayAdapter<String> endAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, endList);
+        endAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerEnd.setAdapter(endAdapter);
 
         spinnerEnd.setEnabled(false);
         spinnerEnd.setClickable(false);
-
-       /* spinnerStarting.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position > 0)
-                {
-                    spinnerEnd.setEnabled(true);
-                    spinnerEnd.setClickable(true);
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });*/
 
         spinnerEnd.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -224,6 +210,10 @@ public class RideFragment extends BaseFragment {
     // widget initialization
     private void init()
     {
+        startingListKey=new ArrayList<>();
+        startingListDesc=new ArrayList<>();
+        endList = new ArrayList<>();
+
         spinnerStarting=(Spinner)getView().findViewById(R.id.spinnerStarting);
         spinnerEnd=(Spinner)getView().findViewById(R.id.spinnerEnd);
         txtTitle=(TextView) getView().findViewById(R.id.txtTitle);
@@ -251,11 +241,19 @@ public class RideFragment extends BaseFragment {
         btnValidate.setEnabled(false);
         btnValidate.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-               // btnAddMoney.setVisibility(View.VISIBLE);
-                view1.setVisibility(View.VISIBLE);
-                title_label.setVisibility(View.VISIBLE);
-                btnValidate.setText(getResources().getString(R.string.get_another_token));
+            public void onClick(View v)
+            {
+                if (btnValidate.getText().toString().equals(getResources().getString(R.string.add_money)))
+                {
+                    Fragment fragment = new WalletFragment();
+                    launchFragment(fragment, fragment.getTag());
+                }
+                else
+                {
+                    view1.setVisibility(View.VISIBLE);
+                    title_label.setVisibility(View.VISIBLE);
+                    btnValidate.setText(getResources().getString(R.string.get_another_token));
+                }
             }
         });
 
