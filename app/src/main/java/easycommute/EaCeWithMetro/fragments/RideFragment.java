@@ -23,12 +23,16 @@ import java.util.Map;
 
 import easycommute.EaCeWithMetro.R;
 import easycommute.EaCeWithMetro.api.EasyCommuteApi;
+import easycommute.EaCeWithMetro.api.data.response.ApiResponse;
 import easycommute.EaCeWithMetro.models.Commuter;
 import easycommute.EaCeWithMetro.models.RideReq;
+import easycommute.EaCeWithMetro.models.ride_screen.GenerateTokenModel;
+import easycommute.EaCeWithMetro.models.ride_screen.GenerateTokenResponse;
 import easycommute.EaCeWithMetro.models.ride_screen.PlansMap;
 import easycommute.EaCeWithMetro.models.ride_screen.RideModel;
 import easycommute.EaCeWithMetro.models.ride_screen.SourceStopModel;
 import easycommute.EaCeWithMetro.utils.BaseFragment;
+import easycommute.EaCeWithMetro.utils.EasySingleton;
 import easycommute.EaCeWithMetro.utils.PreferenceManager;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -39,12 +43,13 @@ public class RideFragment extends BaseFragment {
     Spinner spinnerStarting,spinnerEnd;
     List<String> startingListDesc, endList;
     List<Integer> startingListKey;
-    TextView txtChangeSelection,txtTitle,title_label,title_label1,title_label2;
-    View view1,view2,view3;
+    TextView txtChangeSelection,txtTitle,title_label;
+    View view1;
     Button btnValidate,btnAddMoney;
     PreferenceManager preferenceManager = null;
-    int account_balance,travel_plan_fare;
+    int account_balance,travel_plan_fare,travel_plan_id;
     List<PlansMap> plansMapList;
+    GenerateTokenModel generateTokenModel;
 
     public RideFragment() {
         // Required empty public constructor
@@ -112,7 +117,7 @@ public class RideFragment extends BaseFragment {
                                     spinnerEnd.setEnabled(true);
                                     spinnerEnd.setClickable(true);
                                     int startingPoint = startingListKey.get(startingListDesc.indexOf(spinnerStarting.getSelectedItem()));
-                                     plansMapList = rideModel.getPlans_map().get(startingPoint);
+                                    plansMapList = rideModel.getPlans_map().get(startingPoint);
 
                                     endList.add(getResources().getString(R.string.select_end_point));
                                     for(int i=0;i<plansMapList.size();i++)
@@ -143,7 +148,8 @@ public class RideFragment extends BaseFragment {
                                       txtTitle.setText(plansMapList.get(position-1).getTravel_plan_display());
                                       travel_plan_fare = plansMapList.get(position-1).getTravel_plan_fare();
 
-                                      if (account_balance<travel_plan_fare)
+                                      travel_plan_id = plansMapList.get(position-1).getTravel_plan_id();
+                                      if (account_balance < travel_plan_fare)
                                       {
                                           btnValidate.setText(getResources().getString(R.string.add_money));
                                       }
@@ -152,9 +158,7 @@ public class RideFragment extends BaseFragment {
                                       btnValidate.setVisibility(View.VISIBLE);
                                       btnValidate.setEnabled(true);
                                   }
-
                             }
-
                             @Override
                             public void onNothingSelected(AdapterView<?> parent) {
 
@@ -162,6 +166,37 @@ public class RideFragment extends BaseFragment {
                         });
 
 
+                    }
+                }, errorHandler);
+    }
+
+    private void getEasyToken(int travel_plan_id)
+    {
+        showProgressBar();
+        generateTokenModel= new GenerateTokenModel(String.valueOf(travel_plan_id),String.valueOf(getCommuterId()));
+        view1.setVisibility(View.VISIBLE);
+        title_label.setVisibility(View.VISIBLE);
+
+        EasyCommuteApi.getService().getEasyToken(generateTokenModel)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<GenerateTokenResponse>()
+                {
+                    @Override
+                    public void call(GenerateTokenResponse generateTokenResponse)
+                    {
+                        title_label.setText(generateTokenResponse.getResponse().getToken_display_msg());
+                        if( generateTokenResponse.getResponse().getAvaiable_balance() < travel_plan_fare)
+                        {
+                            btnAddMoney.setVisibility(View.VISIBLE);
+                            btnValidate.setVisibility(View.GONE);
+                        }
+                        else
+                        {
+                            btnAddMoney.setVisibility(View.GONE);
+                            btnValidate.setText(getResources().getString(R.string.get_another_token));
+                        }
+                            hideProgressBar();
                     }
                 }, errorHandler);
     }
@@ -221,20 +256,9 @@ public class RideFragment extends BaseFragment {
         preferenceManager = new PreferenceManager(getActivity());
 
         title_label=(TextView) getView().findViewById(R.id.title_label);
-        title_label1=(TextView) getView().findViewById(R.id.title_label1);
-        title_label2=(TextView) getView().findViewById(R.id.title_label2);
-
         view1=(View) getView().findViewById(R.id.view1);
-        view2=(View) getView().findViewById(R.id.view2);
-        view3=(View) getView().findViewById(R.id.view3);
-
         title_label.setVisibility(View.GONE);
-        title_label1.setVisibility(View.GONE);
-        title_label2.setVisibility(View.GONE);
         view1.setVisibility(View.GONE);
-        view2.setVisibility(View.GONE);
-        view3.setVisibility(View.GONE);
-
         btnValidate=(Button) getView().findViewById(R.id.btnValidate);
         btnAddMoney=(Button) getView().findViewById(R.id.btnAddMoney);
 
@@ -248,11 +272,13 @@ public class RideFragment extends BaseFragment {
                     Fragment fragment = new WalletFragment();
                     launchFragment(fragment, fragment.getTag());
                 }
-                else
+                else if (btnValidate.getText().toString().equals(getResources().getString(R.string.get_easy_token)))
                 {
-                    view1.setVisibility(View.VISIBLE);
-                    title_label.setVisibility(View.VISIBLE);
-                    btnValidate.setText(getResources().getString(R.string.get_another_token));
+                    getEasyToken(travel_plan_id);
+                }
+                else if (btnValidate.getText().toString().equals(getResources().getString(R.string.get_another_token)))
+                {
+                    getEasyToken(travel_plan_id);
                 }
             }
         });

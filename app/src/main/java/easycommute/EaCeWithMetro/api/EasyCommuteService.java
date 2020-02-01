@@ -7,9 +7,11 @@ import easycommute.EaCeWithMetro.models.BookingReq;
 import easycommute.EaCeWithMetro.models.City;
 import easycommute.EaCeWithMetro.models.CityReq;
 import easycommute.EaCeWithMetro.models.Commuter;
+import easycommute.EaCeWithMetro.models.ride_screen.GenerateTokenModel;
 import easycommute.EaCeWithMetro.models.PaymentApiResponse;
 import easycommute.EaCeWithMetro.models.RazorpayDTO;
 import easycommute.EaCeWithMetro.models.RideReq;
+import easycommute.EaCeWithMetro.models.ride_screen.GenerateTokenResponse;
 import easycommute.EaCeWithMetro.models.ride_screen.RideModel;
 import easycommute.EaCeWithMetro.models.wallet_model.WalletModel;
 import retrofit.http.Body;
@@ -58,5 +60,8 @@ public interface EasyCommuteService {
 
     @POST("/transaction/razorpayment/update")
     Observable<PaymentApiResponse> updatePaymentTransR(@Body RazorpayDTO razorpayDTO);
+
+    @POST("/transaction/generateToken")
+    Observable<GenerateTokenResponse> getEasyToken(@Body GenerateTokenModel generateTokenModel);
 
 }

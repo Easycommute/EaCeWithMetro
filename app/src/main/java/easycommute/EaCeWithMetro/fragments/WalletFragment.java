@@ -7,9 +7,12 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -97,7 +100,7 @@ public class WalletFragment extends BaseFragment {
 
     }
 
-    private void unselectAllPriceButtons() {
+    private void unSelectAllPriceButtons() {
 
         int numrows = (priceList.length / numOfButtonsPerRow) + 1;
         for (int i = 0; i < numrows; i++) {
@@ -109,6 +112,7 @@ public class WalletFragment extends BaseFragment {
                 Button b1 = row.getChildAt(j).findViewById(R.id.price_btn);
                 b1.setBackground(getResources().getDrawable(R.drawable.rounded_button_unselected));
             }
+
         }
     }
 
@@ -137,7 +141,7 @@ public class WalletFragment extends BaseFragment {
             LinearLayout item = (LinearLayout)getView().findViewById(resID);
             View child = getLayoutInflater().inflate(R.layout.layout_recharge_options,null);
             item.addView(child);
-            final Button b = (Button)  child.findViewById(R.id.price_btn);
+            final Button b = (Button)child.findViewById(R.id.price_btn);
             b.setText( String.valueOf(priceList[counter]) );
             final long price = priceList[counter];
 
@@ -147,7 +151,7 @@ public class WalletFragment extends BaseFragment {
                         public void onClick(View v)
                         {
                             //Clear existing selected buttons
-                            unselectAllPriceButtons();
+                            unSelectAllPriceButtons();
                             selectedPrice = price * 100;
                             int priceID =rechargePackID.get(Integer.parseInt(String.valueOf(price)));
                             selectedOrderID = orderIDs.get(String.valueOf(priceID));
@@ -189,17 +193,14 @@ public class WalletFragment extends BaseFragment {
     {
         super.onActivityResult(requestCode, resultCode, data);
         String orderID="",signature="",paymentID="";
-
         if (data != null)
         {
             orderID = data.getStringExtra("orderID");
             signature = data.getStringExtra("signature");
             paymentID = data.getStringExtra("paymentID");
         }
-
         if (resultCode == Activity.RESULT_OK)
         {
-            //showToast("Payment Successful!");
             handlePaymentResponse(orderID,signature,paymentID);
         }
         else if (resultCode == Activity.RESULT_CANCELED)
@@ -229,23 +230,30 @@ public class WalletFragment extends BaseFragment {
                         @Override
                         public void call(PaymentApiResponse paymentApiResponse) {
                             hideProgressBar();
-                            // Log.d("DEBUG_RECHARGE", "AMOUNT : " + paymentInfo.amount);
-                            handlePaymentResponse(paymentApiResponse, String.valueOf(selectedPrice));
+                            handlePaymentResponse(paymentApiResponse);
                         }
                     }, errorHandler);
         }
     }
 
 
-    private void handlePaymentResponse(PaymentApiResponse apiResponse, String amount) {
+    private void handlePaymentResponse(PaymentApiResponse apiResponse) {
         switch (apiResponse.status) {
             case PAYMENT_TRANSACTION_UPDATION_SUCCESS:
                 showToast("Payment Successful!");
-                getWalletDetails();
-                unselectAllPriceButtons();
+                refreshFragment();
                 break;
             default:
                 showToast(apiResponse.status.toString());
         }
+    }
+
+    private void refreshFragment()
+    {
+        Fragment currentFragment = getActivity().getSupportFragmentManager().findFragmentById(R.id.container);
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction.detach(currentFragment);
+        fragmentTransaction.attach(currentFragment);
+        fragmentTransaction.commit();
     }
 }
