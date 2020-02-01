@@ -18,14 +18,13 @@
         android:textColor="@color/primary_text" />
 
     <TextView
-        android:id="@+id/credits"
+        android:id="@+id/txtCredit"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_below="@id/title_label"
         android:layout_centerHorizontal="true"
         android:background="@drawable/bg_credits"
         android:gravity="center"
-        android:text="INR 25"
         android:textColor="@color/primary_text"
         android:textSize="35sp"
         android:textStyle="bold" />
@@ -34,7 +33,7 @@
         android:id="@+id/priceLayout1"
         android:orientation="horizontal"
         android:layout_marginTop="50dp"
-        android:layout_below="@+id/credits"
+        android:layout_below="@+id/txtCredit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     </LinearLayout>

@@ -15,6 +15,7 @@ import com.razorpay.PaymentResultWithDataListener;
 
 import org.json.JSONObject;
 
+import easycommute.EaCeWithMetro.R;
 import easycommute.EaCeWithMetro.models.Commuter;
 import easycommute.EaCeWithMetro.utils.EasySingleton;
 import easycommute.EaCeWithMetro.utils.PaymentConstants;
@@ -41,19 +42,19 @@ public class PaymentsActivity extends Activity implements PaymentResultWithDataL
     // open razorpay screen
     private void openPaymentScreen()
     {
-        Commuter commuter = EasySingleton.getInstance().getCommuter();
-
         amount = getIntent().getStringExtra(PaymentConstants.AMOUNT);
         rechargeId = getIntent().getStringExtra(PaymentConstants.RECHARGE_ID);
-        //orderID = getIntent().getStringExtra(PaymentConstants.ORDER_ID);
+        orderID = getIntent().getStringExtra(PaymentConstants.ORDER_ID);
         Checkout checkout = new Checkout();
-        //checkout.setImage(R.mipmap.rsz_32logo);
+        checkout.setImage(R.mipmap.rsz_32logo);
         try {
+            Commuter commuter = EasySingleton.getInstance()
+                    .getCommuter();
             JSONObject options = new JSONObject();
             options.put("name", "Easy Commute");
             options.put("description", "Affordable Bus Shuttle Services");
             options.put("currency", "INR");
-           // options.put("order_id", orderID);
+            options.put("order_id", orderID);
             options.put("amount", amount);
             options.put("prefill.email", commuter.email);
             options.put("prefill.contact", commuter.phone);
@@ -62,7 +63,6 @@ public class PaymentsActivity extends Activity implements PaymentResultWithDataL
             Log.e(TAG, "Error in starting Razorpay Checkout", e);
         }
     }
-
 
 
     // handle back press
@@ -90,7 +90,7 @@ public class PaymentsActivity extends Activity implements PaymentResultWithDataL
     public void onPaymentError(int i, String s, PaymentData paymentData)
     {
          Toast.makeText(PaymentsActivity.this, s, Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent();
+         Intent intent = new Intent();
          setResult(RESULT_OK, intent);
          finish();
 

@@ -44,6 +44,7 @@ public class SplashActivity extends BaseActivity {
                             return;
                         }
                         regId = task.getResult().getToken();
+                        Log.v("Firebase_Token: ",regId);
                         prefManger.setRegistrationId(regId);
                     }
                 });
