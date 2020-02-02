@@ -14,13 +14,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import easycommute.EaCeWithMetro.R;
-import easycommute.EaCeWithMetro.adapter.StopListAdapter;
+import easycommute.EaCeWithMetro.adapter.HistoryAdapter;
 import easycommute.EaCeWithMetro.api.EasyCommuteApi;
 import easycommute.EaCeWithMetro.api.data.AccountBalance;
 import easycommute.EaCeWithMetro.api.data.Fare;
-import easycommute.EaCeWithMetro.api.data.response.PreBookingApiResponse;
 import easycommute.EaCeWithMetro.models.BookingInfo;
 import easycommute.EaCeWithMetro.models.Commuter;
+import easycommute.EaCeWithMetro.models.Myhistory.HistoryReq;
+import easycommute.EaCeWithMetro.models.Myhistory.HistoryResponse;
 import easycommute.EaCeWithMetro.utils.AppConstants;
 import easycommute.EaCeWithMetro.utils.BaseFragment;
 import easycommute.EaCeWithMetro.utils.PreferenceManager;
@@ -60,7 +61,6 @@ public class MyHistoryFragment extends BaseFragment {
             bookedBookingId = getArguments().getInt(AppConstants.BOOKING_ID);
             action = getArguments().getString(AppConstants.ACTION);
         }
-
     }
 
     @Override
@@ -82,22 +82,25 @@ public class MyHistoryFragment extends BaseFragment {
     private void fetchBookingDetails()
     {
         showProgressBar();
-        EasyCommuteApi.getService().getPreBookingDetails(booking.getBookingReq(promoCode, bookedBookingId, action))
+
+        HistoryReq historyReq= new HistoryReq(getCommuterId());
+        EasyCommuteApi.getService().getHistoryDetails(historyReq)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<PreBookingApiResponse>() {
+                .subscribe(new Action1<HistoryResponse>()
+                {
                     @Override
-                    public void call(PreBookingApiResponse apiResponse) {
+                    public void call(HistoryResponse historyResponse) {
                         hideProgressBar();
-                        updateContent(apiResponse);
+                        updateContent(historyResponse);
 
                     }
                 }, errorHandler);
     }
 
 
-    private void updateContent(PreBookingApiResponse apiResponse) {
-        recyclerView.setAdapter(new StopListAdapter(apiResponse.bookingDtls.stops));
+    private void updateContent(HistoryResponse historyResponse) {
+        recyclerView.setAdapter(new HistoryAdapter(historyResponse.getResponse()));
     }
 
     @Override

@@ -7,6 +7,8 @@ import easycommute.EaCeWithMetro.models.BookingReq;
 import easycommute.EaCeWithMetro.models.City;
 import easycommute.EaCeWithMetro.models.CityReq;
 import easycommute.EaCeWithMetro.models.Commuter;
+import easycommute.EaCeWithMetro.models.Myhistory.HistoryReq;
+import easycommute.EaCeWithMetro.models.Myhistory.HistoryResponse;
 import easycommute.EaCeWithMetro.models.ride_screen.GenerateTokenModel;
 import easycommute.EaCeWithMetro.models.PaymentApiResponse;
 import easycommute.EaCeWithMetro.models.RazorpayDTO;
@@ -63,5 +65,8 @@ public interface EasyCommuteService {
 
     @POST("/transaction/generateToken")
     Observable<GenerateTokenResponse> getEasyToken(@Body GenerateTokenModel generateTokenModel);
+
+    @POST("/transaction/commuter/history")
+    Observable<HistoryResponse> getHistoryDetails(@Body HistoryReq historyReq);
 
 }

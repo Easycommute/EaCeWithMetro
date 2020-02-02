@@ -15,22 +15,25 @@
         android:src="@mipmap/start_point"
         android:layout_marginLeft="10dp"/>
 
+
+
     <TextView
-        android:id="@+id/time"
+        android:id="@+id/txtDebit"
         android:layout_width="80dp"
+        android:textStyle="bold"
         android:gravity="right"
         android:layout_height="wrap_content"
-        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
         android:layout_toRightOf="@+id/startPoint"
         android:layout_marginTop="10dp"
-        android:text="10:30 AM"/>
+        />
 
     <LinearLayout
         android:id="@+id/connectorLayout"
-        android:layout_toRightOf="@id/time"
         android:layout_width="15dp"
         android:layout_marginLeft="2dp"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:orientation="vertical"
         android:gravity="center_horizontal">
 
@@ -64,11 +67,10 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/stopName"
+            android:id="@+id/txtCredit"
             android:layout_height="wrap_content"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:text="JNTU, KPHB, Kukatpally"
             android:textStyle="bold"/>
 
         <ImageView
