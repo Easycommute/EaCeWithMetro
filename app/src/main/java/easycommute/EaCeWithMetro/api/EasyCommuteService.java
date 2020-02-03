@@ -3,6 +3,7 @@ package easycommute.EaCeWithMetro.api;
 
 import easycommute.EaCeWithMetro.api.data.response.ApiResponse;
 import easycommute.EaCeWithMetro.api.data.response.PreBookingApiResponse;
+import easycommute.EaCeWithMetro.models.AboutUs;
 import easycommute.EaCeWithMetro.models.BookingReq;
 import easycommute.EaCeWithMetro.models.City;
 import easycommute.EaCeWithMetro.models.CityReq;
@@ -17,6 +18,7 @@ import easycommute.EaCeWithMetro.models.ride_screen.GenerateTokenResponse;
 import easycommute.EaCeWithMetro.models.ride_screen.RideModel;
 import easycommute.EaCeWithMetro.models.wallet_model.WalletModel;
 import retrofit.http.Body;
+import retrofit.http.GET;
 import retrofit.http.POST;
 import retrofit.http.Path;
 import rx.Observable;
@@ -69,4 +71,6 @@ public interface EasyCommuteService {
     @POST("/transaction/commuter/history")
     Observable<HistoryResponse> getHistoryDetails(@Body HistoryReq historyReq);
 
+    @GET("/general/about_us")
+    Observable<AboutUs> getAboutUsDetails();
 }

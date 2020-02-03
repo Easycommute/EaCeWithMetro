@@ -23,6 +23,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import easycommute.EaCeWithMetro.BuildConfig;
 import easycommute.EaCeWithMetro.R;
+import easycommute.EaCeWithMetro.fragments.AboutUsFragment;
 import easycommute.EaCeWithMetro.fragments.MyHistoryFragment;
 import easycommute.EaCeWithMetro.fragments.ProfileFragment;
 import easycommute.EaCeWithMetro.fragments.RideFragment;
@@ -146,6 +147,10 @@ public class MainActivity extends BaseActivity
 
             case R.id.nav_ride:
                 fragment=new RideFragment();
+                break;
+
+            case R.id.nav_about_us:
+                fragment=new AboutUsFragment();
                 break;
 
             case R.id.nav_rate_us:

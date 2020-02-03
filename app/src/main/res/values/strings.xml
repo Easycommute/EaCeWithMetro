@@ -72,4 +72,11 @@
     <string name="select_city">Select City</string>
     <string name="change_selection">Change Selection</string>
 
+    <string name="title_about_us">About us</string>
+    <string name="about_us_tag_line">Affordable Metro Feeder Service</string>
+    <string name="es">EasyCommute</string>
+    <string name="txt_about_us">EasyCommute is a mobile based metro feeder service. We aim to provide the best possible experience for our customers in the last leg of their daily commute.</string>
+    <string name="whatsapp">WhatsApp: 8099927902</string>
+    <string name="email">Email: care@easycommute.co</string>
+    <string name="phone">Phone: 8374590066</string>
 </resources>
