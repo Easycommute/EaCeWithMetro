@@ -14,9 +14,6 @@ import easycommute.EaCeWithMetro.R;
 import easycommute.EaCeWithMetro.models.Myhistory.Response;
 import easycommute.EaCeWithMetro.models.Myhistory.TxnEntry;
 
-/**
- * Created by Ram Prasad on 11/15/2015.
- */
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder> {
 
     private List<Response> historyResponse;

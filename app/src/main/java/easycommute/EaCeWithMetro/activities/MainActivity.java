@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -45,7 +46,7 @@ public class MainActivity extends BaseActivity
     ImageView imgCall;
     Toolbar toolbar;
     NavigationView navigationView;
-    TextView txtVersion,nav_header_name,nav_mob_no,nav_header_email;
+    static TextView txtVersion,nav_header_name,nav_mob_no,nav_header_email;
     private PreferenceManager prefManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +85,7 @@ public class MainActivity extends BaseActivity
         super.initLayout();
     }
 
-    private void showNavHeaderData()
+    public static void showNavHeaderData()
     {
         Commuter commuter = EasySingleton.getInstance().getCommuter();
         nav_header_email.setText(commuter.email);
@@ -205,6 +206,8 @@ public class MainActivity extends BaseActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
 
     private void rateApp()
     {

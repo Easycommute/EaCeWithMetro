@@ -79,7 +79,7 @@ public class BaseActivity extends AppCompatActivity implements FragmentListener 
         }
 
         if (!noHistory) {
-            beginTransaction.addToBackStack(tag);
+           beginTransaction.addToBackStack(tag);
         }
 
         beginTransaction.replace(R.id.container, fragment, tag);

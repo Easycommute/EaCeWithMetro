@@ -18,6 +18,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import easycommute.EaCeWithMetro.R;
+import easycommute.EaCeWithMetro.activities.MainActivity;
 import easycommute.EaCeWithMetro.api.EasyCommuteApi;
 import easycommute.EaCeWithMetro.api.data.response.ApiResponse;
 import easycommute.EaCeWithMetro.models.City;
@@ -167,11 +168,18 @@ public class ProfileFragment extends BaseFragment {
                     public void call(ApiResponse apiResponse) {
                         new PreferenceManager(getContext()).updateCommuter(commuter);
                         updateProfileInfo();
-
                         showToast(apiResponse.message);
                         hideProgressBar();
+                        reloadMainActivityNavHeader();
                     }
                 }, errorHandler);
+    }
+
+    public void reloadMainActivityNavHeader(){
+        MainActivity mainActivity = (MainActivity) getActivity();
+        if(mainActivity!=null){
+            MainActivity.showNavHeaderData();
+        }
     }
 
 

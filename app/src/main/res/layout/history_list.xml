@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:addToBackStackandroid="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -18,7 +18,6 @@
             android:id="@+id/DebitImg"
             android:layout_width="25dp"
             android:layout_height="25dp"
-
             android:src="@mipmap/debit_img"
             android:layout_gravity="center_vertical"
             />
@@ -28,7 +27,6 @@
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-
             android:orientation="vertical"
             android:layout_toRightOf="@+id/DebitImg">
 
@@ -65,7 +63,6 @@
         android:id="@+id/connectorLayout"
         android:layout_width="30dp"
         android:layout_height="match_parent"
-
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="5dp"
         android:layout_toRightOf="@+id/leftblock"
@@ -93,7 +90,6 @@
             android:id="@+id/displayBlockCredit"
             android:layout_width="90dp"
             android:layout_height="wrap_content"
-
             android:orientation="vertical"
             >
 
@@ -130,7 +126,6 @@
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:src="@mipmap/credit_img"
-
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_gravity="center_vertical"
