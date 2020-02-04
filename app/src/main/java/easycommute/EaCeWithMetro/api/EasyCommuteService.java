@@ -10,11 +10,12 @@ import easycommute.EaCeWithMetro.models.CityReq;
 import easycommute.EaCeWithMetro.models.Commuter;
 import easycommute.EaCeWithMetro.models.Myhistory.HistoryReq;
 import easycommute.EaCeWithMetro.models.Myhistory.HistoryResponse;
+import easycommute.EaCeWithMetro.models.ride_screen.BookRideResponse;
 import easycommute.EaCeWithMetro.models.ride_screen.GenerateTokenModel;
 import easycommute.EaCeWithMetro.models.PaymentApiResponse;
 import easycommute.EaCeWithMetro.models.RazorpayDTO;
 import easycommute.EaCeWithMetro.models.RideReq;
-import easycommute.EaCeWithMetro.models.ride_screen.GenerateTokenResponse;
+import easycommute.EaCeWithMetro.models.MyTokens.TokenResponse;
 import easycommute.EaCeWithMetro.models.ride_screen.RideModel;
 import easycommute.EaCeWithMetro.models.wallet_model.WalletModel;
 import retrofit.http.Body;
@@ -66,11 +67,14 @@ public interface EasyCommuteService {
     Observable<PaymentApiResponse> updatePaymentTransR(@Body RazorpayDTO razorpayDTO);
 
     @POST("/transaction/generateToken")
-    Observable<GenerateTokenResponse> getEasyToken(@Body GenerateTokenModel generateTokenModel);
+    Observable<BookRideResponse> getEasyToken(@Body GenerateTokenModel generateTokenModel);
 
     @POST("/transaction/commuter/history")
     Observable<HistoryResponse> getHistoryDetails(@Body HistoryReq historyReq);
 
     @GET("/general/about_us")
     Observable<AboutUs> getAboutUsDetails();
+
+    @POST("/transaction/commuter/token/history")
+    Observable<TokenResponse> getTokenDetails(@Body HistoryReq historyReq);
 }

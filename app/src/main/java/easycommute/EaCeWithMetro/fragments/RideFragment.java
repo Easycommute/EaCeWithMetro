@@ -16,25 +16,20 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 import easycommute.EaCeWithMetro.R;
 import easycommute.EaCeWithMetro.api.EasyCommuteApi;
-import easycommute.EaCeWithMetro.api.data.response.ApiResponse;
 import easycommute.EaCeWithMetro.models.Commuter;
 import easycommute.EaCeWithMetro.models.RideReq;
+import easycommute.EaCeWithMetro.models.ride_screen.BookRideResponse;
 import easycommute.EaCeWithMetro.models.ride_screen.GenerateTokenModel;
-import easycommute.EaCeWithMetro.models.ride_screen.GenerateTokenResponse;
 import easycommute.EaCeWithMetro.models.ride_screen.PlansMap;
 import easycommute.EaCeWithMetro.models.ride_screen.RideModel;
 import easycommute.EaCeWithMetro.models.ride_screen.SourceStopModel;
 import easycommute.EaCeWithMetro.utils.BaseFragment;
-import easycommute.EaCeWithMetro.utils.EasySingleton;
 import easycommute.EaCeWithMetro.utils.PreferenceManager;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -182,13 +177,14 @@ public class RideFragment extends BaseFragment {
         EasyCommuteApi.getService().getEasyToken(generateTokenModel)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<GenerateTokenResponse>()
+                .subscribe(new Action1<BookRideResponse>()
                 {
                     @Override
-                    public void call(GenerateTokenResponse generateTokenResponse)
+                    public void call(BookRideResponse generateTokenResponse)
                     {
-                        title_label.setText(generateTokenResponse.getResponse().getToken_display_msg());
-                        if( generateTokenResponse.getResponse().getAvaiable_balance() < travel_plan_fare)
+                        title_label.setText(generateTokenResponse.getTokenResponse().getToken_display_msg());
+
+                        if( generateTokenResponse.getTokenResponse().getAvaiable_balance() < travel_plan_fare)
                         {
                             btnAddMoney.setVisibility(View.VISIBLE);
                             btnValidate.setVisibility(View.GONE);
@@ -198,7 +194,8 @@ public class RideFragment extends BaseFragment {
                             btnAddMoney.setVisibility(View.GONE);
                             btnValidate.setText(getResources().getString(R.string.get_another_token));
                         }
-                            hideProgressBar();
+
+                        hideProgressBar();
                     }
                 }, errorHandler);
     }

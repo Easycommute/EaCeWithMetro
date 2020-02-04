@@ -15,11 +15,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import easycommute.EaCeWithMetro.R;
 import easycommute.EaCeWithMetro.adapter.HistoryAdapter;
+import easycommute.EaCeWithMetro.adapter.TokenAdapter;
 import easycommute.EaCeWithMetro.api.EasyCommuteApi;
 import easycommute.EaCeWithMetro.api.data.AccountBalance;
 import easycommute.EaCeWithMetro.api.data.Fare;
 import easycommute.EaCeWithMetro.models.BookingInfo;
 import easycommute.EaCeWithMetro.models.Commuter;
+import easycommute.EaCeWithMetro.models.MyTokens.TokenResponse;
 import easycommute.EaCeWithMetro.models.Myhistory.HistoryReq;
 import easycommute.EaCeWithMetro.models.Myhistory.HistoryResponse;
 import easycommute.EaCeWithMetro.utils.AppConstants;
@@ -32,23 +34,14 @@ import rx.schedulers.Schedulers;
 /**
  * Created by Ram Prasad on 11/15/2015.
  */
-public class MyHistoryFragment extends BaseFragment {
+public class MyTokensFragment extends BaseFragment {
     private PreferenceManager prefManager;
     private RecyclerView recyclerView;
-    private AlertDialog confirmDialog;
-    private Button buy_a_pass;
-    private BookingInfo booking;
-    private Fare fare;
-    private TextView seats, credits, balanceTxt;
-    private Button ridePay, justMe, plus1, plus2, plus3;
-    int chargedFare, actualFare;
-    private AccountBalance accountBalance;
+   // private AlertDialog confirmDialog;
     private boolean showPromoBox;
-    private String fromPayment,promoCode;
-    String from,to;
-    Integer bookedBookingId=0;
+
     String action;
-    Commuter commuterFCM;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,16 +49,15 @@ public class MyHistoryFragment extends BaseFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_my_history, null);
+        return inflater.inflate(R.layout.fragment_my_tokens, null);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        recyclerView = (RecyclerView) getView().findViewById(R.id.recyclerView);
+        recyclerView = (RecyclerView) getView().findViewById(R.id.recyclerTokenView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setHasFixedSize(true);
-
         fetchBookingDetails();
     }
 
@@ -75,23 +67,23 @@ public class MyHistoryFragment extends BaseFragment {
         showProgressBar();
 
         HistoryReq historyReq= new HistoryReq(getCommuterId());
-        EasyCommuteApi.getService().getHistoryDetails(historyReq)
+        EasyCommuteApi.getService().getTokenDetails(historyReq)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<HistoryResponse>()
+                .subscribe(new Action1<TokenResponse>()
                 {
                     @Override
-                    public void call(HistoryResponse historyResponse) {
+                    public void call(TokenResponse tokenResponse) {
                         hideProgressBar();
-                        updateContent(historyResponse);
+                        updateContent(tokenResponse);
 
                     }
                 }, errorHandler);
     }
 
 
-    private void updateContent(HistoryResponse historyResponse) {
-        recyclerView.setAdapter(new HistoryAdapter(historyResponse.getResponse()));
+    private void updateContent(TokenResponse tokenResponse) {
+        recyclerView.setAdapter(new TokenAdapter(tokenResponse));
     }
 
     @Override
@@ -104,7 +96,7 @@ public class MyHistoryFragment extends BaseFragment {
     @Override
     protected int getTitle() {
         // POTENTIAL_MULTILINGUAL_STRINGS
-        return R.string.history;
+        return R.string.tokens;
     }
 
 

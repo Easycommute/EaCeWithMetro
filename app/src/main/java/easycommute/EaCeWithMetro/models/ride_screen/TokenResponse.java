@@ -4,10 +4,8 @@ import com.google.gson.annotations.SerializedName;
 
 public class TokenResponse
 {
-
     @SerializedName("avaiable_balance")
     private Integer avaiable_balance;
-
 
     @SerializedName("token_display_msg")
     private String token_display_msg;

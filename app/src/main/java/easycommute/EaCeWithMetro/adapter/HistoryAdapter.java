@@ -82,6 +82,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
 
         public ViewHolder(View itemView, int viewType) {
             super(itemView);
+
             txtCredit = (TextView) itemView.findViewById(R.id.txtCredit);
             txtDebit = (TextView) itemView.findViewById(R.id.txtDebit);
             txtCreditDesc = (TextView) itemView.findViewById(R.id.txtCreditDesc);
@@ -91,6 +92,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
 
             CreditView = (ImageView) itemView.findViewById(R.id.CreditImg);
             DebitView = (ImageView) itemView.findViewById(R.id.DebitImg);
+
         }
     }
 }

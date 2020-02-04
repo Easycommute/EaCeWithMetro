@@ -15,6 +15,9 @@
             android:id="@+id/nav_history"
             android:title="@string/history" />
         <item
+            android:id="@+id/nav_tokens"
+            android:title="@string/tokens" />
+        <item
             android:id="@+id/nav_ride"
             android:title="@string/ride" />
 

@@ -26,6 +26,7 @@ import easycommute.EaCeWithMetro.BuildConfig;
 import easycommute.EaCeWithMetro.R;
 import easycommute.EaCeWithMetro.fragments.AboutUsFragment;
 import easycommute.EaCeWithMetro.fragments.MyHistoryFragment;
+import easycommute.EaCeWithMetro.fragments.MyTokensFragment;
 import easycommute.EaCeWithMetro.fragments.ProfileFragment;
 import easycommute.EaCeWithMetro.fragments.RideFragment;
 import easycommute.EaCeWithMetro.fragments.WalletFragment;
@@ -152,6 +153,10 @@ public class MainActivity extends BaseActivity
                 fragmentNav=new RideFragment();
                 break;
 
+            case R.id.nav_tokens:
+                fragmentNav=new MyTokensFragment();
+                break;
+
             case R.id.nav_about_us:
                 fragmentNav=new AboutUsFragment();
                 break;
@@ -160,7 +165,7 @@ public class MainActivity extends BaseActivity
                 rateApp();
                 break;
 
-                case R.id.nav_share:
+            case R.id.nav_share:
                 shareApp();
                 break;
 
