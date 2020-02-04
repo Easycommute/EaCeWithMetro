@@ -70,6 +70,7 @@ public class WalletFragment extends BaseFragment {
 
     private void getWalletDetails()
     {
+        showProgressBar();
         preferenceManager = new PreferenceManager(getActivity());
         Commuter commuter=preferenceManager.getCommuter();
         RideReq rideReq= new RideReq("1",String.valueOf(commuter.commuterId),"1");
@@ -94,6 +95,7 @@ public class WalletFragment extends BaseFragment {
                         orderIDs = walletModel.getResponse().getRpOrderMap();
                         init();
                         txtCredit.setText(walletModel.getResponse().getAccountBalance());
+                        hideProgressBar();
                     }
                 }, errorHandler);
 
@@ -157,6 +159,8 @@ public class WalletFragment extends BaseFragment {
                             selectedOrderID = orderIDs.get(String.valueOf(priceID));
                             selectedPriceID=String.valueOf(priceID);
                             b.setBackground(getResources().getDrawable(R.drawable.rounded_button_selected));
+                            btnAddMoney.setBackgroundResource(R.drawable.rounded_button);
+
                         }
                     }
             );

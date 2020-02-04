@@ -19,6 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import easycommute.EaCeWithMetro.R;
+import easycommute.EaCeWithMetro.fragments.RideFragment;
 import easycommute.EaCeWithMetro.interfaces.ActionEventListener;
 import easycommute.EaCeWithMetro.interfaces.FragmentListener;
 import retrofit.RetrofitError;
@@ -111,16 +112,14 @@ public class BaseActivity extends AppCompatActivity implements FragmentListener 
     }
 
     @Override
-    public void onBackPressed() {
-        if (mFragment != null && mFragment.onBackPressed()) {
-            if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
-                getSupportFragmentManager().popBackStack();
-            } else {
-                mFragment.onBackPressedFragment();
-                //super.onBackPressed();
-            }
-        } else {
-            super.onBackPressed();
+    public void onBackPressed()
+    {
+         if (mFragment.getClass().getSimpleName().equals("RideFragment"))
+         {
+             mFragment.onBackPressed();
+         }
+        else if (new RideFragment() != null) {
+            navigateToFragment(new RideFragment(), new RideFragment().getTag(), false, true);
         }
     }
 

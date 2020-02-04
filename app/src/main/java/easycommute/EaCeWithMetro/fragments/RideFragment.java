@@ -1,6 +1,8 @@
 package easycommute.EaCeWithMetro.fragments;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -236,10 +238,20 @@ public class RideFragment extends BaseFragment {
 
     // handle back press
     @Override
-    public boolean onBackPressed() {
-       // WalletFragment stopSelectionFragment = new WalletFragment();
-       // launchFragment(stopSelectionFragment, stopSelectionFragment.getTag());
-        return super.onBackPressed();
+    public boolean onBackPressed()
+    {
+        new AlertDialog.Builder(getActivity())
+                .setCancelable(false)
+                .setMessage(getResources().getString(R.string.want_to_exit))
+                .setPositiveButton(getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id)
+                    {
+                        getActivity().finish();
+                    }
+                })
+                .setNegativeButton(getResources().getString(R.string.no), null)
+                .show();
+        return false;
     }
 
     // widget initialization

@@ -57,7 +57,7 @@ public class MainActivity extends BaseActivity
         init();
         showNavHeaderData();
         // initializing fragment with walletFragment
-        fragment = new WalletFragment();
+        fragment = new RideFragment();
         // call fragment
         navigateToFragment(fragment, fragment.getTag(), false, true);
         try {
@@ -136,22 +136,24 @@ public class MainActivity extends BaseActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item)
     {
+        Fragment fragmentNav = null;
 
-        switch (item.getItemId()) {
+        switch (item.getItemId())
+        {
             case R.id.nav_profile:
-                fragment= new ProfileFragment();
+                fragmentNav= new ProfileFragment();
                 break;
 
             case R.id.nav_wallet:
-                fragment = new WalletFragment();
+                fragmentNav = new WalletFragment();
                 break;
 
             case R.id.nav_ride:
-                fragment=new RideFragment();
+                fragmentNav=new RideFragment();
                 break;
 
             case R.id.nav_about_us:
-                fragment=new AboutUsFragment();
+                fragmentNav=new AboutUsFragment();
                 break;
 
             case R.id.nav_rate_us:
@@ -194,12 +196,16 @@ public class MainActivity extends BaseActivity
                     bundle.putString("to", "Sagar X Road");
                     bundle.putInt(AppConstants.BOOKING_ID, 0);
                     bundle.putString(AppConstants.ACTION, null);
-                    fragment = new MyHistoryFragment();
-                    fragment.setArguments(bundle);
+                    fragmentNav = new MyHistoryFragment();
+                    fragmentNav.setArguments(bundle);
                    break;
+
+           // default:
+              //  fragment=new RideFragment();
+              //  break;
         }
-                if (fragment != null) {
-            navigateToFragment(fragment, fragment.getTag(), false, true);
+                if (fragmentNav != null) {
+            navigateToFragment(fragmentNav, fragmentNav.getTag(), false, true);
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
