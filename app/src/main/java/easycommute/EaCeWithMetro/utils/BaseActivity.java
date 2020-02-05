@@ -114,12 +114,20 @@ public class BaseActivity extends AppCompatActivity implements FragmentListener 
     @Override
     public void onBackPressed()
     {
-         if (mFragment.getClass().getSimpleName().equals("RideFragment"))
-         {
-             mFragment.onBackPressed();
-         }
-        else if (new RideFragment() != null) {
-            navigateToFragment(new RideFragment(), new RideFragment().getTag(), false, true);
+        if(mFragment!=null)
+        {
+            if (mFragment.getClass().getSimpleName().equals("RideFragment"))
+            {
+                mFragment.onBackPressed();
+            }
+            else if (new RideFragment() != null)
+            {
+                navigateToFragment(new RideFragment(), new RideFragment().getTag(), false, true);
+            }
+        }
+        else
+        {
+            finish();
         }
     }
 
