@@ -22,7 +22,5 @@ public class City {
 
         @SerializedName("name")
         public String name;
-
-
     }
 }

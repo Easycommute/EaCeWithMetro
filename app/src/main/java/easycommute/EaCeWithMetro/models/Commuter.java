@@ -24,7 +24,6 @@ public class Commuter {
     @SerializedName("mobile")
     public String phone;
 
-    //@SerializedName("gcm_reg_id")
     @SerializedName("fcm_reg_id")
     public String regId;
 

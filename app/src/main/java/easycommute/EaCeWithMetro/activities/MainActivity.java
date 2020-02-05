@@ -30,7 +30,6 @@ import easycommute.EaCeWithMetro.fragments.MyTokensFragment;
 import easycommute.EaCeWithMetro.fragments.ProfileFragment;
 import easycommute.EaCeWithMetro.fragments.RideFragment;
 import easycommute.EaCeWithMetro.fragments.WalletFragment;
-import easycommute.EaCeWithMetro.models.BookingInfo;
 import easycommute.EaCeWithMetro.models.Commuter;
 import easycommute.EaCeWithMetro.utils.AppConstants;
 import easycommute.EaCeWithMetro.utils.BaseActivity;
@@ -42,7 +41,6 @@ public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     DrawerLayout drawer;
-    private BookingInfo booking;
     Fragment fragment=null;
     ImageView imgCall;
     Toolbar toolbar;
@@ -186,7 +184,7 @@ public class MainActivity extends BaseActivity
                 break;
 
                 case R.id.nav_history:
-                    booking=new BookingInfo();
+                  /*  booking=new BookingInfo();
                     booking.commuterId = 173306;
                     booking.tripId = 228263;
                     booking.fromStopId = 42;
@@ -200,9 +198,9 @@ public class MainActivity extends BaseActivity
                     bundle.putString("from", "Gachibowli-TCS Synergy Park");
                     bundle.putString("to", "Sagar X Road");
                     bundle.putInt(AppConstants.BOOKING_ID, 0);
-                    bundle.putString(AppConstants.ACTION, null);
+                    bundle.putString(AppConstants.ACTION, null);*/
                     fragmentNav = new MyHistoryFragment();
-                    fragmentNav.setArguments(bundle);
+                 //   fragmentNav.setArguments(bundle);
                    break;
 
            // default:
