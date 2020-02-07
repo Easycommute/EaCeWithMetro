@@ -1,11 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/layout_root" android:orientation="horizontal"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_root"
     android:layout_width="match_parent" android:layout_height="wrap_content"
     android:padding="10dp">
 
     <TextView android:id="@+id/token_text"
-        android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:textColor="#000">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black">
     </TextView>
-</LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="3dp"
+        android:layout_below="@+id/token_text"
+        android:background="@color/colorButtonDisabled"/>
+
+
+</RelativeLayout>

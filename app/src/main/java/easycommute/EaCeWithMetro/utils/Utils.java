@@ -1,7 +1,9 @@
 package easycommute.EaCeWithMetro.utils;
 
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -15,6 +17,7 @@ import android.net.NetworkInfo;
 import android.os.Build;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.Window;
 
 import androidx.core.app.NotificationCompat;
 
@@ -115,6 +118,8 @@ public class Utils {
                 return 24;
         }
     }
+
+
 
 
 }

@@ -77,7 +77,7 @@ public class MyTokensFragment extends BaseFragment {
 
 
     private void updateContent(TokenResponse tokenResponse) {
-        recyclerView.setAdapter(new TokenAdapter(tokenResponse));
+        recyclerView.setAdapter(new TokenAdapter(tokenResponse,getActivity()));
     }
 
     @Override
