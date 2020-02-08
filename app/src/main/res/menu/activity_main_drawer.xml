@@ -8,18 +8,24 @@
         <item
             android:id="@+id/nav_profile"
             android:title="@string/title_profile" />
-        <item
-            android:id="@+id/nav_wallet"
-            android:title="@string/wallet" />
-        <item
-            android:id="@+id/nav_history"
-            android:title="@string/history" />
-        <item
-            android:id="@+id/nav_tokens"
-            android:title="@string/tokens" />
+
         <item
             android:id="@+id/nav_ride"
             android:title="@string/ride" />
+
+        <item
+            android:id="@+id/nav_wallet"
+            android:title="@string/wallet" />
+
+        <item
+            android:id="@+id/nav_tokens"
+            android:title="@string/tokens" />
+
+        <item
+            android:id="@+id/nav_history"
+            android:title="@string/history" />
+
+
 
     </group>
 

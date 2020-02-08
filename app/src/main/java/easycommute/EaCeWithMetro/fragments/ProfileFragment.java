@@ -1,6 +1,7 @@
 package easycommute.EaCeWithMetro.fragments;
 
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,6 +69,10 @@ public class ProfileFragment extends BaseFragment {
 
         phoneEdt = (EditText) getView().findViewById(R.id.inputMobile);
         emailEdt = (EditText) getView().findViewById(R.id.inputEmail);
+
+        emailEdt.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+
+
         radioGroup = (RadioGroup) getView().findViewById(R.id.myRadioGroup);
         nameEdt  = (EditText) getView().findViewById(R.id.inputName);
         spinnerCityList = (Spinner) getView().findViewById(R.id.spinnerCityList);

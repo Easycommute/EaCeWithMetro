@@ -46,7 +46,7 @@
             style="@style/styleEditTxt"
             android:fontFamily="sans-serif-light"
             android:hint="@string/lbl_email"
-            android:inputType="textEmailAddress" />
+             />
 
         <EditText
             android:id="@+id/inputMobile"

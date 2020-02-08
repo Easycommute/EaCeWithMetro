@@ -33,6 +33,7 @@ public class MyTokensFragment extends BaseFragment {
     private RecyclerView recyclerView;
    // private AlertDialog confirmDialog;
     private boolean showPromoBox;
+    TextView txtNoTokens;
 
     String action;
 
@@ -50,6 +51,7 @@ public class MyTokensFragment extends BaseFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         recyclerView = (RecyclerView) getView().findViewById(R.id.recyclerTokenView);
+        txtNoTokens = (TextView) getView().findViewById(R.id.txtNoTokens);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setHasFixedSize(true);
         fetchBookingDetails();
@@ -70,14 +72,23 @@ public class MyTokensFragment extends BaseFragment {
                     public void call(TokenResponse tokenResponse) {
                         hideProgressBar();
                         updateContent(tokenResponse);
-
                     }
                 }, errorHandler);
     }
 
 
-    private void updateContent(TokenResponse tokenResponse) {
-        recyclerView.setAdapter(new TokenAdapter(tokenResponse,getActivity()));
+    private void updateContent(TokenResponse tokenResponse)
+    {
+        if (tokenResponse.getTokenHistory().size()==0)
+        {
+             recyclerView.setVisibility(View.GONE);
+             txtNoTokens.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            recyclerView.setVisibility(View.VISIBLE);
+            recyclerView.setAdapter(new TokenAdapter(tokenResponse,getActivity()));
+        }
     }
 
     @Override
