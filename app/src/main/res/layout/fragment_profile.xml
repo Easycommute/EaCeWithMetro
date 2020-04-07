@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    
+
+    <RelativeLayout
+        android:id="@+id/rlLayout"
+        android:layout_width="match_parent"
+        android:layout_height="30dp">
+
+
+        <TextView
+            android:id="@+id/txtBookingId"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="#fffafafa"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="15dp">
+
+        <EditText
+            android:id="@+id/inputName"
+            style="@style/styleEditTxt"
+            android:fontFamily="sans-serif-light"
+            android:hint="@string/lbl_name"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/inputEmail"
+            style="@style/styleEditTxt"
+            android:fontFamily="sans-serif-light"
+            android:hint="@string/lbl_email"
+             />
+
+        <EditText
+            android:id="@+id/inputMobile"
+            style="@style/styleEditTxt"
+            android:fontFamily="sans-serif-light"
+            android:hint="@string/lbl_mobile"
+            android:inputType="none"
+            android:maxLength="10"
+            android:textCursorDrawable="@null"
+            android:clickable="false"
+            android:cursorVisible="false"
+            android:focusable="false"/>
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:layout_gravity="center"
+                android:text="City"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_view"
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            card_view:cardBackgroundColor="#fff"
+            card_view:cardCornerRadius="2dp"
+            card_view:cardElevation="3dp"
+            card_view:cardUseCompatPadding="true">
+
+            <Spinner
+            android:spinnerMode="dialog"
+            android:id="@+id/spinnerCityList"
+            android:layout_width="match_parent"
+            android:layout_height="40dp">
+        </Spinner>
+        </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="5dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="4dp">
+
+            <TextView
+                android:id="@+id/gender_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="8dp"
+                android:text="Gender"
+                android:textColor="#000000"
+                android:textSize="18sp" />
+
+            <RadioGroup
+                android:id="@+id/myRadioGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/gender_tv"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/male"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:checked="true"
+                    android:button="@drawable/apptheme_btn_radio_holo_light"
+                    android:text="@string/male" />
+
+                <RadioButton
+                    android:id="@+id/female"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:button="@drawable/apptheme_btn_radio_holo_light"
+                    android:text="@string/female" />
+            </RadioGroup>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/btn_edit_profile"
+            style="@style/styleBtnTxt"
+            android:text="@string/lbl_edit_profile"
+            android:layout_marginTop="25dp" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -15,6 +15,9 @@ import com.razorpay.PaymentResultWithDataListener;
 
 import org.json.JSONObject;
 
+import easycommute.EaCeWithMetro.R;
+import easycommute.EaCeWithMetro.models.Commuter;
+import easycommute.EaCeWithMetro.utils.EasySingleton;
 import easycommute.EaCeWithMetro.utils.PaymentConstants;
 
 
@@ -36,23 +39,25 @@ public class PaymentsActivity extends Activity implements PaymentResultWithDataL
         openPaymentScreen();
     }
 
-
+    // open razorpay screen
     private void openPaymentScreen()
     {
         amount = getIntent().getStringExtra(PaymentConstants.AMOUNT);
         rechargeId = getIntent().getStringExtra(PaymentConstants.RECHARGE_ID);
-        //orderID = getIntent().getStringExtra(PaymentConstants.ORDER_ID);
+        orderID = getIntent().getStringExtra(PaymentConstants.ORDER_ID);
         Checkout checkout = new Checkout();
-        //checkout.setImage(R.mipmap.rsz_32logo);
+        checkout.setImage(R.mipmap.rsz_32logo);
         try {
+            Commuter commuter = EasySingleton.getInstance()
+                    .getCommuter();
             JSONObject options = new JSONObject();
             options.put("name", "Easy Commute");
             options.put("description", "Affordable Bus Shuttle Services");
             options.put("currency", "INR");
-           // options.put("order_id", orderID);
+            options.put("order_id", orderID);
             options.put("amount", amount);
-            options.put("prefill.email", "naveenkukreja28@gmail.com");
-            options.put("prefill.contact", "9826242803");
+            options.put("prefill.email", commuter.email);
+            options.put("prefill.contact", commuter.phone);
             checkout.open(PaymentsActivity.this, options);
         } catch(Exception e) {
             Log.e(TAG, "Error in starting Razorpay Checkout", e);
@@ -60,16 +65,17 @@ public class PaymentsActivity extends Activity implements PaymentResultWithDataL
     }
 
 
-
-
+    // handle back press
     @Override
     public void onBackPressed() {
         setResult(RESULT_CANCELED);
         finish();
     }
 
+    // handle payment success
     @Override
-    public void onPaymentSuccess(String s, PaymentData paymentData) {
+    public void onPaymentSuccess(String s, PaymentData paymentData)
+    {
 
         Intent intent = new Intent();
         intent.putExtra("orderID",  paymentData.getOrderId());
@@ -79,10 +85,12 @@ public class PaymentsActivity extends Activity implements PaymentResultWithDataL
         finish();
     }
 
+    // handle payment failure
     @Override
-    public void onPaymentError(int i, String s, PaymentData paymentData) {
+    public void onPaymentError(int i, String s, PaymentData paymentData)
+    {
          Toast.makeText(PaymentsActivity.this, s, Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent();
+         Intent intent = new Intent();
          setResult(RESULT_OK, intent);
          finish();
 

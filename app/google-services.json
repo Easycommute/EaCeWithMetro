@@ -1,92 +1,34 @@
 {
   "project_info": {
-    "project_number": "116779949904",
-    "firebase_url": "https://easycommutedriver.firebaseio.com",
-    "project_id": "easycommutedriver",
-    "storage_bucket": "easycommutedriver.appspot.com"
+    "project_number": "695106073662",
+    "firebase_url": "https://easy-commute-hyd-metro.firebaseio.com",
+    "project_id": "easy-commute-hyd-metro",
+    "storage_bucket": "easy-commute-hyd-metro.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:116779949904:android:af458e61c19c31d5",
-        "android_client_info": {
-          "package_name": "easy.commute.shuttle.app"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "116779949904-qmp7a9jq3s05n3jhh8svek3ofoq06fcl.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBBr4SzyqGCWhxl_tydq5yNbemynwPUAi0"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "116779949904-qmp7a9jq3s05n3jhh8svek3ofoq06fcl.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:116779949904:android:a5abe5d6393d239b",
-        "android_client_info": {
-          "package_name": "easy.commute.shuttle.driver.app"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "116779949904-qmp7a9jq3s05n3jhh8svek3ofoq06fcl.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBBr4SzyqGCWhxl_tydq5yNbemynwPUAi0"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "116779949904-qmp7a9jq3s05n3jhh8svek3ofoq06fcl.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:116779949904:android:e5c8ce471c5efb5ac15655",
+        "mobilesdk_app_id": "1:695106073662:android:6391b635fef06f8e9d8d6f",
         "android_client_info": {
           "package_name": "easycommute.EaCeWithMetro"
         }
       },
       "oauth_client": [
         {
-          "client_id": "116779949904-qmp7a9jq3s05n3jhh8svek3ofoq06fcl.apps.googleusercontent.com",
+          "client_id": "695106073662-h72fdrm0obu9agq72qqnim64ugt3a4br.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBBr4SzyqGCWhxl_tydq5yNbemynwPUAi0"
+          "current_key": "AIzaSyArBiv99076O8HKST_Gca_g1ClIruvbDI8"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "116779949904-qmp7a9jq3s05n3jhh8svek3ofoq06fcl.apps.googleusercontent.com",
+              "client_id": "695106073662-h72fdrm0obu9agq72qqnim64ugt3a4br.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

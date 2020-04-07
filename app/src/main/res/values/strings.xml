@@ -1,18 +1,31 @@
 <resources>
-    <string name="app_name">EaCeWithMetro</string>
+    <string name="app_name">Easy Commute Metro</string>
     <string name="add_money">Add Money</string>
     <string name="title_activity_main2">Main2Activity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_title">John Doe</string>
+    <string name="nav_header_subtitle">johndoe@noname.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
 
-    <string name="wallet">Wallet</string>
-    <string name="passbook">Pass Book</string>
-    <string name="ride">Ride</string>
+    <string name="wallet">My Wallet</string>
+    <string name="history">My History</string>
+    <string name="tokens">My Tokens</string>
+    <string name="ride">My Ride</string>
+    <string name="yes">Yes</string>
+    <string name="no">no</string>
+    <string name="choose_one">choose one</string>
+    <string name="EasyCommuteMetro">EasyCommuteMetro</string>
+    <string name="app_store_url">https://play.google.com/store/apps/details?id=</string>
+    <string name="want_to_logout">Are you sure you want to logout?</string>
+    <string name="want_to_exit">Are you sure you want to exit?</string>
+    <string name="about_us">About Us</string>
+    <string name="rate_us">Rate Us</string>
+    <string name="share">Share</string>
+    <string name="logout">Logout</string>
+    <string name="no_token_found">No Token found</string>
 
     <string name="netwrok_error">Network Error</string>
     <string name="error_internet_conn">Looks like you are not connected to network. Please check your internet connection.</string>
@@ -49,20 +62,24 @@
 
     <string name="regenerate_otp">Regenerate Your OTP</string>
 
-    <string-array name="source">
-        <item>"Select Source"</item>
-        <item>IIT Hyderabad</item>
-        <item>Galconda fort</item>
-    </string-array>
-
-    <string-array name="destination">
-        <item>"Select Destination"</item>
-        <item>DLF</item>
-        <item>RMZ</item>
-    </string-array>
-
-
+    <string name="select_starting_point">Select Starting Point</string>
+    <string name="select_end_point">Select End Point</string>
     <string name="get_easy_token">Get Easy Token</string>
+    <string name="sit_relax_commute">Sit. . . Relax. . . Commute. . .</string>
+    <string name="get_another_token">Get Another Token</string>
 
+    <string name="generic_error">Oops! Something went wrong. Please try after sometime.</string>
+    <string name="title_profile">My Profile</string>
+    <string name="lbl_edit_profile">Update Profile</string>
+    <string name="please_select_city">Please select city</string>
+    <string name="select_city">Select City</string>
+    <string name="change_selection">Change Selection</string>
 
+    <string name="title_about_us">About us</string>
+    <string name="about_us_tag_line">Affordable Metro Feeder Service</string>
+    <string name="es">EasyCommute</string>
+    <string name="txt_about_us">EasyCommute is a mobile based metro feeder service. We aim to provide the best possible experience for our customers in the last leg of their daily commute.</string>
+    <string name="whatsapp">WhatsApp: 8099927902</string>
+    <string name="email">Email: care@easycommute.co</string>
+    <string name="phone">Phone: 8374590066</string>
 </resources>

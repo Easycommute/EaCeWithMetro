@@ -24,7 +24,7 @@ public class Commuter {
     @SerializedName("mobile")
     public String phone;
 
-    @SerializedName("gcm_reg_id")
+    @SerializedName("fcm_reg_id")
     public String regId;
 
     @SerializedName("otp")
@@ -36,12 +36,8 @@ public class Commuter {
     @SerializedName("referral_code")
     public String referralCode;
 
-    @SerializedName("company_name")
-    public String companyName;
-
     @SerializedName("city_id")
     public int cityId;
-
 
     public Commuter() {
     }
@@ -60,6 +56,4 @@ public class Commuter {
         this.regId=regId;
         this.cityId=cityId;
     }
-
-
 }

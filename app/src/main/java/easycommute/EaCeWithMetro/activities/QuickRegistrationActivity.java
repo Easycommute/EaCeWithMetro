@@ -33,6 +33,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import java.util.regex.Pattern;
 
+
 import easycommute.EaCeWithMetro.R;
 import easycommute.EaCeWithMetro.api.EasyCommuteApi;
 import easycommute.EaCeWithMetro.api.data.response.ApiResponse;
@@ -45,8 +46,6 @@ import easycommute.EaCeWithMetro.utils.PreferenceManager;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
-
-
 
 public class QuickRegistrationActivity extends BaseActivity implements View.OnClickListener {
     private EditText inputEmail, inputMobile, inputName, inputOtp;
@@ -63,13 +62,14 @@ public class QuickRegistrationActivity extends BaseActivity implements View.OnCl
     private TextView txtEditMobile;
     private RadioGroup radioGroup;
 
+    RelativeLayout back_dim_layout;
     Receiver receiver;
     private PopupWindow successDialog;
     private static final int REQUEST_CODE_EMAIL = 1;
     private String referralCode = "";
 
     CheckBox checkBox;
-    private static Commuter tempCommuter;
+    public static Commuter tempCommuter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,16 +78,6 @@ public class QuickRegistrationActivity extends BaseActivity implements View.OnCl
         initLayout();
 
     }
-
-/*    protected void setAccountsPicker() {
-        try {
-            Intent intent = AccountPicker.newChooseAccountIntent(null, null,
-                    new String[]{GoogleAuthUtil.GOOGLE_ACCOUNT_TYPE}, false, null, null, null, null);
-            startActivityForResult(intent, REQUEST_CODE_EMAIL);
-        } catch (ActivityNotFoundException e) {
-            // TODO
-        }
-    }*/
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -108,8 +98,10 @@ public class QuickRegistrationActivity extends BaseActivity implements View.OnCl
         registerReceiver(receiver, filter);
     }
 
+    // widget initialization
     @Override
-    protected void initLayout() {
+    protected void initLayout()
+    {
         super.initLayout();
 
         viewPager = (ViewPager) findViewById(R.id.viewPagerVertical);
@@ -124,6 +116,7 @@ public class QuickRegistrationActivity extends BaseActivity implements View.OnCl
         txtEditMobile = (TextView) findViewById(R.id.txt_edit_mobile);
         btnRequestSms = (Button) findViewById(R.id.btn_request_sms);
         btnVerifyOtp  = (Button) findViewById(R.id.btn_verify_otp);
+        back_dim_layout = (RelativeLayout) findViewById(R.id.bac_dim_layout);
 
         layoutEditMobile = (RelativeLayout) findViewById(R.id.layout_edit_mobile);
         radioGroup = (RadioGroup) findViewById(R.id.myRadioGroup);
@@ -157,15 +150,10 @@ public class QuickRegistrationActivity extends BaseActivity implements View.OnCl
         findViewById(R.id.reg_img).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                //
-                launchHomeActivity();
-
-                //
                 showProgressBar();
                 inputOtp.setHint(R.string.regenerating_otp);
                 Commuter commuter = EasySingleton.getInstance().getCommuter();
-              /*  EasyCommuteApi.getService().regenerateOTP(commuter)
+                EasyCommuteApi.getService().regenerateOTP(commuter)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Action1<ApiResponse>() {
@@ -174,8 +162,6 @@ public class QuickRegistrationActivity extends BaseActivity implements View.OnCl
                             public void call(ApiResponse apiResponse) {
                                 hideProgressBar();
                                 inputOtp.setHint(R.string.wait_sms);
-                                // @Ram no need to call below method, if we call it is goint to homeactivity before verifying user
-                                //validateRegenerateOTPResponse(apiResponse);
                             }
                         }, new Action1<Throwable>() {
 
@@ -183,7 +169,7 @@ public class QuickRegistrationActivity extends BaseActivity implements View.OnCl
                             public void call(Throwable throwable) {
                                 showToast(throwable.getMessage());
                             }
-                        });*/
+                        });
             }
         });
 
@@ -191,14 +177,12 @@ public class QuickRegistrationActivity extends BaseActivity implements View.OnCl
         layoutEditMobile.setVisibility(View.GONE);
         prefManager = new PreferenceManager(this);
 
-        //TODO: This should be cleaned off once Splash Activity is introduced
         // Checking for user session
         // if user is already logged in, take him to main activity
-        if (prefManager.isLoggedIn()) {
-
+        if (prefManager.isLoggedIn())
+        {
             Intent intent = new Intent(this, HomeActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
             startActivity(intent);
             finish();
         }
@@ -227,7 +211,8 @@ public class QuickRegistrationActivity extends BaseActivity implements View.OnCl
         }
 
         /*checking whether if user entered the data previously, if data is there pre filling the form*/
-        if(tempCommuter != null) {
+        if(tempCommuter != null)
+        {
             inputEmail.setText(tempCommuter.email);
             inputName.setText(tempCommuter.name);
             inputMobile.setText(tempCommuter.phone);
@@ -241,22 +226,6 @@ public class QuickRegistrationActivity extends BaseActivity implements View.OnCl
 
     }
 
-    private void validateRegenerateOTPResponse(ApiResponse apiResponse) {
-        ApiResponse.ResponseStatus status = apiResponse.responseStatus;
-
-        switch (status) {
-            case USER_VERIFIED:
-                EasySingleton.getInstance().setCommuter(apiResponse.commuter);
-                new PreferenceManager(this).setLoggedIn(true);
-
-                launchHomeActivity();
-                break;
-            case USER_EXIST_OTP_GENERATED:
-                break;
-            default:
-                Toast.makeText(this, status.toString(), Toast.LENGTH_SHORT).show();
-        }
-    }
 
     @Override
     protected void onStop() {
@@ -266,7 +235,8 @@ public class QuickRegistrationActivity extends BaseActivity implements View.OnCl
     }
 
     @Override
-    public void onClick(View view) {
+    public void onClick(View view)
+    {
         switch (view.getId()) {
             case R.id.btn_request_sms:
                 try {
@@ -291,7 +261,8 @@ public class QuickRegistrationActivity extends BaseActivity implements View.OnCl
     /**
      * Validating user details form
      */
-    private void validateForm() {
+    private void validateForm()   // validate form fields
+    {
         String mobile = inputMobile.getText().toString().trim();
         String email  = inputEmail.getText().toString().trim();
         String name   = inputName.getText().toString().trim();
@@ -310,28 +281,31 @@ public class QuickRegistrationActivity extends BaseActivity implements View.OnCl
         }
 
         prefManager.setMobileNumber(mobile);
-        Commuter commuter = new Commuter(name, email, mobile, getGender(),
-                prefManager.getRegistrationId());
+        Commuter commuter = new Commuter(name, email, mobile, getGender(), prefManager.getRegistrationId());
         //TODO  If referral code not works out we con remove comment for requestForSms(commuter) and comment openReferralDialog()
         commuter.deviceId = getDeviceID();
         this.tempCommuter = commuter;
      //   requestForSMS(commuter);
-        launchHomeActivity();
-
+        showReferralCodeDialog(commuter);
 
     }
 
-    public String getDeviceID() {
+    // get unique deviceID
+    public String getDeviceID()
+    {
         String deviceId =  Settings.Secure.getString(getContentResolver(),
                 Settings.Secure.ANDROID_ID);
         return deviceId;
     }
 
-    private String getGender() {
+    private String getGender()
+    {
         return radioGroup.getCheckedRadioButtonId() == R.id.male ? "M" : "F";
     }
 
-    private void verifyEmail(String email) {
+    // email validation
+    private void verifyEmail(String email)
+    {
         if (email.isEmpty()) {
             throw new RuntimeException(getString(R.string.warning_email_empty));
         } else if (!Pattern.compile(AppConstants.EMAIL_PATTERN).matcher(email).matches()) {
@@ -358,12 +332,7 @@ public class QuickRegistrationActivity extends BaseActivity implements View.OnCl
     {
         commuter.regId=prefManager.getRegistrationId();
         showProgressBar();
-        //
-        startActivity(new Intent(QuickRegistrationActivity.this,MainActivity.class));
-       //
-
-        //Log.d("DEBUG", commuter.referralCode + "");
-        /*EasyCommuteApi.getService().registerCommuter(commuter)
+        EasyCommuteApi.getService().registerCommuter(commuter)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Action1<ApiResponse>() {
@@ -372,12 +341,13 @@ public class QuickRegistrationActivity extends BaseActivity implements View.OnCl
                         hideProgressBar();
                         validateResponse(response);
                     }
-                }, errorHandler);*/
+                }, errorHandler);
     }
 
-    private void validateResponse(ApiResponse apiResponse) {
+    // handle OTP response
+    private void validateResponse(ApiResponse apiResponse)
+    {
         ApiResponse.ResponseStatus status = apiResponse.responseStatus;
-
         switch (status) {
             case USER_CREATED_OTP_GENERATED:
             case USER_EXIST_OTP_GENERATED:
@@ -393,10 +363,6 @@ public class QuickRegistrationActivity extends BaseActivity implements View.OnCl
             case USER_VERIFICATION_FAILED:
                 showToast(status.toString());
 
-/*
-            case USER_ALREADY_EXIST:
-                launchHomeActivity();
-                break;*/
             default:
               //  showToast(status.toString());
         }
@@ -405,7 +371,8 @@ public class QuickRegistrationActivity extends BaseActivity implements View.OnCl
     /**
      * sending the OTP to server and activating the user
      */
-    private void verifyOtp() {
+    private void verifyOtp()
+    {
         String otp = inputOtp.getText().toString().trim();
 
         if (!otp.isEmpty()) {
@@ -471,8 +438,7 @@ public class QuickRegistrationActivity extends BaseActivity implements View.OnCl
         @Override
         public void onReceive(Context context, Intent intent) {
             if(intent.getAction().equals(AppConstants.CUSTOM_INTENT)) {
-              //
-                //  showSortPopup(QuickRegistrationActivity.this);
+                //showSortPopup(QuickRegistrationActivity.this);
                 startHome();
 
 
@@ -531,23 +497,22 @@ public class QuickRegistrationActivity extends BaseActivity implements View.OnCl
         thread.start();
     }
 
-    private void launchHomeActivity() {
+    private void launchHomeActivity()
+    {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);
-
         finish();
     }
 
-/*
-    private void showReferralCodeDialog(final Commuter commuter) {
+    // display dialog box with referral field
+    private void showReferralCodeDialog(final Commuter commuter)
+    {
         View layout = LayoutInflater.from(this).inflate(R.layout.referral_popup, null);
         final Dialog referralDialog = new Dialog(this, R.style.Theme_Dialog);
         referralDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         referralDialog.setContentView(layout);
-        */
-/*referralDialog.setTitle("Have Referral Code? ");*//*
-
+        /*referralDialog.setTitle("Have Referral Code? ");*/
         final EditText referral = (EditText) layout.findViewById(R.id.referral_code);
         referral.setText(referralCode);
         Button yes = (Button) layout.findViewById(R.id.yes);
@@ -575,7 +540,6 @@ public class QuickRegistrationActivity extends BaseActivity implements View.OnCl
         });
     referralDialog.show();
     }
-*/
 
 
 }

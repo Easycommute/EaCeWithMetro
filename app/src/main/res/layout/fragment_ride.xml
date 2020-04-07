@@ -5,6 +5,8 @@
     android:layout_height="match_parent"
     tools:context=".fragments.RideFragment">
 
+
+
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent">
@@ -12,10 +14,11 @@
     <TextView
         android:id="@+id/title_label"
         android:layout_width="wrap_content"
+        android:gravity="center"
+        android:layout_margin="15dp"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:text="Token: 1456 For HYD-> ABC, Valid Till 24/11/19 11:00 AM"
         android:textColor="@color/black" />
 
 
@@ -65,9 +68,21 @@
                 android:layout_marginTop="100dp"
                 android:text="Hyderbad based Easy Commute Metro Shuttle Services"
                 android:textColor="@color/primary_text"
-                android:textSize="20sp"
+                android:textSize="20dp"
                 android:gravity="center"
                 android:layout_centerInParent="true"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/txtChangeSelection"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/change_selection"
+                android:layout_below="@+id/txtTitle"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:textColor="@color/colorButton"
+                android:textSize="15dp"
                 android:visibility="gone" />
 
 
@@ -75,22 +90,25 @@
 
         <Button
             android:id="@+id/btnValidate"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/rlSpinner"
             android:background="@drawable/rounded_button_disable"
-            android:layout_centerHorizontal="true"
-            android:textAllCaps="false"
+            android:textAllCaps="true"
+            android:text="@string/get_easy_token"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
             android:layout_marginTop="50dp"
             android:textColor="@color/icons" />
 
         <Button
             android:id="@+id/btnAddMoney"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/rlSpinner"
             android:background="@drawable/rounded_button"
-            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
             android:textAllCaps="false"
             android:text="@string/add_money"
             android:layout_marginTop="50dp"

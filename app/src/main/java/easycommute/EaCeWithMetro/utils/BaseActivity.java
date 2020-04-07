@@ -19,6 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import easycommute.EaCeWithMetro.R;
+import easycommute.EaCeWithMetro.fragments.RideFragment;
 import easycommute.EaCeWithMetro.interfaces.ActionEventListener;
 import easycommute.EaCeWithMetro.interfaces.FragmentListener;
 import retrofit.RetrofitError;
@@ -79,7 +80,7 @@ public class BaseActivity extends AppCompatActivity implements FragmentListener 
         }
 
         if (!noHistory) {
-            beginTransaction.addToBackStack(tag);
+           beginTransaction.addToBackStack(tag);
         }
 
         beginTransaction.replace(R.id.container, fragment, tag);
@@ -90,7 +91,8 @@ public class BaseActivity extends AppCompatActivity implements FragmentListener 
 
     @Override
     public void showProgressBar() {
-        if (progressLayout != null) {
+        if (progressLayout != null)
+        {
             progressLayout.setVisibility(View.VISIBLE);
             progressLayout.setBackgroundColor(getResources().getColor(android.R.color.white));
         }
@@ -110,16 +112,22 @@ public class BaseActivity extends AppCompatActivity implements FragmentListener 
     }
 
     @Override
-    public void onBackPressed() {
-        if (mFragment != null && mFragment.onBackPressed()) {
-            if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
-                getSupportFragmentManager().popBackStack();
-            } else {
-                mFragment.onBackPressedFragment();
-                //super.onBackPressed();
+    public void onBackPressed()
+    {
+        if(mFragment!=null)
+        {
+            if (mFragment.getClass().getSimpleName().equals("RideFragment"))
+            {
+                mFragment.onBackPressed();
             }
-        } else {
-            super.onBackPressed();
+            else if (new RideFragment() != null)
+            {
+                navigateToFragment(new RideFragment(), new RideFragment().getTag(), false, true);
+            }
+        }
+        else
+        {
+            finish();
         }
     }
 
@@ -173,7 +181,7 @@ public class BaseActivity extends AppCompatActivity implements FragmentListener 
     @Override
     public void setActionTitle(String title) {
         if (mToolbar != null) {
-            ((TextView) mToolbar.findViewById(R.id.title)).setText(title);
+            //((TextView) mToolbar.findViewById(R.id.title)).setText(title);
         }
     }
 
