@@ -26,7 +26,7 @@ public final class EasyCommuteApi {
     //private static final String PRODUCTION_URL = "https://api.easycommute.co/sts";
     //http://prod.easycommute.co
   //    private static final String PRODUCTION_URL = "https://apiv2.easycommute.co/sts";
-    private static final String PRODUCTION_URL = "https://prod.easycommute.co";
+    private static final String PRODUCTION_URL = "https://metro.easycommute.in";
     private static final String STAGING_URL = "https://staging.easycommute.co";
     private static String SERVER_URL = PRODUCTION_URL;
     private static final String PLACES_URL = "https://maps.googleapis.com/maps/api";
