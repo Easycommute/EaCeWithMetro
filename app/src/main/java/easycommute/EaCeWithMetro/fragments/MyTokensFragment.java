@@ -13,6 +13,8 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.Objects;
+
 import easycommute.EaCeWithMetro.R;
 import easycommute.EaCeWithMetro.adapter.HistoryAdapter;
 import easycommute.EaCeWithMetro.adapter.TokenAdapter;
@@ -33,7 +35,7 @@ public class MyTokensFragment extends BaseFragment {
     private RecyclerView recyclerView;
    // private AlertDialog confirmDialog;
     private boolean showPromoBox;
-    TextView txtNoTokens;
+    private TextView txtNoTokens;
 
     String action;
 
@@ -44,13 +46,14 @@ public class MyTokensFragment extends BaseFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_my_tokens, null);
+        final View inflate = inflater.inflate(R.layout.fragment_my_tokens, null);
+        return inflate;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        recyclerView = (RecyclerView) getView().findViewById(R.id.recyclerTokenView);
+        recyclerView = (RecyclerView) Objects.requireNonNull(getView()).findViewById(R.id.recyclerTokenView);
         txtNoTokens = (TextView) getView().findViewById(R.id.txtNoTokens);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setHasFixedSize(true);

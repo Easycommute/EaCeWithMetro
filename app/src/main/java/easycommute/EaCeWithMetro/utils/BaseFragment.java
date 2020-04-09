@@ -24,7 +24,7 @@ import rx.functions.Action1;
 /**
  * Created by Ram Prasad on 10/28/2015.
  */
-public class BaseFragment extends Fragment implements ActionEventListener {
+public abstract class BaseFragment extends Fragment implements ActionEventListener {
     private static final String TAG = BaseFragment.class.getSimpleName();
     protected FragmentListener mActivity;
     protected String fragmentTitle;
@@ -189,7 +189,5 @@ public class BaseFragment extends Fragment implements ActionEventListener {
     protected int getTitle() {
         return R.string.app_name;
     }
-
-
 
 }
